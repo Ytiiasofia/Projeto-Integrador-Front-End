@@ -1195,6 +1195,11 @@ section,
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
+.paragrafo-destaque {
+    text-align: justify;
+    text-indent: 2em;
+    color: #333;
+}
 .about .content h3 {
   font-size: 2rem;
   font-weight: 700;
@@ -1495,6 +1500,132 @@ section,
 /*--------------------------------------------------------------
 # Portfolio Section
 --------------------------------------------------------------*/
+/*Css Tabela de Oportuinidades*/
+    .opportunities-container {
+      padding: 60px 0;
+      background-color: #f8f9fa;
+    }
+    
+    .search-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+    
+    .table-responsive {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 20px;
+    }
+    
+    .table th {
+      background-color: #877feb;
+      color: white;
+      vertical-align: middle;
+    }
+    
+    .badge-online {
+      background-color: #28a745;
+      color: white;
+    }
+    
+    .badge-presencial {
+      background-color: #007bff;
+      color: white;
+    }
+    
+    .badge-hibrido {
+      background-color: #6f42c1;
+      color: white;
+    }
+    
+    .badge-aberto {
+      background-color: #28a745;
+      color: white;
+    }
+    
+    .badge-fechado {
+      background-color: #dc3545;
+      color: white;
+    }
+    
+    .badge-vigente {
+      background-color: #ffc107;
+      color: #212529;
+    }
+    
+    .table-hover tbody tr:hover {
+      background-color: rgba(135, 127, 235, 0.1);
+    }
+    
+    .pagination .page-item.active .page-link {
+      background-color: #877feb;
+      border-color: #877feb;
+    }
+    
+    .pagination .page-link {
+      color: #877feb;
+    }
+    
+    .page-title {
+      background-size: cover;
+      background-position: center;
+    }
+/* Estilos adicionais */
+.btn-details {
+  background-color: #877feb;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-details:hover {
+  background-color: #6b63d1;
+  color: white;
+}
+
+.btn-search {
+  background-color: #877feb;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-search:hover {
+  background-color: #6b63d1;
+  color: white;
+}
+
+.table th {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.table td {
+  vertical-align: middle;
+  padding: 12px 8px;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(135, 127, 235, 0.08);
+}
+
+.badge {
+  padding: 6px 10px;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+/*Fim do Css da Tabela de oportunidades*/
 .portfolio .portfolio-filters {
   padding: 0;
   margin: 0 auto 20px auto;
