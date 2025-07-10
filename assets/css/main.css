@@ -922,6 +922,59 @@ section,
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
+.services .service-item {
+  position: relative;
+  height: 100%;
+  margin-bottom: 30px;
+}
+
+.services .service-item .icon {
+  margin-right: 20px;
+}
+
+.services .service-item .icon i {
+  color: var(--accent-color);
+  font-size: 40px;
+  line-height: 0;
+  transition: 0.3s;
+}
+
+.services .service-item:hover .icon i {
+  color: var(--accent-color);
+}
+
+.services .service-item .title {
+  color: var(--heading-color);
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.services .service-item .description {
+  font-size: 15px;
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  margin-bottom: 10px;
+}
+
+.services .service-item .readmore {
+  display: flex;
+  align-items: center;
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  transition: 0.3s;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.services .service-item .readmore i {
+  margin-left: 8px;
+}
+
+.services .service-item:hover .title,
+.services .service-item:hover .readmore,
+.services .service-item:hover .icon i {
+  color: var(--accent-color);
+}
 /* Estilos do Fórum */
 
         /* Estilos para posts do fórum */
@@ -1738,102 +1791,6 @@ section,
 }
 
 /*Fim da sessão referente ao css do login*/
-.contact {
-  background-image: url("../img/contact-bg.png");
-  background-position: left center;
-  background-repeat: no-repeat;
-  position: relative;
-}
-
-@media (max-width: 640px) {
-  .contact {
-    background-position: center 50px;
-    background-size: contain;
-  }
-}
-
-.contact:before {
-  content: "";
-  background: color-mix(in srgb, var(--background-color), transparent 30%);
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-.contact .info-item+.info-item {
-  margin-top: 40px;
-}
-
-.contact .info-item i {
-  background: var(--accent-color);
-  color: var(--contrast-color);
-  font-size: 20px;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50px;
-  transition: all 0.3s ease-in-out;
-  margin-right: 15px;
-}
-
-.contact .info-item h3 {
-  padding: 0;
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.contact .info-item p {
-  padding: 0;
-  margin-bottom: 0;
-  font-size: 14px;
-}
-
-.contact .php-email-form {
-  height: 100%;
-}
-
-.contact .php-email-form input[type=text],
-.contact .php-email-form input[type=email],
-.contact .php-email-form textarea {
-  font-size: 14px;
-  padding: 10px 15px;
-  box-shadow: none;
-  border-radius: 0;
-  color: var(--default-color);
-  background-color: color-mix(in srgb, var(--background-color), transparent 50%);
-  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
-}
-
-.contact .php-email-form input[type=text]:focus,
-.contact .php-email-form input[type=email]:focus,
-.contact .php-email-form textarea:focus {
-  border-color: var(--accent-color);
-}
-
-.contact .php-email-form input[type=text]::placeholder,
-.contact .php-email-form input[type=email]::placeholder,
-.contact .php-email-form textarea::placeholder {
-  color: color-mix(in srgb, var(--default-color), transparent 70%);
-}
-
-.contact .php-email-form button[type=submit] {
-  color: var(--contrast-color);
-  background: var(--accent-color);
-  border: 0;
-  padding: 10px 30px;
-  transition: 0.4s;
-  border-radius: 50px;
-}
-
-.contact .php-email-form button[type=submit]:hover {
-  background: color-mix(in srgb, var(--accent-color), transparent 20%);
-}
-
 /*--------------------------------------------------------------
 # Blog Posts Section
 --------------------------------------------------------------*/
