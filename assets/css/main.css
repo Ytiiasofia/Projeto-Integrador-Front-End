@@ -922,60 +922,124 @@ section,
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
-.services .service-item {
-  position: relative;
-  height: 100%;
-  margin-bottom: 30px;
-}
+/* Estilos do Fórum */
 
-.services .service-item .icon {
-  margin-right: 20px;
-}
-
-.services .service-item .icon i {
-  color: var(--accent-color);
-  font-size: 40px;
-  line-height: 0;
-  transition: 0.3s;
-}
-
-.services .service-item:hover .icon i {
-  color: var(--accent-color);
-}
-
-.services .service-item .title {
-  color: var(--heading-color);
-  font-weight: 700;
-  margin-bottom: 10px;
-  font-size: 20px;
-  transition: 0.3s;
-}
-
-.services .service-item .description {
-  font-size: 15px;
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
-  margin-bottom: 10px;
-}
-
-.services .service-item .readmore {
-  display: flex;
-  align-items: center;
-  color: color-mix(in srgb, var(--default-color), transparent 50%);
-  transition: 0.3s;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.services .service-item .readmore i {
-  margin-left: 8px;
-}
-
-.services .service-item:hover .title,
-.services .service-item:hover .readmore,
-.services .service-item:hover .icon i {
-  color: var(--accent-color);
-}
-
+        /* Estilos para posts do fórum */
+        .forum-post {
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .forum-post:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Estilos para ações nos posts */
+        .post-actions {
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+        
+        .action-btn {
+            cursor: pointer;
+            margin-right: 15px;
+            color: #6c757d;
+        }
+        
+        .action-btn:hover {
+            color: #877feb;
+        }
+        
+        .action-btn.active {
+            color:  #877feb;
+        }
+        
+        /* Estilos para seção de comentários */
+        .comments-section {
+            background-color: #f8f9fa;
+            border-radius: 0 0 10px 10px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .comment {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        
+        /* Estilos para tags */
+        .tag {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            color: #495057;
+        }
+        
+        /* Estilos para avatar do usuário */
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Estilos para formulário de novo post */
+        #new-post-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        /* Estilos para botão de posts salvos */
+        .saved-posts-btn {
+            background-color: #877feb;
+            border: none;
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+        
+        /* Estilos para container do fórum */
+        .forum-container {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+        }
+        
+        /* Estilos para botões com cor #877feb */
+        .btn-primary {
+            background-color: #877feb;
+            border-color: #877feb;
+        }
+        
+        .btn-primary:hover {
+            background-color: #6a62d4;
+            border-color: #6a62d4;
+        }
+        
+        .save-btn.active {
+            color: #877feb;
+        }
+        
+        /* Ajustes para os botões no formulário */
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
 /*--------------------------------------------------------------
 # Call To Action Section
 --------------------------------------------------------------*/
@@ -1626,237 +1690,54 @@ section,
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 /*Fim do Css da Tabela de oportunidades*/
-.portfolio .portfolio-filters {
-  padding: 0;
-  margin: 0 auto 20px auto;
-  list-style: none;
-  text-align: center;
-}
-
-.portfolio .portfolio-filters li {
-  cursor: pointer;
-  display: inline-block;
-  padding: 0;
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 10px;
-  line-height: 1;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  transition: all 0.3s ease-in-out;
-}
-
-.portfolio .portfolio-filters li:hover,
-.portfolio .portfolio-filters li.filter-active {
-  color: var(--accent-color);
-}
-
-.portfolio .portfolio-filters li:first-child {
-  margin-left: 0;
-}
-
-.portfolio .portfolio-filters li:last-child {
-  margin-right: 0;
-}
-
-@media (max-width: 575px) {
-  .portfolio .portfolio-filters li {
-    font-size: 14px;
-    margin: 0 5px;
-  }
-}
-
-.portfolio .portfolio-item {
-  position: relative;
-}
-
-.portfolio .portfolio-item .portfolio-info {
-  opacity: 0;
-  position: absolute;
-  left: 30px;
-  right: 30px;
-  bottom: 0;
-  z-index: 3;
-  transition: all ease-in-out 0.3s;
-  background: color-mix(in srgb, var(--background-color), transparent 10%);
-  padding: 15px;
-}
-
-.portfolio .portfolio-item .portfolio-info h4 {
-  font-size: 18px;
-  font-weight: 600;
-  padding-right: 50px;
-}
-
-.portfolio .portfolio-item .portfolio-info p {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
-  font-size: 14px;
-  margin-bottom: 0;
-  padding-right: 50px;
-}
-
-.portfolio .portfolio-item .portfolio-info .preview-link,
-.portfolio .portfolio-item .portfolio-info .details-link {
-  position: absolute;
-  right: 50px;
-  font-size: 24px;
-  top: calc(50% - 14px);
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
-  transition: 0.3s;
-  line-height: 0;
-}
-
-.portfolio .portfolio-item .portfolio-info .preview-link:hover,
-.portfolio .portfolio-item .portfolio-info .details-link:hover {
-  color: var(--accent-color);
-}
-
-.portfolio .portfolio-item .portfolio-info .details-link {
-  right: 14px;
-  font-size: 28px;
-}
-
-.portfolio .portfolio-item:hover .portfolio-info {
-  opacity: 1;
-  bottom: 20px;
-}
-
-/*--------------------------------------------------------------
-# Portfolio Details Section
---------------------------------------------------------------*/
-.portfolio-details .portfolio-details-slider img {
-  width: 100%;
-}
-
-.portfolio-details .portfolio-details-slider .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
-}
-
-.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
-  background-color: color-mix(in srgb, var(--default-color), transparent 85%);
-  opacity: 1;
-}
-
-.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: var(--accent-color);
-}
-
-.portfolio-details .portfolio-info {
-  background-color: var(--surface-color);
-  padding: 30px;
-  box-shadow: 0px 0 30px rgba(0, 0, 0, 0.1);
-}
-
-.portfolio-details .portfolio-info h3 {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
-}
-
-.portfolio-details .portfolio-info ul {
-  list-style: none;
-  padding: 0;
-  font-size: 15px;
-}
-
-.portfolio-details .portfolio-info ul li+li {
-  margin-top: 10px;
-}
-
-.portfolio-details .portfolio-description {
-  padding-top: 30px;
-}
-
-.portfolio-details .portfolio-description h2 {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-.portfolio-details .portfolio-description p {
-  padding: 0;
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
-}
-
-/*--------------------------------------------------------------
-# Team Section
---------------------------------------------------------------*/
-.team .team-member {
-  background-color: var(--surface-color);
-  overflow: hidden;
-  border-radius: 5px;
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-  height: 100%;
-}
-
-.team .team-member .member-img {
-  position: relative;
-  overflow: hidden;
-}
-
-.team .team-member .social {
-  position: absolute;
-  left: 0;
-  bottom: 30px;
-  right: 0;
-  opacity: 0;
-  transition: ease-in-out 0.3s;
-  text-align: center;
-}
-
-.team .team-member .social a {
-  background: color-mix(in srgb, var(--contrast-color), transparent 25%);
-  color: color-mix(in srgb, var(--default-color), transparent 20%);
-  margin: 0 3px;
-  border-radius: 4px;
-  width: 36px;
-  height: 36px;
-  transition: ease-in-out 0.3s;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.team .team-member .social a:hover {
-  color: var(--contrast-color);
-  background: var(--accent-color);
-}
-
-.team .team-member .social i {
-  font-size: 18px;
-  line-height: 0;
-}
-
-.team .team-member .member-info {
-  padding: 25px 15px;
-}
-
-.team .team-member .member-info h4 {
-  font-weight: 700;
-  margin-bottom: 5px;
-  font-size: 18px;
-}
-
-.team .team-member .member-info span {
-  display: block;
-  font-size: 13px;
-  font-weight: 400;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
-}
-
-.team .team-member:hover .social {
-  opacity: 1;
-  bottom: 15px;
-}
-
 /*--------------------------------------------------------------
 # Contact Section
 --------------------------------------------------------------*/
+/*Início da sessão referente ao css do login*/
+.login-section {
+  padding: 60px 0;
+}
+
+.login-form {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+}
+
+.login-form h2 {
+  color: #333;
+  font-weight: 600;
+}
+
+.login-form .form-control {
+  padding: 10px 15px;
+  height: 45px;
+  border-radius: 4px;
+}
+
+.login-form .btn-primary {
+  background-color: #877feb;
+  border-color: #877feb;
+  padding: 10px;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.login-form .btn-primary:hover {
+  background-color: #6b63d1;
+  border-color: #6b63d1;
+}
+.login-form a.text-primary {
+  color: #626569 !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.login-form a.text-primary:hover {
+  text-decoration: underline;
+  color: #877feb !important;
+}
+
+/*Fim da sessão referente ao css do login*/
 .contact {
   background-image: url("../img/contact-bg.png");
   background-position: left center;
@@ -2242,148 +2123,7 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 30%);
   margin-bottom: 0;
 }
-
-/*--------------------------------------------------------------
-# Blog Comments Section
---------------------------------------------------------------*/
-.blog-comments {
-  padding: 10px 0;
-}
-
-.blog-comments .comments-count {
-  font-weight: bold;
-}
-
-.blog-comments .comment {
-  margin-top: 30px;
-  position: relative;
-}
-
-.blog-comments .comment .comment-img {
-  margin-right: 14px;
-}
-
-.blog-comments .comment .comment-img img {
-  width: 60px;
-}
-
-.blog-comments .comment h5 {
-  font-size: 16px;
-  margin-bottom: 2px;
-}
-
-.blog-comments .comment h5 a {
-  font-weight: bold;
-  color: var(--default-color);
-  transition: 0.3s;
-}
-
-.blog-comments .comment h5 a:hover {
-  color: var(--accent-color);
-}
-
-.blog-comments .comment h5 .reply {
-  padding-left: 10px;
-  color: color-mix(in srgb, var(--default-color), transparent 20%);
-}
-
-.blog-comments .comment h5 .reply i {
-  font-size: 20px;
-}
-
-.blog-comments .comment time {
-  display: block;
-  font-size: 14px;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
-  margin-bottom: 5px;
-}
-
-.blog-comments .comment.comment-reply {
-  padding-left: 40px;
-}
-
-/*--------------------------------------------------------------
-# Comment Form Section
---------------------------------------------------------------*/
-.comment-form {
-  padding-top: 10px;
-}
-
-.comment-form form {
-  background-color: var(--surface-color);
-  margin-top: 30px;
-  padding: 30px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.comment-form form h4 {
-  font-weight: bold;
-  font-size: 22px;
-}
-
-.comment-form form p {
-  font-size: 14px;
-}
-
-.comment-form form input {
-  background-color: var(--surface-color);
-  color: var(--default-color);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 70%);
-  font-size: 14px;
-  border-radius: 4px;
-  padding: 10px 10px;
-}
-
-.comment-form form input:focus {
-  color: var(--default-color);
-  background-color: var(--surface-color);
-  box-shadow: none;
-  border-color: var(--accent-color);
-}
-
-.comment-form form input::placeholder {
-  color: color-mix(in srgb, var(--default-color), transparent 50%);
-}
-
-.comment-form form textarea {
-  background-color: var(--surface-color);
-  color: var(--default-color);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 70%);
-  border-radius: 4px;
-  padding: 10px 10px;
-  font-size: 14px;
-  height: 120px;
-}
-
-.comment-form form textarea:focus {
-  color: var(--default-color);
-  box-shadow: none;
-  border-color: var(--accent-color);
-  background-color: var(--surface-color);
-}
-
-.comment-form form textarea::placeholder {
-  color: color-mix(in srgb, var(--default-color), transparent 50%);
-}
-
-.comment-form form .form-group {
-  margin-bottom: 25px;
-}
-
-.comment-form form .btn-primary {
-  border-radius: 4px;
-  padding: 10px 20px;
-  border: 0;
-  background-color: var(--accent-color);
-  color: var(--contrast-color);
-}
-
-.comment-form form .btn-primary:hover {
-  color: var(--contrast-color);
-  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
-}
-
-/*--------------------------------------------------------------
+/*---------------------------------------------------------
 # Widgets
 --------------------------------------------------------------*/
 .widgets-container {
