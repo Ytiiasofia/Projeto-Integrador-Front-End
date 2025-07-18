@@ -28,38 +28,37 @@
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
-    /* Custom styles for the user table */
     .user-table {
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
-    
+
     .user-table thead {
       background-color: #6c63ff;
       color: white;
     }
-    
+
     .user-table th {
       padding: 15px;
       font-weight: 600;
     }
-    
+
     .user-table td {
       padding: 12px 15px;
       vertical-align: middle;
     }
-    
+
     .user-table tbody tr {
       transition: all 0.3s ease;
     }
-    
+
     .user-table tbody tr:hover {
       background-color: #f8f9fa;
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     }
-    
+
     .badge-user {
       background-color: #6c63ff;
       color: white;
@@ -68,7 +67,7 @@
       font-size: 0.8rem;
       font-weight: 500;
     }
-    
+
     .badge-admin {
       background-color: #28a745;
       color: white;
@@ -77,25 +76,25 @@
       font-size: 0.8rem;
       font-weight: 500;
     }
-    
+
     .action-btn {
       padding: 5px 12px;
       border-radius: 20px;
       font-size: 0.85rem;
       transition: all 0.3s ease;
     }
-    
+
     .action-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    
+
     .section-header h2 {
       color: #6c63ff;
       font-weight: 700;
       margin-bottom: 15px;
     }
-    
+
     .section-header p {
       color: #6c757d;
       font-size: 1.1rem;
@@ -105,6 +104,7 @@
 
 <body class="contact-page">
 
+  <!-- Header -->
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
       <a class="logo d-flex align-items-center">
@@ -113,17 +113,18 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="controleUserAdm.html" class="active" >Gerenciamento de Usuários</a></li>
+          <li><a href="controleUserAdm.html" class="active">Gerenciamento de Usuários</a></li>
           <li><a href="noticiaAdm.html">Notícias</a></li>
           <li><a href="oportunidadeAdm.html">Oportunidades</a></li>
           <li><a href="forumAdm.html">Fórum</a></li>
-          <li><a href="perfilAdm.html" >Perfil</a></li>
+          <li><a href="perfilAdm.html">Perfil</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
   </header>
 
+  <!-- Main -->
   <main class="main">
 
     <!-- Page Title -->
@@ -137,12 +138,10 @@
         </nav>
       </div>
     </div>
-    <!-- End Page Title -->
 
     <!-- User Management Section -->
     <section id="user-management" class="user-management section">
       <div class="container" data-aos="fade-up">
-
         <div class="table-responsive">
           <table class="table table-hover user-table">
             <thead>
@@ -156,6 +155,7 @@
               </tr>
             </thead>
             <tbody>
+              <!-- Usuários -->
               <tr>
                 <th scope="row">1</th>
                 <td>Ana Silva</td>
@@ -233,7 +233,6 @@
           <div class="modal-body">
             <p>Tem certeza que deseja excluir permanentemente a conta de <strong id="userToDeleteName"></strong>?</p>
             <p class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i> Esta ação é irreversível e removerá todos os dados associados a este usuário.</p>
-            
             <div id="passwordConfirmation" class="mt-3" style="display: none;">
               <label for="adminPassword" class="form-label">Digite sua senha de administrador para confirmar:</label>
               <div class="input-group">
@@ -259,11 +258,11 @@
 
   </main>
 
+  <!-- Footer -->
   <footer id="footer" class="footer light-background">
     <div class="footer-top">
       <div class="container">
         <div class="row gy-4">
-
           <div class="col-lg-6 col-md-12 footer-about">
             <a class="logo d-flex align-items-center">
               <span class="sitename">She Innovates</span>
@@ -276,7 +275,6 @@
               <a href=""><i class="bi bi-linkedin"></i></a>
             </div>
           </div>
-
           <div class="col-lg-6 col-md-12 footer-contact text-end">
             <h4>Entre em Contato</h4>
             <p>Rua Ernesto Alves 1942</p>
@@ -285,21 +283,19 @@
             <p class="mt-4"><strong>Telefone:</strong> <span>(11) 4002-8922</span></p>
             <p><strong>E-mail:</strong> <span>SheInnovates@gmail.com</span></p>
           </div>
-
         </div>
       </div>
     </div>
-
     <div class="container copyright text-center">
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Nova</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
+      <div class="credits">Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></div>
     </div>
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -318,7 +314,7 @@
 
   <!-- Custom Script for User Management -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const deleteButtons = document.querySelectorAll('.delete-user');
       const deleteModal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
       const userToDeleteName = document.getElementById('userToDeleteName');
@@ -327,48 +323,39 @@
       const adminPasswordInput = document.getElementById('adminPassword');
       const passwordError = document.getElementById('passwordError');
       const togglePassword = document.getElementById('togglePassword');
-      
+
       let userIdToDelete = null;
-      
-      // Correct admin password (in a real application, this would be verified server-side)
       const correctAdminPassword = "admin123";
-      
-      // Toggle password visibility
-      togglePassword.addEventListener('click', function() {
+
+      togglePassword.addEventListener('click', function () {
         const type = adminPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         adminPasswordInput.setAttribute('type', type);
         this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
       });
-      
-      // Set up delete buttons
+
       deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
           userIdToDelete = this.getAttribute('data-user-id');
           const userName = this.getAttribute('data-user-name');
           userToDeleteName.textContent = userName;
-          
-          // Reset modal state
+
           passwordConfirmation.style.display = 'none';
           adminPasswordInput.value = '';
           passwordError.style.display = 'none';
           adminPasswordInput.setAttribute('type', 'password');
           togglePassword.innerHTML = '<i class="bi bi-eye"></i>';
-          
+
           deleteModal.show();
         });
       });
-      
-      // Confirm delete button handler
-      confirmDeleteBtn.addEventListener('click', function() {
+
+      confirmDeleteBtn.addEventListener('click', function () {
         if (passwordConfirmation.style.display === 'none') {
-          // First step: show password confirmation
           passwordConfirmation.style.display = 'block';
           confirmDeleteBtn.innerHTML = '<i class="bi bi-check-circle"></i> Confirmar Exclusão';
           adminPasswordInput.focus();
         } else {
-          // Second step: verify password
           if (adminPasswordInput.value === correctAdminPassword) {
-            // Password correct - proceed with deletion
             const toastHTML = `
               <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
                 <div id="deleteToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -382,30 +369,21 @@
                 </div>
               </div>
             `;
-            
-            // Add toast to body
             document.body.insertAdjacentHTML('beforeend', toastHTML);
-            
-            // Remove toast after 5 seconds
             setTimeout(() => {
               const toast = document.getElementById('deleteToast');
               if (toast) toast.remove();
             }, 5000);
-            
+
             deleteModal.hide();
-            
-            // In a real application, you would send an AJAX request to the server here
-            // to actually delete the user from the database and then remove the row
           } else {
-            // Password incorrect
             passwordError.style.display = 'block';
             adminPasswordInput.focus();
           }
         }
       });
-      
-      // Reset modal when closed
-      document.getElementById('deleteUserModal').addEventListener('hidden.bs.modal', function() {
+
+      document.getElementById('deleteUserModal').addEventListener('hidden.bs.modal', function () {
         passwordConfirmation.style.display = 'none';
         adminPasswordInput.value = '';
         passwordError.style.display = 'none';
