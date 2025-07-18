@@ -975,93 +975,116 @@ section,
 .services .service-item:hover .icon i {
   color: var(--accent-color);
 }
-/* Estilos do Fórum */
+/* Estilos específicos para o fórum */
+/* Adicione isso no seu arquivo CSS principal */
+.delete-post-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
 
-        /* Estilos para posts do fórum */
-        .forum-post {
-            border-radius: 10px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .forum-post:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        /* Estilos para ações nos posts */
-        .post-actions {
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
-        
-        .action-btn {
-            cursor: pointer;
-            margin-right: 15px;
-            color: #6c757d;
-        }
-        
-        .action-btn:hover {
-            color: #877feb;
-        }
-        
-        .action-btn.active {
-            color:  #877feb;
-        }
-        
-        .comment {
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: white;
-            border-radius: 5px;
-        }
-        
-        /* Estilos para tags */
-        .tag {
-            display: inline-block;
-            background-color: #e9ecef;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            margin-right: 5px;
-            color: #495057;
-        }
-        
-        /* Estilos para avatar do usuário */
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        
-        /* Estilos para formulário de novo post */
-        #new-post-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        /* Estilos para botão de posts salvos */
-        .saved-posts-btn {
-            background-color: #877feb;
-            border: none;
-            position: absolute;
-            right: 20px;
-            bottom: 20px;
-        }
-        
-        /* Estilos para container do fórum */
-        .forum-container {
-            background-color: #f8f9fa;
-            padding: 60px 0;
-        }
-        
+.delete-post-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Garantir que o título do post não fique muito próximo do botão */
+.flex-grow-1 h5 {
+    margin-right: 10px;
+}
+.forum-container {
+    padding: 60px 0;
+}
+
+#new-post-form {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forum-post {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.tag {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    color: #555;
+}
+
+.post-actions {
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.action-btn:hover {
+    color: #6a62d4;
+}
+
+.action-btn i {
+    margin-right: 5px;
+}
+
+.comments-section {
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.comment {
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.comment-reply {
+    margin-left: 20px;
+    padding-left: 15px;
+}
+
+.comment-actions a {
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.commentactions a:hover {
+    color: #6a62d4
+}
+
+.add-comment {
+    margin-top: 20px;
+}
         /* Estilos para botões com cor #877feb */
         .btn-primary {
             background-color: #877feb;
@@ -1083,113 +1106,52 @@ section,
             justify-content: space-between;
             align-items: center;
             margin-top: 15px;
-        }
-      /* Estilos para comentários */
-        .comments-section {
-          border-top: 1px solid #eee;
-          padding-top: 1.5rem;
-        }
+}
 
-        .comment {
-          padding: 1rem;
-          background: #f9f9f9;
-          border-radius: 8px;
-        }
+/* Estilos para o botão de deletar */
+.delete-post-btn {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    padding: 5px 8px;
+    align-self: flex-start;
+}
 
-        .comment-reply {
-          border-left: 3px solid #6c63ff;
-        }
+.delete-post-btn:hover {
+    opacity: 1;
+}
 
-        .user-avatar {
-          width: 45px;
-          height: 45px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
+.forum-post:hover .delete-post-btn {
+    opacity: 0.7;
+}
 
-        .comment-actions a {
-          text-decoration: none;
-          transition: color 0.2s;
-        }
+/* Estilos para posts salvos */
+.saved-posts-list .list-group-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
 
-        .comment-actions a:hover {
-          color: #6c63ff !important;
-        }
+.post-title {
+    font-weight: 500;
+}
 
-        .tag {
-          display: inline-block;
-          background-color: #e0e0ff;
-          color: #6c63ff;
-          padding: 0.25rem 0.75rem;
-          border-radius: 50px;
-          font-size: 0.8rem;
-          margin-right: 0.5rem;
-          margin-bottom: 0.5rem;
-        }
+.post-actions .btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+/* Adicione isso ao seu arquivo CSS */
+.delete-post-btn {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
 
-        .action-btn {
-          cursor: pointer;
-          padding: 0.5rem 1rem;
-          border-radius: 6px;
-          transition: all 0.2s;
-          margin-right: 0.5rem;
-        }
+.delete-post-btn:hover {
+    opacity: 1;
+}
 
-        .action-btn:hover {
-          background-color: #f0f0f0;
-        }
-
-        .action-btn i {
-          transition: all 0.2s;
-        }
-
-        .action-btn:hover i {
-          color: #6c63ff;
-        }
-      /* Estilos para a lista de posts salvos */
-      .saved-posts-list {
-          max-height: 400px;
-          overflow-y: auto;
-      }
-
-      .saved-posts-list li {
-          transition: background-color 0.3s ease;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-      }
-
-      .saved-posts-list li:hover {
-          background-color: #f8f9fa;
-      }
-
-      /* Estilos para os botões de ação */
-      .post-actions {
-          display: flex;
-          gap: 8px;
-      }
-
-      .view-post-btn {
-          white-space: nowrap;
-          background-color: #877feb; /* Roxo principal */
-          border-color:  #877feb;
-          color: white;
-      }
-
-      .view-post-btn:hover {
-          background-color: #6c63ff; /* Roxo mais escuro no hover */
-          border-color: #6c63ff;
-          color: white;
-      }
-
-      .remove-saved-post {
-          opacity: 0.7;
-          transition: opacity 0.2s;
-      }
-
-      .remove-saved-post:hover {
-          opacity: 1;
-      }
+.forum-post:hover .delete-post-btn {
+    opacity: 0.7;
+}
 /*--------------------------------------------------------------
 # Call To Action Section
 --------------------------------------------------------------*/
