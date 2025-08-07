@@ -67,17 +67,17 @@
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <h1 class="sitename">She Innovates</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Início</a></li>
-          <li><a href="blog.html">Notícias</a></li>
-          <li><a href="portfolio.html">Oportunidades</a></li>
-          <li><a href="services.html">Fórum</a></li>
-          <li><a href="contact.html" class="active">Login</a></li>
+          <li><a href="index.php">Início</a></li>
+          <li><a href="blog.php">Notícias</a></li>
+          <li><a href="portfolio.php">Oportunidades</a></li>
+          <li><a href="services.php">Fórum</a></li>
+          <li><a href="contact.php" class="active">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -92,7 +92,7 @@
         <h1>Criar Conta</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Início</a></li>
+            <li><a href="index.php">Início</a></li>
             <li class="current">Cadastro</li>
           </ol>
         </nav>
@@ -135,11 +135,11 @@
                   <input type="password" class="form-control" id="confirmPassword" placeholder="Repita sua senha" required>
                 </div>   
                 <div class="d-grid gap-2">
-                  <a href="perfilUserCad.html" class="btn btn-primary">Criar conta</a>
+                  <a href="perfilUserCad.php" class="btn btn-primary">Criar conta</a>
                 </div>
                 
                 <div class="text-center">
-                  <p>Já tem uma conta? <a href="contact.html" class="login-link">Faça login</a></p>
+                  <p>Já tem uma conta? <a href="contact.php" class="login-link">Faça login</a></p>
                 </div>
               </form>
             </div>
@@ -157,11 +157,9 @@
   ?>
 </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <?php
+    require("../Include/preloaderAndScrollTop.php");
+  ?>
 
   <?php
     require("../Include/scriptScr.php");
@@ -230,7 +228,7 @@
         // Simulate successful registration
         alert('Cadastro realizado com sucesso! Redirecionando...');
         setTimeout(() => {
-          window.location.href = 'perfilUserCad.html';
+          window.location.href = 'perfilUserCad.php';
         }, 1500);
       });
     });

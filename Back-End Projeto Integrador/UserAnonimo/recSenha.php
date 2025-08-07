@@ -74,17 +74,17 @@
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <h1 class="sitename">She Innovates</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Início</a></li>
-          <li><a href="blog.html">Notícias</a></li>
-          <li><a href="portfolio.html">Oportunidades</a></li>
-          <li><a href="services.html">Fórum</a></li>
-          <li><a href="contact.html">Login</a></li>
+          <li><a href="index.php">Início</a></li>
+          <li><a href="blog.php">Notícias</a></li>
+          <li><a href="portfolio.php">Oportunidades</a></li>
+          <li><a href="services.php">Fórum</a></li>
+          <li><a href="contact.php">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -99,8 +99,8 @@
         <h1>Recuperar Senha</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="contact.html">Login</a></li>
+            <li><a href="index.php">Início</a></li>
+            <li><a href="contact.php">Login</a></li>
           </ol>
         </nav>
       </div>
@@ -142,7 +142,7 @@
                 </div>
                 
                 <div class="text-center">
-                  <p>Lembrou sua senha? <a href="contact.html" class="login-link">Faça login</a></p>
+                  <p>Lembrou sua senha? <a href="contact.php" class="login-link">Faça login</a></p>
                 </div>
               </form>
             </div>
@@ -160,11 +160,9 @@
   ?>
 </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <?php
+    require("../Include/preloaderAndScrollTop.php");
+  ?>
   
   <?php
     require("../Include/scriptScr.php");

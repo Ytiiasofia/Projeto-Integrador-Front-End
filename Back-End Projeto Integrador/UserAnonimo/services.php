@@ -17,7 +17,7 @@
     <!-- Cabeçalho -->
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="index.php" class="logo d-flex align-items-center">
                 <h1 class="sitename">She Innovates</h1>
             </a>
 
@@ -41,7 +41,7 @@
                 <h1>Fórum</h1>
                 <nav class="breadcrumbs">
                     <ol>
-                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.php">Início</a></li>
                         <li class="current">Fórum</li>
                     </ol>
                 </nav>
@@ -238,12 +238,6 @@
     require("../Include/footerUserAnom.php");
   ?>
 </footer>
-    <!-- Botão para voltar ao topo -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Preloader -->
-    <div id="preloader"></div>
-
     <!-- Modal de Login para Publicar -->
     <div class="modal fade" id="loginToPostModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -257,7 +251,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mais tarde</button>
-                    <a href="contact.html" class="btn btn-primary">Fazer login</a>
+                    <a href="contact.php" class="btn btn-primary">Fazer login</a>
                 </div>
             </div>
         </div>
@@ -276,11 +270,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mais tarde</button>
-                    <a href="contact.html" class="btn btn-primary">Fazer login</a>
+                    <a href="contact.php" class="btn btn-primary">Fazer login</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <?php
+        require("../Include/preloaderAndScrollTop.php");
+    ?>
 
     <?php
         require("../Include/scriptScr.php");

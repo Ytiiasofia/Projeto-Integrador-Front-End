@@ -69,17 +69,17 @@
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <h1 class="sitename">She Innovates</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Início</a></li>
-          <li><a href="blog.html">Notícias</a></li>
-          <li><a href="portfolio.html">Oportunidades</a></li>
-          <li><a href="services.html">Fórum</a></li>
-          <li><a href="contact.html" class="active">Login</a></li>
+          <li><a href="index.php">Início</a></li>
+          <li><a href="blog.php">Notícias</a></li>
+          <li><a href="portfolio.php">Oportunidades</a></li>
+          <li><a href="services.php">Fórum</a></li>
+          <li><a href="contact.php" class="active">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -94,7 +94,7 @@
         <h1>Login</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Início</a></li>
+            <li><a href="index.php">Início</a></li>
             <li class="current">Login</li>
           </ol>
         </nav>
@@ -123,12 +123,12 @@
 
                 <div class="d-flex justify-content-between mb-4">
                   <div>
-                    <a href="recSenha.html" class="text-primary">Esqueceu sua senha?</a>
+                    <a href="recSenha.php" class="text-primary">Esqueceu sua senha?</a>
                   </div>
                 </div>
 
                 <div class="d-grid gap-2">
-                  <a href="inicioUserCad.html" class="btn btn-primary">Entrar</a>
+                  <a href="inicioUserCad.php" class="btn btn-primary">Entrar</a>
                 </div>
 
                 <div class="login-divider">
@@ -136,11 +136,11 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                  <a href="cadastro.html" class="btn btn-primary">Criar nova conta</a>
+                  <a href="cadastro.php" class="btn btn-primary">Criar nova conta</a>
                 </div>
 
                 <div class="d-grid gap-2 mt-3">
-                  <a href="perfilAdm.html" class="btn btn-primary">Acessar como Administrador</a>
+                  <a href="perfilAdm.php" class="btn btn-primary">Acessar como Administrador</a>
                 </div>
               </form>
             </div>
@@ -158,11 +158,9 @@
   ?>
 </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <?php
+    require("../Include/preloaderAndScrollTop.php");
+  ?>
 
   <?php
     require("../Include/scriptScr.php");

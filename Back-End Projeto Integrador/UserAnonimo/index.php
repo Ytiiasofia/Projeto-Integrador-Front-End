@@ -19,7 +19,7 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <h1 class="sitename">She Innovates</h1>
       </a>
 
@@ -52,7 +52,7 @@
               <p>Acreditamos que toda mulher merece trilhar seu percurso na área da tecnologia com confiança, apoio e pertencimento.</p>
             </blockquote>
             <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <a href="about.html" class="btn-get-started">Saiba Mais</a>
+              <a href="about.php" class="btn-get-started">Saiba Mais</a>
             </div>
           </div>
         </div>
@@ -149,7 +149,7 @@
             <div>
               <h4 class="title">Oportunidades</h4>
               <p class="description">Explore e busque por vagas, eventos, mentorias e cursos em um só lugar. Aqui, você encontra caminhos reais para crescer, se conectar e avançar na sua carreira.</p>
-              <a href="portfolio.html" class="readmore stretched-link"><span>Saiba Mais</span><i class="bi bi-arrow-right"></i></a>
+              <a href="portfolio.php" class="readmore stretched-link"><span>Saiba Mais</span><i class="bi bi-arrow-right"></i></a>
             </div>
           </div>
           <!-- End Service Item -->
@@ -159,7 +159,7 @@
             <div>
               <h4 class="title">Notícias</h4>
               <p class="description">Fique por dentro das principais novidades do mundo tech, acompanhe tendências do setor e inspire-se com as conquistas de outras mulheres que estão fazendo história na área.</p>
-              <a href="blog.html" class="readmore stretched-link"><span>Saiba Mais</span><i class="bi bi-arrow-right"></i></a>
+              <a href="blog.php" class="readmore stretched-link"><span>Saiba Mais</span><i class="bi bi-arrow-right"></i></a>
             </div>
           </div><!-- End Service Item -->
 
@@ -168,7 +168,7 @@
             <div>
               <h4 class="title">Fórum</h4>
               <p class="description">Participe de um espaço seguro e acolhedor para trocar experiências, tirar dúvidas e fortalecer sua jornada com o apoio de outras mulheres que também atuam na área da tecnologia.</p>
-              <a href="services.html" class="readmore stretched-link"><span>Saiba Mais</span><i class="bi bi-arrow-right"></i></a>
+              <a href="services.php" class="readmore stretched-link"><span>Saiba Mais</span><i class="bi bi-arrow-right"></i></a>
             </div>
           </div><!-- End Service Item -->
     </section> <!-- End Service Section -->
@@ -214,7 +214,7 @@
               </div>
               <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis</h3>
               <p>Illum voluptas ab enim placeat. Adipisci enim velit nulla. Vel omnis laudantium. Asperiores eum ipsa est officiis. Modi qui magni est...</p>
-              <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+              <a href="blog-details.php" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
             </div>
           </div>
 
@@ -227,7 +227,7 @@
               </div>
               <h3 class="post-title">Et repellendus molestiae qui est sed omnis</h3>
               <p>Voluptatem nesciunt omnis libero autem tempora enim ut ipsam id. Odit quia ab eum assumenda. Quisquam omnis doloribus...</p>
-              <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+              <a href="blog-details.php" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
             </div>
           </div>
 
@@ -240,7 +240,7 @@
               </div>
               <h3 class="post-title">Quia assumenda est et veritati</h3>
               <p>Quia nam eaque omnis explicabo similique eum quaerat similique laboriosam. Quis omnis repellat sed quae consectetur magnam...</p>
-              <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+              <a href="blog-details.php" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
             </div>
           </div>
 
@@ -253,7 +253,7 @@
               </div>
               <h3 class="post-title">Pariatur quia facilis similique deleniti</h3>
               <p>Et consequatur eveniet nam voluptas commodi cumque ea est ex. Aut quis omnis sint ipsum earum quia eligendi...</p>
-              <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+              <a href="blog-details.php" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
             </div>
           </div>
 
@@ -271,11 +271,9 @@
 ?>
 </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <?php
+    require("../Include/preloaderAndScrollTop.php");
+  ?>
 
   <?php
     require("../Include/scriptScr.php");

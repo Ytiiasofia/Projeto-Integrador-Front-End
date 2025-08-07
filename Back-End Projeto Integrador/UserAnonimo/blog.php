@@ -19,17 +19,17 @@
   <!-- Cabeçalho -->
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <h1 class="sitename">She Innovates</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Início</a></li>
-          <li><a href="blog.html" class="active">Notícias</a></li>
-          <li><a href="portfolio.html">Oportunidades</a></li>
-          <li><a href="services.html">Fórum</a></li>
-          <li><a href="contact.html">Login</a></li>
+          <li><a href="index.php">Início</a></li>
+          <li><a href="blog.php" class="active">Notícias</a></li>
+          <li><a href="portfolio.php">Oportunidades</a></li>
+          <li><a href="services.php">Fórum</a></li>
+          <li><a href="contact.php">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -44,7 +44,7 @@
         <h1>Notícias</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Início</a></li>
+            <li><a href="index.php">Início</a></li>
             <li class="current">Notícias</li>
           </ol>
         </nav>
@@ -70,7 +70,7 @@
                     </div>
                     <p class="post-category">Politics</p>
                     <h2 class="title">
-                      <a href="blog-details.html">Dolorum optio tempore voluptas dignissimos</a>
+                      <a href="blog-details.php">Dolorum optio tempore voluptas dignissimos</a>
                     </h2>
                     <div class="d-flex align-items-center">
                       <img src="../../assets/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
@@ -90,7 +90,7 @@
                     </div>
                     <p class="post-category">Sports</p>
                     <h2 class="title">
-                      <a href="blog-details.html">Nisi magni odit consequatur autem nulla dolorem</a>
+                      <a href="blog-details.php">Nisi magni odit consequatur autem nulla dolorem</a>
                     </h2>
                     <div class="d-flex align-items-center">
                       <img src="../../assets/img/blog/blog-author-2.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
@@ -110,7 +110,7 @@
                     </div>
                     <p class="post-category">Entertainment</p>
                     <h2 class="title">
-                      <a href="blog-details.html">Possimus soluta ut id suscipit ea ut in quo quia et soluta</a>
+                      <a href="blog-details.php">Possimus soluta ut id suscipit ea ut in quo quia et soluta</a>
                     </h2>
                     <div class="d-flex align-items-center">
                       <img src="../../assets/img/blog/blog-author-3.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
@@ -130,7 +130,7 @@
                     </div>
                     <p class="post-category">Sports</p>
                     <h2 class="title">
-                      <a href="blog-details.html">Non rem rerum nam cum quo minus olor distincti</a>
+                      <a href="blog-details.php">Non rem rerum nam cum quo minus olor distincti</a>
                     </h2>
                     <div class="d-flex align-items-center">
                       <img src="../../assets/img/blog/blog-author-4.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
@@ -150,7 +150,7 @@
                     </div>
                     <p class="post-category">Politics</p>
                     <h2 class="title">
-                      <a href="blog-details.html">Accusamus quaerat aliquam qui debitis facilis consequatur</a>
+                      <a href="blog-details.php">Accusamus quaerat aliquam qui debitis facilis consequatur</a>
                     </h2>
                     <div class="d-flex align-items-center">
                       <img src="../../assets/img/blog/blog-author-5.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
@@ -170,7 +170,7 @@
                     </div>
                     <p class="post-category">Entertainment</p>
                     <h2 class="title">
-                      <a href="blog-details.html">Distinctio provident quibusdam numquam aperiam aut</a>
+                      <a href="blog-details.php">Distinctio provident quibusdam numquam aperiam aut</a>
                     </h2>
                     <div class="d-flex align-items-center">
                       <img src="../../assets/img/blog/blog-author-6.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
@@ -239,7 +239,7 @@
               <div class="post-item">
                 <img src="../../assets/img/blog/blog-recent-1.jpg" alt="" class="flex-shrink-0">
                 <div>
-                  <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
+                  <h4><a href="blog-details.php">Nihil blanditiis at in nihil autem</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
               </div>
@@ -247,7 +247,7 @@
               <div class="post-item">
                 <img src="../../assets/img/blog/blog-recent-2.jpg" alt="" class="flex-shrink-0">
                 <div>
-                  <h4><a href="blog-details.html">Quidem autem et impedit</a></h4>
+                  <h4><a href="blog-details.php">Quidem autem et impedit</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
               </div>
@@ -255,7 +255,7 @@
               <div class="post-item">
                 <img src="../../assets/img/blog/blog-recent-3.jpg" alt="" class="flex-shrink-0">
                 <div>
-                  <h4><a href="blog-details.html">Id quia et et ut maxime similique occaecati ut</a></h4>
+                  <h4><a href="blog-details.php">Id quia et et ut maxime similique occaecati ut</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
               </div>
@@ -263,7 +263,7 @@
               <div class="post-item">
                 <img src="../../assets/img/blog/blog-recent-4.jpg" alt="" class="flex-shrink-0">
                 <div>
-                  <h4><a href="blog-details.html">Laborum corporis quo dara net para</a></h4>
+                  <h4><a href="blog-details.php">Laborum corporis quo dara net para</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
               </div>
@@ -271,7 +271,7 @@
               <div class="post-item">
                 <img src="../../assets/img/blog/blog-recent-5.jpg" alt="" class="flex-shrink-0">
                 <div>
-                  <h4><a href="blog-details.html">Et dolores corrupti quae illo quod dolor</a></h4>
+                  <h4><a href="blog-details.php">Et dolores corrupti quae illo quod dolor</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
               </div>
@@ -312,11 +312,9 @@
   ?>
 </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <?php
+    require("../Include/preloaderAndScrollTop.php");
+  ?>
 
   <?php
     require("../Include/scriptScr.php");
