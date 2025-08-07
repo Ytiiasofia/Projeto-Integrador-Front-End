@@ -9,24 +9,10 @@
     <meta name="description" content="Fórum de discussão para mulheres na tecnologia">
     <meta name="keywords" content="fórum, mulheres, tecnologia, discussão">
 
-    <!-- Ícones -->
-    <link href="../assets/img/favicon.png" rel="icon">
-    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <?php
+    require("../Include/hrefCssHead.php");
+    ?>
 
-    <!-- Fontes -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-    <!-- CSS de Terceiros -->
-    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- CSS Principal -->
-    <link href="../assets/css/main.css" rel="stylesheet">
 </head>
 
 <body class="services-page">
@@ -39,11 +25,11 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                <li><a href="controleUserAdm.html"  >Gerenciamento de Usuários</a></li>
-                <li><a href="noticiaAdm.html">Notícias</a></li>
-                <li><a href="oportunidadeAdm.html">Oportunidades</a></li>
-                <li><a href="forumAdm.html" class="active">Fórum</a></li>
-                <li><a href="perfilAdm.html" >Perfil</a></li>
+                <li><a href="controleUserAdm.php"  >Gerenciamento de Usuários</a></li>
+                <li><a href="noticiaAdm.php">Notícias</a></li>
+                <li><a href="oportunidadeAdm.php">Oportunidades</a></li>
+                <li><a href="forumAdm.php" class="active">Fórum</a></li>
+                <li><a href="perfilAdm.php" >Perfil</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -307,62 +293,20 @@
 </div>
 
     <!-- Rodapé -->
-    <footer id="footer" class="footer light-background">
-        <div class="footer-top">
-            <div class="container">
-                <div class="row gy-4">
-                    <!-- Logo e descrição (EXTREMA ESQUERDA) -->
-                    <div class="col-lg-6 col-md-12 footer-about">
-                        <a class="logo d-flex align-items-center">
-                            <span class="sitename">She Innovates</span>
-                        </a>
-                        <p>Acreditamos na força da comunidade para enfrentar desafios, incentivar permanências e abrir portas.</p>
-                        <div class="social-links d-flex mt-4">
-                            <a href=""><i class="bi bi-twitter-x"></i></a>
-                            <a href=""><i class="bi bi-facebook"></i></a>
-                            <a href=""><i class="bi bi-instagram"></i></a>
-                            <a href=""><i class="bi bi-linkedin"></i></a>
-                        </div>
-                    </div>
+<footer id="footer" class="footer light-background">
+  <?php
+    require("../Include/footerUserAnom.php");
+  ?>
+</footer>
 
-                    <!-- Contato (EXTREMA DIREITA) -->
-                    <div class="col-lg-6 col-md-12 footer-contact text-end">
-                        <h4>Entre em Contato</h4>
-                        <p>Rua Ernesto Alves 1942</p>
-                        <p>Taquara, RS</p>
-                        <p>Brasil</p>
-                        <p class="mt-4"><strong>Telefone:</strong> <span>(11) 4002-8922</span></p>
-                        <p><strong>E-mail:</strong> <span>SheInnovates@gmail.com</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <?php
+    require("../Include/preloaderAndScrollTop.php");
+  ?>
 
-        <div class="container copyright text-center">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">Nova</strong> <span>All Rights Reserved</span></p>
-            <div class="credits">
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Botão para voltar ao topo -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Preloader -->
-    <div id="preloader"></div>
-
-    <!-- JavaScript de Terceiros -->
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/vendor/php-email-form/validate.js"></script>
-    <script src="../assets/vendor/aos/aos.js"></script>
-    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="../assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
-    <!-- JavaScript Principal -->
-    <script src="../assets/js/main.js"></script>
+  <?php
+    require("../Include/scriptScr.php");
+  ?>
+  
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Simular salvamento de posts
