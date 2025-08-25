@@ -15,25 +15,8 @@
 
 <body class="contact-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="inicioUserCad.html" class="logo d-flex align-items-center">
-        <h1 class="sitename">She Innovates</h1>
-      </a>
+<?php require_once __DIR__ . '/../include/menuADM.php'; ?>
 
-      <nav id="navmenu" class="navmenu">
-                <ul>
-                <li><a href="inicioUserCad.html" >Início<br></a></li>
-                <li><a href="noticiasUserCad.html">Notícias</a></li>
-                <li><a href="oportunidadesUserCad.html">Oportunidades</a></li>
-                <li><a href="forumUserCad.html">Fórum</a></li>
-                <li><a href="perfilUserCad.html"class="active">Perfil</a></li>
-                </ul>
-
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header>
 
   <main class="main">
     <!-- Page Title -->

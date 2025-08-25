@@ -15,28 +15,8 @@
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+<?php require_once __DIR__ . '/../include/menuADM.php'; ?>
 
-      <a href="inicioUserCad.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="../assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">She Innovates</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="inicioUserCad.html" class="active">Início<br></a></li>
-          <li><a href="noticiasUserCad.html">Notícias</a></li>
-          <li><a href="oportunidadesUserCad.html">Oportunidades</a></li>
-          <li><a href="forumUserCad.html">Fórum</a></li>
-          <li><a href="perfilUserCad.html">Perfil</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-    </div>
-  </header>
 
   <main class="main">
 
