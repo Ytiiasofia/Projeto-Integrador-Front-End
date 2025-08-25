@@ -72,24 +72,8 @@
 
 <body class="contact-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.php" class="logo d-flex align-items-center">
-        <h1 class="sitename">She Innovates</h1>
-      </a>
+<?php require_once __DIR__ . '/../include/menuADM.php'; ?>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.php">Início</a></li>
-          <li><a href="blog.php">Notícias</a></li>
-          <li><a href="portfolio.php">Oportunidades</a></li>
-          <li><a href="services.php">Fórum</a></li>
-          <li><a href="contact.php">Login</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header>
 
   <main class="main">
 
