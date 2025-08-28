@@ -338,7 +338,7 @@
       if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
           if (confirm('Tem certeza que deseja sair da sua conta?')) {
-            window.location.href = 'contact.html'; 
+            window.location.href = '../UserAnonimo/contact.php'; 
           }
         });
       }

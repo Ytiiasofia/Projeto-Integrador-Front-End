@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                  <a href="inicioUserCad.php" class="btn btn-primary">Entrar</a>
+                  <a href="../UserCadastrado/inicioUserCad.php" class="btn btn-primary">Entrar</a>
                 </div>
 
                 <div class="login-divider">
@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="d-grid gap-2 mt-3">
-                  <a href="perfilAdm.php" class="btn btn-primary">Acessar como Administrador</a>
+                  <a href="../UserADM/perfilAdm.php" class="btn btn-primary">Acessar como Administrador</a>
                 </div>
               </form>
             </div>
