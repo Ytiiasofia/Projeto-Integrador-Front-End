@@ -404,7 +404,7 @@
       if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
           if (confirm('Tem certeza que deseja sair da sua conta de administrador?')) {
-            window.location.href = 'index.php'; 
+            window.location.href = '../UserAnonimo/index.php'; 
           }
         });
       }
