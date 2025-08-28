@@ -228,7 +228,7 @@
   <!-- Footer -->
 <footer id="footer" class="footer light-background">
   <?php
-    require("../Include/footerUserAnom.php");
+    require("../Include/footer.php");
   ?>
 </footer>
 
