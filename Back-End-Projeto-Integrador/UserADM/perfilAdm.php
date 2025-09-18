@@ -166,18 +166,7 @@
                     </button>
                   </div>
                 </div>
-                
-                <!-- Biografia -->
-                <div class="mb-3">
-                  <label for="bio" class="form-label">Biografia</label>
-                  <div class="input-group">
-                    <textarea class="form-control" id="bio" rows="3" readonly>Administrador da plataforma She Innovates. Responsável pela moderação de conteúdo, gerenciamento de usuários e manutenção da plataforma.</textarea>
-                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editBioModal">
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
-                  </div>
-                </div>
-
+          
                 <!-- Botão de Logout -->
                 <div class="d-flex justify-content-end mt-4">
                   <button class="btn btn-danger" type="button" id="logoutBtn">
@@ -291,29 +280,6 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-primary" id="savePasswordBtn">Salvar Alterações</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal para edição de biografia -->
-  <div class="modal fade" id="editBioModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Alterar Biografia</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="newBio" class="form-label">Biografia</label>
-            <textarea class="form-control" id="newBio" rows="4">Administrador da plataforma She Innovates. Responsável pela moderação de conteúdo, gerenciamento de usuários e manutenção da plataforma.</textarea>
-            <div class="form-text">Máximo de 500 caracteres</div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="saveBioBtn">Salvar Alterações</button>
         </div>
       </div>
     </div>
