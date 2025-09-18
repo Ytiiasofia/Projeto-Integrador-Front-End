@@ -78,7 +78,7 @@
 <body class="blog-page">
 
   <!-- Cabeçalho -->
-<?php require_once __DIR__ . '/../include/menuADM.php'; ?>
+<?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
 
 
   <main class="main">

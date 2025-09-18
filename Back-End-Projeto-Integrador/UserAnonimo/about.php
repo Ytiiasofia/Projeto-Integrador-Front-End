@@ -17,7 +17,7 @@
 <body class="about-page">
 
   <!-- Cabeçalho -->
-  <?php require_once __DIR__ . '/../include/menuADM.php'; ?>
+  <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
   <!-- Fim do Cabeçalho -->
 
   <main class="main">
