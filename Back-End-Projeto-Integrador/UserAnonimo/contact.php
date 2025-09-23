@@ -9,6 +9,7 @@
   <meta name="keywords" content="login, cadastro, usuário">
 
   <?php
+  // Inclui os estilos padrão do projeto
   require("../Include/hrefCssHead.php");
   ?>
 
@@ -17,42 +18,49 @@
       background-color: white;
       border-radius: 8px;
       padding: 30px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-    
+
     .login-divider {
       display: flex;
       align-items: center;
       margin: 20px 0;
     }
-    
+
     .login-divider::before,
     .login-divider::after {
       content: "";
       flex: 1;
       border-bottom: 1px solid #dee2e6;
     }
-    
+
     .login-divider-text {
       padding: 0 10px;
       color: #6c757d;
     }
-    
+
     .btn-register {
-      background-color:  #877feb;
-      border-color:  #877feb;
+      background-color: #877feb;
+      border-color: #877feb;
     }
-    
+
     .btn-register:hover {
       background-color: #6a62d4;
       border-color: #6a62d4;
+    }
+
+    .feedback-message {
+      color: red;
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body class="contact-page">
 
-<?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
+  <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
 
   <main class="main">
 
@@ -78,15 +86,23 @@
             <div class="login-form">
               <h2 class="text-center mb-4">Acesse sua conta</h2>
 
-              <form>
+              <!-- Exibe mensagens de erro -->
+              <?php if (isset($_GET['status']) && $_GET['status'] == 'erro'): ?>
+                <div class="feedback-message">
+                  Usuário ou senha inválidos!
+                </div>
+              <?php endif; ?>
+
+              <!-- Ajuste do action para ir até a pasta login -->
+              <form action="../login/autenticar.php" method="POST">
                 <div class="mb-3">
-                  <label for="username" class="form-label">Usuário ou E-mail</label>
-                  <input type="text" class="form-control" id="username" placeholder="Digite seu usuário ou e-mail">
+                  <label for="usuario" class="form-label">Usuário ou E-mail</label>
+                  <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Digite seu usuário ou e-mail" required>
                 </div>
 
                 <div class="mb-3">
-                  <label for="password" class="form-label">Senha</label>
-                  <input type="password" class="form-control" id="password" placeholder="Digite sua senha">
+                  <label for="senha" class="form-label">Senha</label>
+                  <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required>
                 </div>
 
                 <div class="d-flex justify-content-between mb-4">
@@ -96,7 +112,7 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                  <a href="../UserCadastrado/inicioUserCad.php" class="btn btn-primary">Entrar</a>
+                  <button type="submit" name="login" class="btn btn-primary">Entrar</button>
                 </div>
 
                 <div class="login-divider">
@@ -104,11 +120,7 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                  <a href="cadastro.php" class="btn btn-primary">Criar nova conta</a>
-                </div>
-
-                <div class="d-grid gap-2 mt-3">
-                  <a href="../UserADM/perfilAdm.php" class="btn btn-primary">Acessar como Administrador</a>
+                  <a href="cadastro.php" class="btn btn-register">Criar nova conta</a>
                 </div>
               </form>
             </div>
@@ -120,20 +132,13 @@
 
   </main>
 
-<footer id="footer" class="footer light-background">
-  <?php
-    require("../Include/footer.php");
-  ?>
-</footer>
+  <footer id="footer" class="footer light-background">
+    <?php require("../Include/footer.php"); ?>
+  </footer>
 
-  <?php
-    require("../Include/preloaderAndScrollTop.php");
-  ?>
+  <?php require("../Include/preloaderAndScrollTop.php"); ?>
+  <?php require("../Include/scriptScr.php"); ?>
 
-  <?php
-    require("../Include/scriptScr.php");
-  ?>
-  
 </body>
 
 </html>
