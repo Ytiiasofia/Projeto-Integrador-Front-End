@@ -92,10 +92,11 @@
                 </div>
           
                 <!-- Botão Sair da Conta -->
-                <div class="mt-4 text-start">
-                  <button class="btn btn-danger btn-sm" type="button" id="logoutBtn">
-                    <i class="bi bi-box-arrow-right"></i> Sair da Conta
-                  </button>
+                  <div class="mt-4 text-start">
+                    <a href="../login/logout.php" class="btn btn-danger btn-sm">
+                      <i class="bi bi-box-arrow-right"></i> Sair da Conta
+                    </a>
+                  </div>
                 </div>
               </form>
             </div>

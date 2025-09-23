@@ -168,11 +168,11 @@
                 </div>
           
                 <!-- Botão de Logout -->
-                <div class="d-flex justify-content-end mt-4">
-                  <button class="btn btn-danger" type="button" id="logoutBtn">
-                    <i class="bi bi-box-arrow-right"></i> Sair da Conta
-                  </button>
-                </div>
+                  <div class="mt-4 text-start">
+                    <a href="../login/logout.php" class="btn btn-danger btn-sm">
+                      <i class="bi bi-box-arrow-right"></i> Sair da Conta
+                    </a>
+                  </div>
               </form>
             </div>
           </div>
