@@ -14,12 +14,13 @@
 </head>
 
 <body class="services-page">
-    <!-- Cabeçalho -->
-<?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
 
+<!-- Menu -->
+<?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
+<!-- Fim do Menu -->
 
     <main class="main">
-        <!-- Título da Página -->
+        <!-- Título -->
         <div class="page-title dark-background" data-aos="fade" style="background-image: url(../assets/img/services-page-title-bg.jpg);">
             <div class="container">
                 <h1>Fórum</h1>
@@ -31,7 +32,8 @@
                 </nav>
             </div>
         </div>
-
+        <!-- Fim do Título -->
+         
         <!-- Seção do Fórum -->
         <div class="forum-container">
             <div class="container">

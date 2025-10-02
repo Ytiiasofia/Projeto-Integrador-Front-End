@@ -120,7 +120,7 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                  <a href="cadastro.php" class="btn btn-register">Criar nova conta</a>
+                  <a href="cadastro.php" class="btn btn-primary">Criar nova conta</a>
                 </div>
               </form>
             </div>

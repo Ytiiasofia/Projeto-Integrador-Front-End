@@ -16,13 +16,13 @@
 
 <body class="about-page">
 
-  <!-- Cabeçalho -->
+  <!-- Menu -->
   <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
-  <!-- Fim do Cabeçalho -->
+  <!-- Fim do Menu -->
 
   <main class="main">
 
-    <!-- Título da Página -->
+    <!-- Título -->
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(../../assets/img/about-page-title-bg.jpg);">
       <div class="container">
         <h1>Sobre</h1>
@@ -34,7 +34,7 @@
         </nav>
       </div>
     </div>
-    <!-- Fim do Título da Página -->
+    <!-- Fim do Título -->
 
     <!-- Seção Sobre -->
     <section id="about" class="about section">
@@ -56,7 +56,7 @@
     </section>
     <!-- Fim da Seção Sobre -->
 
-    <!-- Seção de Chamada para Ação -->
+    <!-- Seção Firula -->
     <section id="call-to-action" class="call-to-action section dark-background">
 
       <img src="../../assets/img/ImagemApp3.png" alt="">
@@ -73,7 +73,7 @@
       </div>
 
     </section>
-    <!-- Fim da Seção de Chamada para Ação -->
+    <!-- Fim da Seção Firula -->
 
   </main>
 

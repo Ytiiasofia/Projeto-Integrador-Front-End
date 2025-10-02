@@ -2,11 +2,11 @@
 session_start();
 
 // Configurações do banco de dados
-$host = "db";      // Usando localhost pois o PHP e o MySQL estão no mesmo servidor
-$user = "root";           // Usuário root
-$pass = "root";           // Senha root
-$dbname = "meu_banco";    // Nome correto do banco de dados
-$port = 3306;             // Porta padrão do MySQL (não é a 8081, essa é do phpMyAdmin)
+$host = "db";      
+$user = "root";           // Usuário: root
+$pass = "root";           // Senha: root
+$dbname = "meu_banco";    
+$port = 3306;             
 
 // Conexão com o banco
 $con = mysqli_connect($host, $user, $pass, $dbname, $port);
@@ -33,9 +33,8 @@ if (isset($_POST['login'])) {
     if (mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
 
-        // Verifica a senha (se estiver armazenada sem hash, apenas comparação direta)
+        // Verficação de senha sem o HASH
         if ($senha === $row['senha']) {
-            // Seta os dados na sessão
             $_SESSION['usuario_id'] = $row['usuario_id'];
             $_SESSION['usuario_nome'] = $row['nome_usuario'];
             $_SESSION['is_admin'] = $row['is_admin'];
@@ -49,12 +48,10 @@ if (isset($_POST['login'])) {
             }
             exit();
         } else {
-            // Senha incorreta
             header("Location: ../UserAnonimo/contact.php?status=erro");
             exit();
         }
     } else {
-        // Usuário não encontrado
         header("Location: ../UserAnonimo/contact.php?status=erro");
         exit();
     }

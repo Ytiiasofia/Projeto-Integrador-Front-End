@@ -1,52 +1,65 @@
 <?php
 // processa cadastro se o formulário for enviado
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Configurações do banco de dados
-    $host = "db";       // host do container Docker ou servidor MySQL
-    $user = "root";     // usuário
-    $pass = "root";     // senha
-    $dbname = "meu_banco"; // nome do banco
-    $port = 3306;       // porta MySQL
+      // Configurações do banco de dados
+      $host = "db";       
+      $user = "root";     // Usuário: root
+      $pass = "root";     // Senha: root
+      $dbname = "meu_banco"; 
+      $port = 3306;       
 
-    // Conexão com o banco usando mysqli
-    $con = new mysqli($host, $user, $pass, $dbname, $port);
+      // Conexão com o banco
+      $con = mysqli_connect($host, $user, $pass, $dbname, $port);
 
-    if ($con->connect_error) {
-        die("Erro de conexão: " . $con->connect_error);
+      // Verifica se a conexão foi bem-sucedida
+      if (!$con) {
+          die("Erro ao conectar com o banco de dados: " . mysqli_connect_error());
+      }
+
+      // Recebe dados do formulário
+      $nome_usuario = trim($_POST['username']);
+      $email = trim($_POST['email']);
+      $senha = $_POST['password'];
+      $confirmSenha = $_POST['confirmPassword'];
+      $is_admin = 0; // padrão: usuário normal
+
+      // Validações básicas para criação de conta
+  if (strlen($nome_usuario) < 4) {
+      $error = "Nome de usuário deve ter pelo menos 4 caracteres.";
+  } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $error = "E-mail inválido.";
+  } elseif (strlen($senha) < 8) {
+      $error = "Senha deve ter pelo menos 8 caracteres.";
+  } elseif ($senha !== $confirmSenha) {
+      $error = "As senhas não coincidem.";
+  }
+
+// Verifica se o nome de usuário não está repetido
+if (!isset($error)) {
+    $stmt = $con->prepare("SELECT * FROM usuarios WHERE nome_usuario = ?");
+    $stmt->bind_param("s", $nome_usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $error = "Este nome de usuário já está em uso.";
     }
+    $stmt->close();
+}
 
-    // Recebe dados do formulário
-    $nome_usuario = trim($_POST['username']);
-    $email = trim($_POST['email']);
-    $senha = $_POST['password'];
-    $confirmSenha = $_POST['confirmPassword'];
-    $is_admin = 0; // padrão: usuário normal
-
-    // Validações básicas
-    if (strlen($nome_usuario) < 4) {
-        $error = "Nome de usuário deve ter pelo menos 4 caracteres.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = "E-mail inválido.";
-    } elseif (strlen($senha) < 8) {
-        $error = "Senha deve ter pelo menos 8 caracteres.";
-    } elseif ($senha !== $confirmSenha) {
-        $error = "As senhas não coincidem.";
+// Verifica se o e-mail não está repetido
+if (!isset($error)) {
+    $stmt = $con->prepare("SELECT * FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $error = "Este e-mail já está cadastrado.";
     }
+    $stmt->close();
+}
 
-    // Verifica email duplicado
-    if (!isset($error)) {
-        $stmt = $con->prepare("SELECT * FROM usuarios WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $error = "Este e-mail já está cadastrado.";
-        }
-        $stmt->close();
-    }
-
-    // Se não houver erro, insere usuário
+// Se não houver erro, insere usuário
     if (!isset($error)) {
       $stmt = $con->prepare("INSERT INTO usuarios (nome_usuario, email, senha, is_admin) VALUES (?, ?, ?, ?)");
       $stmt->bind_param("sssi", $nome_usuario, $email, $senha, $is_admin);
@@ -89,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
 <main class="main">
 
-  <!-- Page Title -->
+  <!-- Título -->
   <div class="page-title dark-background" data-aos="fade" style="background-image: url(../assets/img/contact-page-title-bg.jpg);">
     <div class="container">
       <h1>Criar Conta</h1>
@@ -101,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </nav>
     </div>
   </div>
-  <!-- End Page Title -->
+  <!-- Título -->
 
   <section class="signup-section">
     <div class="container" data-aos="fade-up">
@@ -110,9 +123,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="signup-form">
             <h2 class="text-center mb-4">Junte-se à nossa comunidade</h2>
 
-            <!-- Mensagens de feedback -->
+            <!-- Mensagens de feedback de cadastro -->
             <?php if (isset($error)) { echo "<div class='alert alert-error'>$error</div>"; } ?>
             <?php if (isset($success)) { echo "<div class='alert alert-success'>$success</div>"; } ?>
+            <!-- Fim das mensagens de feedback de cadastro -->
 
             <form id="signupForm" method="POST" action="">
               <div class="mb-3">
@@ -132,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="password-strength">
                   <div class="password-strength-bar" id="passwordStrength"></div>
                 </div>
-                <div class="form-note">Mínimo de 8 caracteres, incluindo números e letras</div>
+                <div class="form-note">Mínimo de 8 caracteres, incluindo números e letras maiúsculas e minúsculas</div>
               </div>
               
               <div class="mb-3">
@@ -169,6 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
 <?php require("../Include/scriptScr.php"); ?>
 
+<!-- Script para barra de força da senha -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const passwordInput = document.getElementById('password');
@@ -178,10 +193,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const password = this.value;
     let strength = 0;
     if (password.length >= 8) strength += 25;
-    if (password.length >= 12) strength += 25;
-    if (/[A-Z]/.test(password)) strength += 15;
-    if (/[0-9]/.test(password)) strength += 15;
-    if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+    if (/[A-Z]/.test(password)) strength += 25;
+    if (/[0-9]/.test(password)) strength += 25;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 25;
     strength = Math.min(strength, 100);
     passwordStrength.style.width = strength + '%';
     if (strength < 40) passwordStrength.style.backgroundColor = '#dc3545';
