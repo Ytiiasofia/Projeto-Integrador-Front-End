@@ -89,12 +89,13 @@
 
 <body class="contact-page">
 
+<!-- Menu -->
 <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
+<!-- Fim do Menu -->
 
-  <!-- Main -->
   <main class="main">
 
-    <!-- Page Title -->
+    <!-- Título -->
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(../assets/img/contact-page-title-bg.jpg);">
       <div class="container">
         <h1>Gerenciamento de Usuários</h1>
@@ -105,8 +106,9 @@
         </nav>
       </div>
     </div>
+    <!-- Fim do Título -->
 
-    <!-- User Management Section -->
+    <!-- Seção de Gerenciamento de Usuários -->
     <section id="user-management" class="user-management section">
       <div class="container" data-aos="fade-up">
         <div class="table-responsive">
@@ -188,8 +190,10 @@
         </div>
       </div>
     </section>
+    <!-- Fim da seção de Gerenciamento de Usuários -->
 
-    <!-- Delete Confirmation Modal -->
+
+    <!-- Modal de Exclusão de Usuário -->
     <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -222,15 +226,17 @@
         </div>
       </div>
     </div>
+    <!-- Fim do Modal de Exclusão de Usuário -->
 
   </main>
 
-  <!-- Footer -->
+<!-- Rodapé -->
 <footer id="footer" class="footer light-background">
   <?php
     require("../Include/footer.php");
   ?>
 </footer>
+<!-- Fim do Rodapé -->
 
   <?php
     require("../Include/preloaderAndScrollTop.php");
@@ -240,7 +246,7 @@
     require("../Include/scriptScr.php");
   ?>
 
-  <!-- Custom Script for User Management -->
+  <!-- Script para Exclusão de Usuário -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const deleteButtons = document.querySelectorAll('.delete-user');
@@ -319,6 +325,7 @@
       });
     });
   </script>
+  <!-- Fim do Script para Exclusão de Usuário -->
 
 </body>
 

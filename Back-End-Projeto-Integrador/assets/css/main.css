@@ -1,5 +1,4 @@
-/**
-* Template Name: Nova
+/* Template Name: Nova
 * Template URL: https://bootstrapmade.com/nova-bootstrap-business-template/
 * Updated: Aug 07 2024 with Bootstrap v5.3.3
 * Author: BootstrapMade.com
@@ -1076,9 +1075,6 @@ section,
 .comment-actions a {
     text-decoration: none;
     transition: color 0.3s;
-}
-
-.commentactions a:hover {
 }
 
 .add-comment {

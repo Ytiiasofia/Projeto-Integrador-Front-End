@@ -5,17 +5,19 @@
     </a>
 
     <nav id="navmenu" class="navmenu">
-        <?php carregarMenu(); ?>
+        <?php carregarMenu(); ?> <!-- Chama a função para carregar o menu correto -->
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
   </div>
 </header>
 <?php
+
+// Função para carregar o menu com base no diretório atual
 function carregarMenu() {
     $current_page = basename($_SERVER['PHP_SELF']);
-    $current_dir = basename(dirname($_SERVER['SCRIPT_NAME'])); // Pega o nome da pasta
+    $current_dir = basename(dirname($_SERVER['SCRIPT_NAME'])); 
 
-    // MENU ADM
+    // Menu Administrador
     if ($current_dir === 'UserADM') {
         ?>
         <ul>
@@ -27,7 +29,7 @@ function carregarMenu() {
         </ul>
         <?php
     }
-    // MENU USUÁRIO CADASTRADO
+    // Menu Usuário Cadastrado
     elseif ($current_dir === 'UserCadastrado') {
         ?>
         <ul>
@@ -39,7 +41,7 @@ function carregarMenu() {
         </ul>
         <?php
     }
-    // MENU USUÁRIO ANÔNIMO
+    // Menu Usuário Anônimo
     elseif ($current_dir === 'UserAnonimo') {
         ?>
         <ul>
