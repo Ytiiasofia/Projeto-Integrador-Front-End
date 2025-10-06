@@ -1,7 +1,4 @@
-<?php
-// gerenciamento.php
-// Mostra usuários da tabela `usuarios` (usa host "db" por padrão — troque para "localhost" se estiver no XAMPP)
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +9,6 @@
   <?php require("../Include/hrefCssHead.php"); ?>
 
   <style>
-    /* seu CSS mantido */
     .user-table { border-radius: 10px; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
     .user-table thead { background-color: #6c63ff; color: white; }
     .user-table th { padding: 15px; font-weight: 600; }
@@ -133,7 +129,7 @@ $conn->close();
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <form method="POST" action="delete_user.php" style="display:inline;">
+        <form method="POST" action="../controleUser/delete.php" style="display:inline;">
           <input type="hidden" name="user_id" id="userIdToDelete">
           <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Excluir</button>
         </form>
