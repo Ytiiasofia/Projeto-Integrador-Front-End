@@ -292,126 +292,79 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-id="1">
-                                <td>Estágio em Desenvolvimento Front-end</td>
-                                <td class="text-center">Estágio</td>
-                                <td class="text-center"><span class="badge badge-online rounded-pill">Online</span></td>
-                                <td class="text-center">São Paulo</td>
-                                <td class="text-center">Front-end</td>
-                                <td class="text-center">
-                                    <span class="badge badge-aberto rounded-pill">
-                                        <i class="bi bi-check-circle me-1"></i> Aberto
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <a href="https://exemplo.com/oportunidade/1" class="btn btn-sm btn-details rounded-pill px-3">Detalhes</a>
-                                        <button class="btn btn-sm btn-trash delete-btn" data-id="1">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr data-id="2">
-                                <td>Iniciação Científica em IA</td>
-                                <td class="text-center">Iniciação Científica</td>
-                                <td class="text-center"><span class="badge badge-presencial rounded-pill">Presencial</span></td>
-                                <td class="text-center">Rio Grande do Sul</td>
-                                <td class="text-center">Inteligência Artificial</td>
-                                <td class="text-center">
-                                    <span class="badge badge-vigente rounded-pill">
-                                        <i class="bi bi-clock me-1"></i> Vigente
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <a href="https://exemplo.com/oportunidade/2" class="btn btn-sm btn-details rounded-pill px-3">Detalhes</a>
-                                        <button class="btn btn-sm btn-trash delete-btn" data-id="2">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr data-id="3">
-                                <td>Concurso para Analista de Sistemas</td>
-                                <td class="text-center">Concurso</td>
-                                <td class="text-center"><span class="badge badge-hibrido rounded-pill">Híbrido</span></td>
-                                <td class="text-center">Minas Gerais</td>
-                                <td class="text-center">Back-end</td>
-                                <td class="text-center">
-                                    <span class="badge badge-aberto rounded-pill">
-                                        <i class="bi bi-check-circle me-1"></i> Aberto
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <a href="https://exemplo.com/oportunidade/3" class="btn btn-sm btn-details rounded-pill px-3">Detalhes</a>
-                                        <button class="btn btn-sm btn-trash delete-btn" data-id="3">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr data-id="4">
-                                <td>Estágio em Ciência de Dados</td>
-                                <td class="text-center">Estágio</td>
-                                <td class="text-center"><span class="badge badge-online rounded-pill">Online</span></td>
-                                <td class="text-center">Exterior</td>
-                                <td class="text-center">Ciência de Dados</td>
-                                <td class="text-center">
-                                    <span class="badge badge-fechado rounded-pill">
-                                        <i class="bi bi-x-circle me-1"></i> Fechado
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" disabled>Detalhes</button>
-                                        <button class="btn btn-sm btn-trash delete-btn" data-id="4">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr data-id="5">
-                                <td>Bootcamp de Desenvolvimento Fullstack</td>
-                                <td class="text-center">Bootcamp</td>
-                                <td class="text-center"><span class="badge badge-online rounded-pill">Online</span></td>
-                                <td class="text-center">Nacional</td>
-                                <td class="text-center">Fullstack</td>
-                                <td class="text-center">
-                                    <span class="badge badge-aberto rounded-pill">
-                                        <i class="bi bi-check-circle me-1"></i> Aberto
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <a href="https://exemplo.com/oportunidade/5" class="btn btn-sm btn-details rounded-pill px-3">Detalhes</a>
-                                        <button class="btn btn-sm btn-trash delete-btn" data-id="5">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr data-id="6">
-                                <td>Vaga para Engenheira de DevOps</td>
-                                <td class="text-center">Emprego</td>
-                                <td class="text-center"><span class="badge badge-hibrido rounded-pill">Híbrido</span></td>
-                                <td class="text-center">Rio de Janeiro</td>
-                                <td class="text-center">DevOps</td>
-                                <td class="text-center">
-                                    <span class="badge badge-vigente rounded-pill">
-                                        <i class="bi bi-clock me-1"></i> Vigente
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <a href="https://exemplo.com/oportunidade/6" class="btn btn-sm btn-details rounded-pill px-3">Detalhes</a>
-                                        <button class="btn btn-sm btn-trash delete-btn" data-id="6">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <?php
+                            // Conexão com o banco de dados
+                            $host = 'db';
+                            $dbname = 'meu_banco';
+                            $username = 'root';
+                            $password = 'root';
+
+                            try {
+                                $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                // Consulta para buscar TODAS as oportunidades (sem filtro de data_exclusao)
+                                $sql = "SELECT * FROM oportunidades";
+                                $stmt = $pdo->query($sql);
+                                $oportunidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                if (count($oportunidades) > 0) {
+                                    foreach ($oportunidades as $oportunidade) {
+                                        // Determinar a classe do badge com base na modalidade
+                                        $badgeClass = '';
+                                        if ($oportunidade['modalidade'] === 'Online') $badgeClass = 'badge-online';
+                                        else if ($oportunidade['modalidade'] === 'Presencial') $badgeClass = 'badge-presencial';
+                                        else if ($oportunidade['modalidade'] === 'Híbrido') $badgeClass = 'badge-hibrido';
+                                        
+                                        // Determinar a classe do badge com base no status
+                                        $statusClass = '';
+                                        $statusIcon = '';
+                                        if ($oportunidade['status_edital'] === 'Aberto') {
+                                            $statusClass = 'badge-aberto';
+                                            $statusIcon = 'bi-check-circle';
+                                        } else if ($oportunidade['status_edital'] === 'Vigente') {
+                                            $statusClass = 'badge-vigente';
+                                            $statusIcon = 'bi-clock';
+                                        } else if ($oportunidade['status_edital'] === 'Fechado') {
+                                            $statusClass = 'badge-fechado';
+                                            $statusIcon = 'bi-x-circle';
+                                        }
+
+                                        // Verificar se o botão de detalhes deve estar desabilitado
+                                        $disabled = ($oportunidade['status_edital'] === 'Fechado') ? 'disabled' : '';
+                                        $btnClass = ($oportunidade['status_edital'] === 'Fechado') ? 'btn-outline-secondary' : 'btn-details';
+                                        
+                                        echo "
+                                        <tr data-id=\"{$oportunidade['id_oportunidade']}\">
+                                            <td>{$oportunidade['titulo']}</td>
+                                            <td class=\"text-center\">{$oportunidade['tipo']}</td>
+                                            <td class=\"text-center\"><span class=\"badge {$badgeClass} rounded-pill\">{$oportunidade['modalidade']}</span></td>
+                                            <td class=\"text-center\">{$oportunidade['local']}</td>
+                                            <td class=\"text-center\">{$oportunidade['area']}</td>
+                                            <td class=\"text-center\">
+                                                <span class=\"badge {$statusClass} rounded-pill\">
+                                                    <i class=\"bi {$statusIcon} me-1\"></i> {$oportunidade['status_edital']}
+                                                </span>
+                                            </td>
+                                            <td class=\"text-center\">
+                                                <div class=\"d-flex justify-content-center gap-2\">
+                                                    <a href=\"{$oportunidade['link_detalhes']}\" class=\"btn btn-sm {$btnClass} rounded-pill px-3\" {$disabled}>Detalhes</a>
+                                                    <button class=\"btn btn-sm btn-trash delete-btn\" data-id=\"{$oportunidade['id_oportunidade']}\">
+                                                        <i class=\"bi bi-trash\"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        ";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='7' class='text-center'>Nenhuma oportunidade encontrada.</td></tr>";
+                                }
+
+                            } catch (PDOException $e) {
+                                echo "<tr><td colspan='7' class='text-center text-danger'>Erro ao carregar oportunidades: " . $e->getMessage() . "</td></tr>";
+                            }
+                            ?>
                         </tbody>
                     </table>
                     
@@ -508,87 +461,7 @@
             });
         });
         
-        // Função para adicionar nova oportunidade
-        document.getElementById('add-opportunity-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Obter valores do formulário
-            const title = document.getElementById('new-title').value;
-            const type = document.getElementById('new-type').value;
-            const modality = document.getElementById('new-modality').value;
-            const location = document.getElementById('new-location').value;
-            const area = document.getElementById('new-area').value;
-            const status = document.getElementById('new-status').value;
-            const link = document.getElementById('new-link').value;
-            
-            // Criar novo ID (simplesmente incrementando o último ID)
-            const table = document.getElementById('opportunities-table');
-            const lastId = table.querySelector('tbody tr:last-child') ? 
-                          parseInt(table.querySelector('tbody tr:last-child').getAttribute('data-id')) : 0;
-            const newId = lastId + 1;
-            
-            // Determinar a classe do badge com base na modalidade
-            let badgeClass = '';
-            if (modality === 'Online') badgeClass = 'badge-online';
-            else if (modality === 'Presencial') badgeClass = 'badge-presencial';
-            else if (modality === 'Híbrido') badgeClass = 'badge-hibrido';
-            
-            // Determinar a classe do badge com base no status
-            let statusClass = '';
-            let statusIcon = '';
-            if (status === 'Aberto') {
-                statusClass = 'badge-aberto';
-                statusIcon = 'bi-check-circle';
-            } else if (status === 'Vigente') {
-                statusClass = 'badge-vigente';
-                statusIcon = 'bi-clock';
-            } else if (status === 'Fechado') {
-                statusClass = 'badge-fechado';
-                statusIcon = 'bi-x-circle';
-            }
-            
-            // Criar nova linha na tabela
-            const newRow = document.createElement('tr');
-            newRow.setAttribute('data-id', newId);
-            newRow.innerHTML = `
-                <td>${title}</td>
-                <td class="text-center">${type}</td>
-                <td class="text-center"><span class="badge ${badgeClass} rounded-pill">${modality}</span></td>
-                <td class="text-center">${location}</td>
-                <td class="text-center">${area}</td>
-                <td class="text-center">
-                    <span class="badge ${statusClass} rounded-pill">
-                        <i class="bi ${statusIcon} me-1"></i> ${status}
-                    </span>
-                </td>
-                <td class="text-center">
-                    <div class="d-flex justify-content-center gap-2">
-                        <a href="${link}" class="btn btn-sm btn-details rounded-pill px-3">Detalhes</a>
-                        <button class="btn btn-sm btn-trash delete-btn" data-id="${newId}">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            `;
-            
-            // Adicionar a nova linha à tabela
-            table.querySelector('tbody').appendChild(newRow);
-            
-            // Adicionar evento de clique ao novo botão de deletar
-            newRow.querySelector('.delete-btn').addEventListener('click', function() {
-                opportunityToDelete = this.getAttribute('data-id');
-                const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-                deleteModal.show();
-            });
-            
-            // Limpar o formulário
-            this.reset();
-            
-            // Mostrar mensagem de sucesso (opcional)
-            alert('Oportunidade adicionada com sucesso!');
-        });
-        
-        // Configurar eventos de clique para os botões de deletar existentes
+        // Configurar eventos de clique para os botões de deletar
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 opportunityToDelete = this.getAttribute('data-id');
@@ -600,7 +473,8 @@
         // Configurar evento de clique para o botão de confirmar exclusão
         document.getElementById('confirmDelete').addEventListener('click', function() {
             if (opportunityToDelete) {
-                // Encontrar e remover a linha com o ID correspondente
+                // Aqui você pode adicionar uma chamada AJAX para excluir do banco de dados
+                // Por enquanto, apenas remove a linha da tabela
                 const rowToDelete = document.querySelector(`tr[data-id="${opportunityToDelete}"]`);
                 if (rowToDelete) {
                     rowToDelete.remove();
@@ -610,7 +484,7 @@
                 const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
                 deleteModal.hide();
                 
-                // Mostrar mensagem de sucesso (opcional)
+                // Mostrar mensagem de sucesso
                 alert('Oportunidade excluída com sucesso!');
             }
         });
