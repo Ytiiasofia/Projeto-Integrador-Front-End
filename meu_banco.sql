@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Tempo de geração: 02/10/2025 às 12:48
+-- Tempo de geração: 09/10/2025 às 13:40
 -- Versão do servidor: 8.0.43
 -- Versão do PHP: 8.2.27
 
@@ -24,6 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `oportunidades`
+--
+
+CREATE TABLE `oportunidades` (
+  `id_oportunidade` int NOT NULL,
+  `titulo` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_cs NOT NULL,
+  `tipo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_cs NOT NULL,
+  `modalidade` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_cs NOT NULL,
+  `local` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_cs NOT NULL,
+  `area` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_cs NOT NULL,
+  `data_abertura` date NOT NULL,
+  `data_fechamento` date NOT NULL,
+  `link_detalhes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_cs NOT NULL,
+  `status_edital` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_cs NOT NULL,
+  `data_exclusao` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `usuarios`
 --
 
@@ -40,9 +60,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`usuario_id`, `nome_usuario`, `email`, `senha`, `is_admin`) VALUES
-(1, 'sofiaAmassaTODOS', 'sofiao@example.com', '123', 0),
 (2, 'TheGOD', 'admin@example.com', '123', 1),
-(3, 'SofiaAmassaTodos', 'Sofia@example.com', '123', 0),
 (5, 'sofiamdavid', 'sofiamuller1811@gmail.com', 'Sofia1234.', 0);
 
 --
@@ -64,7 +82,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
