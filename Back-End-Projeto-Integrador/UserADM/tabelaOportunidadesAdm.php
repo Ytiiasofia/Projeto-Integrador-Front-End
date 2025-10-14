@@ -69,7 +69,7 @@
                             <td class=\"text-center\">
                                 <div class=\"d-flex justify-content-center gap-2\">
                                     <a href=\"{$oportunidade['link_detalhes']}\" class=\"btn btn-sm {$btnClass} rounded-pill px-3\" {$disabled}>Detalhes</a>
-                                    <button class=\"btn btn-sm btn-trash delete-btn\" data-id=\"{$oportunidade['id_oportunidade']}\">
+                                    <button class=\"btn btn-sm btn-trash delete-oportunidade\" data-oportunidade-id=\"{$oportunidade['id_oportunidade']}\">
                                         <i class=\"bi bi-trash\"></i>
                                     </button>
                                 </div>
@@ -87,4 +87,43 @@
             ?>
         </tbody>
     </table>
+    
+    <!-- Modal de Exclusão de Oportunidade -->
+    <div class="modal fade" id="deleteOportunidadeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Você tem certeza que deseja excluir esta oportunidade?</p>
+                    <p class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i> Esta ação não pode ser desfeita.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form method="POST" action="deleteOportunidades.php" style="display:inline;">
+                        <input type="hidden" name="oportunidade_id" id="oportunidadeIdToDelete">
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim Modal -->
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-oportunidade');
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteOportunidadeModal'));
+            const oportunidadeIdToDelete = document.getElementById('oportunidadeIdToDelete');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    oportunidadeIdToDelete.value = this.getAttribute('data-oportunidade-id');
+                    deleteModal.show();
+                });
+            });
+        });
+    </script>
 </div>

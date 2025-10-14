@@ -322,86 +322,17 @@
         </div>
     </div>
 
+</main>
+
+<!-- Rodapé -->
 <footer id="footer" class="footer light-background">
-  <?php
-    require("../Include/footer.php");
-  ?>
+  <?php require("../Include/footer.php"); ?>
 </footer>
 
-  <?php
-    require("../Include/preloaderAndScrollTop.php");
-  ?>
+<?php require("../Include/preloaderAndScrollTop.php"); ?>
+<?php require("../Include/scriptScr.php"); ?>
 
-  <?php
-    require("../Include/scriptScr.php");
-  ?>
 
-    <script>
-        // Variável para armazenar o ID da linha a ser deletada
-        let opportunityToDelete = null;
-        
-        // Função para filtrar a tabela
-        document.getElementById('search-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Obter valores dos filtros
-            const tipo = document.getElementById('tipo').value.toLowerCase();
-            const modalidade = document.getElementById('modalidade').value.toLowerCase();
-            const local = document.getElementById('local').value.toLowerCase();
-            const area = document.getElementById('area').value.toLowerCase();
-            const edital = document.getElementById('edital').value.toLowerCase();
-            
-            // Filtrar linhas da tabela
-            const rows = document.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const rowTipo = row.cells[1].textContent.toLowerCase();
-                const rowModalidade = row.cells[2].textContent.toLowerCase();
-                const rowLocal = row.cells[3].textContent.toLowerCase();
-                const rowArea = row.cells[4].textContent.toLowerCase();
-                const rowEdital = row.cells[5].textContent.toLowerCase();
-                
-                const tipoMatch = !tipo || rowTipo.includes(tipo);
-                const modalidadeMatch = !modalidade || rowModalidade.includes(modalidade);
-                const localMatch = !local || rowLocal.includes(local);
-                const areaMatch = !area || rowArea.includes(area);
-                const editalMatch = !edital || rowEdital.includes(edital);
-                
-                if (tipoMatch && modalidadeMatch && localMatch && areaMatch && editalMatch) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        });
-        
-        // Configurar eventos de clique para os botões de deletar
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                opportunityToDelete = this.getAttribute('data-id');
-                const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-                deleteModal.show();
-            });
-        });
-        
-        // Configurar evento de clique para o botão de confirmar exclusão
-        document.getElementById('confirmDelete').addEventListener('click', function() {
-            if (opportunityToDelete) {
-                // Aqui você pode adicionar uma chamada AJAX para excluir do banco de dados
-                // Por enquanto, apenas remove a linha da tabela
-                const rowToDelete = document.querySelector(`tr[data-id="${opportunityToDelete}"]`);
-                if (rowToDelete) {
-                    rowToDelete.remove();
-                }
-                
-                // Fechar o modal
-                const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
-                deleteModal.hide();
-                
-                // Mostrar mensagem de sucesso
-                alert('Oportunidade excluída com sucesso!');
-            }
-        });
-    </script>
 
 </body>
 </html>
