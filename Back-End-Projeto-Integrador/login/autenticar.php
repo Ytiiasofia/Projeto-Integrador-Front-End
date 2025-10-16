@@ -1,20 +1,8 @@
 <?php
 session_start();
 
-// Configurações do banco de dados
-$host = "db";      
-$user = "root";           // Usuário: root
-$pass = "root";           // Senha: root
-$dbname = "meu_banco";    
-$port = 3306;             
-
-// Conexão com o banco
-$con = mysqli_connect($host, $user, $pass, $dbname, $port);
-
-// Verifica se a conexão foi bem-sucedida
-if (!$con) {
-    die("Erro ao conectar com o banco de dados: " . mysqli_connect_error());
-}
+// Conexão com o banco de dados via require
+require("../Include/conexao.php");
 
 // Verifica se o formulário foi enviado
 if (isset($_POST['login'])) {

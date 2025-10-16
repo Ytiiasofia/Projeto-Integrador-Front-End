@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,25 +60,15 @@
           </thead>
           <tbody>
 <?php
-// === Conexão com o banco (use "db" se estiver em Docker Compose; em XAMPP use "localhost" e ajuste senha) ===
-$host = "db";      // ou "localhost"
-$user = "root";
-$pass = "root";    // ou "" no XAMPP
-$dbname = "meu_banco";
-$port = 3306;
-
-$conn = new mysqli($host, $user, $pass, $dbname, $port);
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
-$conn->set_charset("utf8");
+// Conexão com o banco 
+require("../Include/conexao.php");
 
 // Busca os usuários
 $sql = "SELECT usuario_id, nome_usuario, email, is_admin FROM usuarios ORDER BY nome_usuario ASC";
-$resultado = $conn->query($sql);
+$resultado = mysqli_query($con, $sql);
 
-if ($resultado && $resultado->num_rows > 0) {
-    while ($linha = $resultado->fetch_assoc()) {
+if ($resultado && mysqli_num_rows($resultado) > 0) {
+    while ($linha = mysqli_fetch_assoc($resultado)) {
         $id = (int)$linha['usuario_id'];
         $nome = htmlspecialchars($linha['nome_usuario'], ENT_QUOTES, 'UTF-8');
         $email = htmlspecialchars($linha['email'], ENT_QUOTES, 'UTF-8');
@@ -107,7 +96,8 @@ if ($resultado && $resultado->num_rows > 0) {
     echo "<tr><td colspan='5' class='text-center'>Nenhum usuário encontrado.</td></tr>";
 }
 
-$conn->close();
+// Fechar conexão (opcional)
+mysqli_close($con);
 ?>
           </tbody>
         </table>
