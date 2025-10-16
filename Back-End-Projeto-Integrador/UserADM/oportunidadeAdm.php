@@ -204,25 +204,6 @@
         </div>
     </main>
 
-    <!-- Modal de Confirmação para Exclusão -->
-    <div class="modal fade modal-confirm-delete" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Você tem certeza que deseja excluir esta oportunidade? Esta ação não pode ser desfeita.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary rounded-pill px-3" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger rounded-pill px-3" id="confirmDelete">Excluir</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </main>
 
 <!-- Rodapé -->
