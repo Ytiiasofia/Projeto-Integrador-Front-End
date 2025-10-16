@@ -3,42 +3,31 @@
     <h4 class="mb-4">Adicionar Nova Oportunidade</h4>
 
     <?php
+    // Conexão com o banco de dados via require
+    require("../Include/conexao.php");
+
     // Verifique se o formulário foi enviado
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo'])) {
-        $host = 'db';
-        $dbname = 'meu_banco';
-        $username = 'root';
-        $password = 'root';
-
-        try {
-            $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $sql = "INSERT INTO oportunidades (titulo, tipo, modalidade, local, area, data_abertura, data_fechamento, link_detalhes, status_edital) 
-                    VALUES (:titulo, :tipo, :modalidade, :local, :area, :data_abertura, :data_fechamento, :link_detalhes, :status_edital)";
-
-            $stmt = $pdo->prepare($sql);
-
-            $result = $stmt->execute([
-                ':titulo' => $_POST['titulo'],
-                ':tipo' => $_POST['tipo'],
-                ':modalidade' => $_POST['modalidade'],
-                ':local' => $_POST['local'],
-                ':area' => $_POST['area'],
-                ':data_abertura' => $_POST['data_abertura'],
-                ':data_fechamento' => $_POST['data_fechamento'],
-                ':link_detalhes' => $_POST['link_detalhes'],
-                ':status_edital' => $_POST['status_edital']
-            ]);
-
-            if ($result) {
-                $message = '<div class="alert alert-success">Oportunidade adicionada com sucesso!</div>';
-                echo '<script>setTimeout(function(){ window.location.href = window.location.href; }, 1500);</script>';
-            } else {
-                $message = '<div class="alert alert-danger">Erro ao adicionar oportunidade.</div>';
-            }
-        } catch (PDOException $e) {
-            $message = '<div class="alert alert-danger">Erro ao conectar com o banco: ' . $e->getMessage() . '</div>';
+        // Preparar os dados
+        $titulo = mysqli_real_escape_string($con, $_POST['titulo']);
+        $tipo = mysqli_real_escape_string($con, $_POST['tipo']);
+        $modalidade = mysqli_real_escape_string($con, $_POST['modalidade']);
+        $local = mysqli_real_escape_string($con, $_POST['local']);
+        $area = mysqli_real_escape_string($con, $_POST['area']);
+        $data_abertura = mysqli_real_escape_string($con, $_POST['data_abertura']);
+        $data_fechamento = mysqli_real_escape_string($con, $_POST['data_fechamento']);
+        $link_detalhes = mysqli_real_escape_string($con, $_POST['link_detalhes']);
+        $status_edital = mysqli_real_escape_string($con, $_POST['status_edital']);
+        
+        // Query de inserção
+        $sql = "INSERT INTO oportunidades (titulo, tipo, modalidade, local, area, data_abertura, data_fechamento, link_detalhes, status_edital) 
+                VALUES ('$titulo', '$tipo', '$modalidade', '$local', '$area', '$data_abertura', '$data_fechamento', '$link_detalhes', '$status_edital')";
+        
+        if (mysqli_query($con, $sql)) {
+            $message = '<div class="alert alert-success">Oportunidade adicionada com sucesso!</div>';
+            echo '<script>setTimeout(function(){ window.location.href = window.location.href; }, 1500);</script>';
+        } else {
+            $message = '<div class="alert alert-danger">Erro ao adicionar oportunidade: ' . mysqli_error($con) . '</div>';
         }
     }
     ?>
@@ -147,6 +136,8 @@
                 <select class="form-select" id="new-status" name="status_edital" required>
                     <option value="">Selecione...</option>
                     <option value="Aberto">Aberto</option>
+                    <option value="Vigente">Vigente</option>
+                    <option value="Fechado">Fechado</option>
                 </select>
             </div>
             <div class="col-md-3 mb-3">
