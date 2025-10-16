@@ -85,58 +85,58 @@
                                 <label for="tipo" class="form-label">Tipo de Oportunidade</label>
                                 <select id="tipo" class="form-select">
                                     <option value="">Todos</option>
-                                    <option value="estagio">Estágio</option>
-                                    <option value="ic">Iniciação Científica</option>
-                                    <option value="concurso">Concurso</option>
-                                    <option value="emprego">Vgas de Emprego</option>
-                                    <option value="bootcamp">Bootcamp</option>
-                                    <option value="freelance">Freelance</option>
-                                    <option value="mentoria">Mentoria</option>
-                                    <option value="voluntariado">Voluntariado</option>
-                                    <option value="treinee">Trainee</option>
+                                    <option value="Estágio">Estágio</option>
+                                    <option value="Iniciação Científica">Iniciação Científica</option>
+                                    <option value="Concurso">Concurso</option>
+                                    <option value="Emprego">Vaga de Emprego</option>
+                                    <option value="Bootcamp">Bootcamp</option>
+                                    <option value="Freelance">Freelance</option>
+                                    <option value="Mentoria">Mentoria</option>
+                                    <option value="Voluntariado">Voluntariado</option>
+                                    <option value="Trainee">Trainee</option>
                                 </select>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="modalidade" class="form-label">Modalidade</label>
                                 <select id="modalidade" class="form-select">
                                     <option value="">Todos</option>
-                                    <option value="online">Online</option>
-                                    <option value="presencial">Presencial</option>
-                                    <option value="hibrido">Híbrido</option>
+                                    <option value="Online">Online</option>
+                                    <option value="Presencial">Presencial</option>
+                                    <option value="Híbrido">Híbrido</option>
                                 </select>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="local" class="form-label">Local</label>
                                 <select id="local" class="form-select">
                                     <option value="">Todos</option>
-                                    <option value="ac">Acre</option>
-                                    <option value="al">Alagoas</option>
-                                    <option value="ap">Amapá</option>
-                                    <option value="am">Amazonas</option>
-                                    <option value="ba">Bahia</option>
-                                    <option value="ce">Ceará</option>
-                                    <option value="df">Distrito Federal</option>
-                                    <option value="es">Espírito Santo</option>
-                                    <option value="go">Goiás</option>
-                                    <option value="ma">Maranhão</option>
-                                    <option value="mt">Mato Grosso</option>
-                                    <option value="ms">Mato Grosso do Sul</option>
-                                    <option value="mg">Minas Gerais</option>
-                                    <option value="pa">Pará</option>
-                                    <option value="pb">Paraíba</option>
-                                    <option value="pr">Paraná</option>
-                                    <option value="pe">Pernambuco</option>
-                                    <option value="pi">Piauí</option>
-                                    <option value="rj">Rio de Janeiro</option>
-                                    <option value="rn">Rio Grande do Norte</option>
-                                    <option value="rs">Rio Grande do Sul</option>
-                                    <option value="ro">Rondônia</option>
-                                    <option value="rr">Roraima</option>
-                                    <option value="sc">Santa Catarina</option>
-                                    <option value="sp">São Paulo</option>
-                                    <option value="se">Sergipe</option>
-                                    <option value="to">Tocantins</option>
-                                    <option value="exterior">Exterior</option>
+                                    <option value="Acre">Acre</option>
+                                    <option value="Alagoas">Alagoas</option>
+                                    <option value="Amapá">Amapá</option>
+                                    <option value="Amazonas">Amazonas</option>
+                                    <option value="Bahia">Bahia</option>
+                                    <option value="Ceará">Ceará</option>
+                                    <option value="Distrito Federal">Distrito Federal</option>
+                                    <option value="Espírito Santo">Espírito Santo</option>
+                                    <option value="Goiás">Goiás</option>
+                                    <option value="Maranhão">Maranhão</option>
+                                    <option value="Mato Grosso">Mato Grosso</option>
+                                    <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                                    <option value="Minas Gerais">Minas Gerais</option>
+                                    <option value="Pará">Pará</option>
+                                    <option value="Paraíba">Paraíba</option>
+                                    <option value="Paraná">Paraná</option>
+                                    <option value="Pernambuco">Pernambuco</option>
+                                    <option value="Piauí">Piauí</option>
+                                    <option value="Rio de Janeiro">Rio de Janeiro</option>
+                                    <option value="Rio Grande do Norte">Rio Grande do Norte</option>
+                                    <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                                    <option value="Rondônia">Rondônia</option>
+                                    <option value="Roraima">Roraima</option>
+                                    <option value="Santa Catarina">Santa Catarina</option>
+                                    <option value="São Paulo">São Paulo</option>
+                                    <option value="Sergipe">Sergipe</option>
+                                    <option value="Tocantins">Tocantins</option>
+                                    <option value="Exterior">Exterior</option>
                                 </select>
                             </div>
                         </div>
@@ -145,25 +145,25 @@
                                 <label for="area" class="form-label">Área de Interesse</label>
                                 <select id="area" class="form-select">
                                     <option value="">Todos</option>
-                                    <option value="fullstack">Desenvolvimento Full Stack</option>
-                                    <option value="frontend">Desenvolvimento Front-End</option>
-                                    <option value="backend">Desenvolvimento Back-End</option>
-                                    <option value="mobile">Desenvolvimento Mobile</option>
-                                    <option value="games">Desenvolvimento de Jogos</option>
-                                    <option value="embarcados">Sistemas Embarcados</option>
-                                    <option value="ia">Inteligência Artificial</option>
-                                    <option value="web">Desenvolvimento Web</option>
-                                    <option value="seguranca">Segurança da Informação</option>
-                                    <option value="desktop">Aplicativos Desktop</option>
+                                    <option value="Desenvolvimento Full Stack">Desenvolvimento Full Stack</option>
+                                    <option value="Desenvolvimento Front-End">Desenvolvimento Front-End</option>
+                                    <option value="Desenvolvimento Back-End">Desenvolvimento Back-End</option>
+                                    <option value="Desenvolvimento Mobile">Desenvolvimento Mobile</option>
+                                    <option value="Desenvolvimento de Jogos">Desenvolvimento de Jogos</option>
+                                    <option value="Sistemas Embarcados">Sistemas Embarcados</option>
+                                    <option value="Inteligência Artificial">Inteligência Artificial</option>
+                                    <option value="Desenvolvimento Web">Desenvolvimento Web</option>
+                                    <option value="Segurança da Informação">Segurança da Informação</option>
+                                    <option value="Aplicativos Desktop">Aplicativos Desktop</option>
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="edital" class="form-label">Status do Edital</label>
                                 <select id="edital" class="form-select">
                                     <option value="">Todos</option>
-                                    <option value="aberto">Aberto</option>
-                                    <option value="fechado">Fechado</option>
-                                    <option value="vigente">Vigente</option>
+                                    <option value="Aberto">Aberto</option>
+                                    <option value="Fechado">Fechado</option>
+                                    <option value="Vigente">Vigente</option>
                                 </select>
                             </div>
                         </div>
@@ -171,7 +171,7 @@
                             <button type="submit" class="btn btn-search rounded-pill px-4 me-2">
                                 <i class="bi bi-search me-1"></i> Buscar
                             </button>
-                            <button type="reset" class="btn btn-outline-secondary rounded-pill px-4">
+                            <button type="reset" class="btn btn-outline-secondary rounded-pill px-4" id="limpar-busca">
                                 <i class="bi bi-arrow-counterclockwise me-1"></i> Limpar
                             </button>
                         </div>
@@ -214,7 +214,83 @@
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
 <?php require("../Include/scriptScr.php"); ?>
 
-
+<script>
+    // Função para filtrar a tabela
+    document.getElementById('search-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Obter valores dos filtros
+        const tipo = document.getElementById('tipo').value.toLowerCase();
+        const modalidade = document.getElementById('modalidade').value.toLowerCase();
+        const local = document.getElementById('local').value.toLowerCase();
+        const area = document.getElementById('area').value.toLowerCase();
+        const edital = document.getElementById('edital').value.toLowerCase();
+        
+        // Filtrar linhas da tabela
+        const rows = document.querySelectorAll('#opportunities-table tbody tr');
+        let resultadosEncontrados = 0;
+        
+        rows.forEach(row => {
+            const rowTipo = row.cells[1].textContent.toLowerCase();
+            const rowModalidade = row.cells[2].textContent.toLowerCase();
+            const rowLocal = row.cells[3].textContent.toLowerCase();
+            const rowArea = row.cells[4].textContent.toLowerCase();
+            const rowEdital = row.cells[5].textContent.toLowerCase();
+            
+            const tipoMatch = !tipo || rowTipo.includes(tipo);
+            const modalidadeMatch = !modalidade || rowModalidade.includes(modalidade);
+            const localMatch = !local || rowLocal.includes(local);
+            const areaMatch = !area || rowArea.includes(area);
+            const editalMatch = !edital || rowEdital.includes(edital);
+            
+            if (tipoMatch && modalidadeMatch && localMatch && areaMatch && editalMatch) {
+                row.style.display = '';
+                resultadosEncontrados++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        // Mostrar mensagem se nenhum resultado for encontrado
+        const mensagemVazio = document.getElementById('mensagem-vazia');
+        if (resultadosEncontrados === 0) {
+            if (!mensagemVazio) {
+                const tr = document.createElement('tr');
+                tr.id = 'mensagem-vazia';
+                tr.innerHTML = '<td colspan="7" class="text-center">Nenhuma oportunidade encontrada com os filtros selecionados.</td>';
+                document.querySelector('#opportunities-table tbody').appendChild(tr);
+            }
+        } else {
+            if (mensagemVazio) {
+                mensagemVazio.remove();
+            }
+        }
+    });
+    
+    // Função para limpar a busca
+    document.getElementById('limpar-busca').addEventListener('click', function() {
+        // Resetar os selects
+        document.getElementById('tipo').value = '';
+        document.getElementById('modalidade').value = '';
+        document.getElementById('local').value = '';
+        document.getElementById('area').value = '';
+        document.getElementById('edital').value = '';
+        
+        // Mostrar todas as linhas
+        const rows = document.querySelectorAll('#opportunities-table tbody tr');
+        rows.forEach(row => {
+            if (row.id !== 'mensagem-vazia') {
+                row.style.display = '';
+            }
+        });
+        
+        // Remover mensagem de vazio
+        const mensagemVazio = document.getElementById('mensagem-vazia');
+        if (mensagemVazio) {
+            mensagemVazio.remove();
+        }
+    });
+</script>
 
 </body>
 </html>
