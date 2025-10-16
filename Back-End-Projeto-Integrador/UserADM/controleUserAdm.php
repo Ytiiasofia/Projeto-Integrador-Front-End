@@ -14,7 +14,7 @@
     .user-table th { padding: 15px; font-weight: 600; }
     .user-table td { padding: 12px 15px; vertical-align: middle; }
     .user-table tbody tr { transition: all 0.3s ease; }
-    .user-table tbody tr:hover { background-color: #f8f9fa; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+    .user-table tbody tr:hover { background-color: #6c63ff; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
     .badge-user { background-color: #6c63ff; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
     .badge-admin { background-color: #28a745; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
     .action-btn { padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; transition: all 0.3s ease; }
