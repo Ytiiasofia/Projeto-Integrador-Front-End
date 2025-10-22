@@ -1,3 +1,41 @@
+<?php
+// ESTE DEVE SER O PRIMEIRO ARQUIVO DO SEU CÓDIGO - SEM ESPAÇOS ANTES
+session_start();
+require("../Include/conexao.php");
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: ../login/login.php");
+    exit();
+}
+
+// Buscar dados do usuário
+$usuario_id = $_SESSION['usuario_id'];
+$sql = "SELECT usuario_id, nome_usuario, email, is_admin, data_cadastro FROM usuarios WHERE usuario_id = ?";
+$stmt = mysqli_prepare($con, $sql);
+mysqli_stmt_bind_param($stmt, "i", $usuario_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$usuario = mysqli_fetch_assoc($result);
+
+if (!$usuario) {
+    echo "Usuário não encontrado!";
+    exit();
+}
+
+// Formatar data de cadastro
+if (isset($usuario['data_cadastro']) && !empty($usuario['data_cadastro'])) {
+    // Converter a data do banco para formato em português
+    $data_cadastro = date('F Y', strtotime($usuario['data_cadastro']));
+    
+    // Traduzir o mês para português
+    $meses_ingles = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    $meses_portugues = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+    $data_cadastro = str_replace($meses_ingles, $meses_portugues, $data_cadastro);
+} else {
+    $data_cadastro = "Janeiro 2023"; // Placeholder caso não tenha o campo
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -15,8 +53,9 @@
 
 <body class="contact-page">
 
-<?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
-
+<?php 
+require_once __DIR__ . '/../Include/menuADM.php';
+?>
 
   <main class="main">
     <!-- Page Title -->
@@ -53,8 +92,11 @@
                     <i class="bi bi-pencil-fill"></i>
                 </button>
                 </div>
-                <h2 class="mt-3">Maria Silva</h2>
-                <p class="text-muted">Membro desde Janeiro 2023</p>
+                <h2 class="mt-3"><?php echo htmlspecialchars($usuario['nome_usuario']); ?></h2>
+                <p class="text-muted">Membro desde <?php echo $data_cadastro; ?></p>
+                <?php if ($usuario['is_admin'] == 1): ?>
+                    <span class="badge bg-primary">Administrador</span>
+                <?php endif; ?>
             </div>
               
               <form>
@@ -62,7 +104,7 @@
                 <div class="mb-3">
                   <label for="username" class="form-label">Nome de Usuário</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" id="username" value="mariasilva" readonly>
+                    <input type="text" class="form-control" id="username" value="<?php echo htmlspecialchars($usuario['nome_usuario']); ?>" readonly>
                     <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editUsernameModal">
                       <i class="bi bi-pencil-fill"></i>
                     </button>
@@ -73,7 +115,7 @@
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
                   <div class="input-group">
-                    <input type="email" class="form-control" id="email" value="maria.silva@example.com" readonly>
+                    <input type="email" class="form-control" id="email" value="<?php echo htmlspecialchars($usuario['email']); ?>" readonly>
                     <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editEmailModal">
                       <i class="bi bi-pencil-fill"></i>
                     </button>
@@ -144,7 +186,7 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="newUsername" class="form-label">Novo nome de usuário</label>
-            <input type="text" class="form-control" id="newUsername" value="mariasilva">
+            <input type="text" class="form-control" id="newUsername" value="<?php echo htmlspecialchars($usuario['nome_usuario']); ?>">
             <div class="form-text">O nome de usuário deve conter entre 3-20 caracteres</div>
           </div>
         </div>
@@ -167,7 +209,7 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="newEmail" class="form-label">Novo email</label>
-            <input type="email" class="form-control" id="newEmail" value="maria.silva@example.com">
+            <input type="email" class="form-control" id="newEmail" value="<?php echo htmlspecialchars($usuario['email']); ?>">
             <div class="form-text">Digite um email válido</div>
           </div>
         </div>
@@ -270,16 +312,6 @@
         });
       }
 
-      // Biografia
-      const saveBioBtn = document.getElementById('saveBioBtn');
-      if (saveBioBtn) {
-        saveBioBtn.addEventListener('click', function() {
-          const newBio = document.getElementById('newBio').value;
-          document.getElementById('bio').value = newBio;
-          bootstrap.Modal.getInstance(document.getElementById('editBioModal')).hide();
-        });
-      }
-
       // Validação de senha em tempo real
       const newPasswordInput = document.getElementById('newPassword');
       if (newPasswordInput) {
@@ -296,16 +328,6 @@
           } else {
             feedback.textContent = 'Senha válida';
             feedback.style.color = 'green';
-          }
-        });
-      }
-
-      // Logout
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-          if (confirm('Tem certeza que deseja sair da sua conta?')) {
-            window.location.href = '../UserAnonimo/contact.php'; 
           }
         });
       }
