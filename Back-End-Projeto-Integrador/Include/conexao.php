@@ -13,7 +13,4 @@ $con = mysqli_connect($host, $user, $pass, $dbname, $port);
 if (!$con) {
     die("Erro ao conectar com o banco de dados: " . mysqli_connect_error());
 }
-
-// Opcional: Definir charset para evitar problemas com acentos
-mysqli_set_charset($con, "utf8");
 ?>
