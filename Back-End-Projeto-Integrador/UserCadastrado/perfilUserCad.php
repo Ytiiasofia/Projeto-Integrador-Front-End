@@ -32,8 +32,6 @@ if (isset($usuario['data_cadastro']) && !empty($usuario['data_cadastro'])) {
     $meses_ingles = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
     $meses_portugues = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
     $data_cadastro = str_replace($meses_ingles, $meses_portugues, $data_cadastro);
-} else {
-    $data_cadastro = "Janeiro 2023"; // Placeholder caso não tenha o campo
 }
 ?>
 <!DOCTYPE html>
