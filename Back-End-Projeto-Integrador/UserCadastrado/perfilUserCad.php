@@ -1,5 +1,4 @@
 <?php
-// ESTE DEVE SER O PRIMEIRO ARQUIVO DO SEU CÓDIGO - SEM ESPAÇOS ANTES
 session_start();
 require("../Include/conexao.php");
 
@@ -25,10 +24,7 @@ if (!$usuario) {
 
 // Formatar data de cadastro
 if (isset($usuario['data_cadastro']) && !empty($usuario['data_cadastro'])) {
-    // Converter a data do banco para formato em português
     $data_cadastro = date('F Y', strtotime($usuario['data_cadastro']));
-    
-    // Traduzir o mês para português
     $meses_ingles = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
     $meses_portugues = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
     $data_cadastro = str_replace($meses_ingles, $meses_portugues, $data_cadastro);
@@ -90,7 +86,7 @@ require_once __DIR__ . '/../Include/menuADM.php';
                     <i class="bi bi-pencil-fill"></i>
                 </button>
                 </div>
-                <h2 class="mt-3"><?php echo htmlspecialchars($usuario['nome_usuario']); ?></h2>
+                <h2 class="mt-3" id="profile-name"><?php echo htmlspecialchars($usuario['nome_usuario']); ?></h2>
                 <p class="text-muted">Membro desde <?php echo $data_cadastro; ?></p>
                 <?php if ($usuario['is_admin'] == 1): ?>
                     <span class="badge bg-primary">Administrador</span>
@@ -186,6 +182,7 @@ require_once __DIR__ . '/../Include/menuADM.php';
             <label for="newUsername" class="form-label">Novo nome de usuário</label>
             <input type="text" class="form-control" id="newUsername" value="<?php echo htmlspecialchars($usuario['nome_usuario']); ?>">
             <div class="form-text">O nome de usuário deve conter entre 3-20 caracteres</div>
+            <div id="usernameFeedback" class="form-text"></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -209,6 +206,7 @@ require_once __DIR__ . '/../Include/menuADM.php';
             <label for="newEmail" class="form-label">Novo email</label>
             <input type="email" class="form-control" id="newEmail" value="<?php echo htmlspecialchars($usuario['email']); ?>">
             <div class="form-text">Digite um email válido</div>
+            <div id="emailFeedback" class="form-text"></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -236,10 +234,12 @@ require_once __DIR__ . '/../Include/menuADM.php';
             <label for="newPassword" class="form-label">Nova senha</label>
             <input type="password" class="form-control" id="newPassword">
             <div class="form-text">A senha deve conter pelo menos 8 caracteres, incluindo números e letras</div>
+            <div id="passwordFeedback" class="form-text"></div>
           </div>
           <div class="mb-3">
             <label for="confirmPassword" class="form-label">Confirme a nova senha</label>
             <input type="password" class="form-control" id="confirmPassword">
+            <div id="confirmFeedback" class="form-text"></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -267,68 +267,299 @@ require_once __DIR__ . '/../Include/menuADM.php';
   <!-- Profile Script -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Nome de usuário
-      const saveUsernameBtn = document.getElementById('saveUsernameBtn');
-      if (saveUsernameBtn) {
-        saveUsernameBtn.addEventListener('click', function() {
-          const newUsername = document.getElementById('newUsername').value;
-          document.getElementById('username').value = newUsername;
-          
-          // Atualiza o nome abaixo da foto
-          const profileName = document.querySelector('.profile-card h2');
-          if (profileName) {
-            profileName.textContent = newUsername;
+      // Função para mostrar mensagem
+      function showMessage(message, isSuccess = true) {
+        // Criar ou atualizar elemento de mensagem
+        let messageDiv = document.getElementById('message-alert');
+        if (!messageDiv) {
+          messageDiv = document.createElement('div');
+          messageDiv.id = 'message-alert';
+          messageDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
+          messageDiv.style.position = 'fixed';
+          messageDiv.style.top = '20px';
+          messageDiv.style.right = '20px';
+          messageDiv.style.zIndex = '9999';
+          messageDiv.style.minWidth = '300px';
+          messageDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          `;
+          document.body.appendChild(messageDiv);
+        } else {
+          messageDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
+          messageDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          `;
+        }
+        
+        // Auto-remover após 5 segundos
+        setTimeout(() => {
+          if (messageDiv && messageDiv.parentNode) {
+            messageDiv.parentNode.removeChild(messageDiv);
           }
-          
-          bootstrap.Modal.getInstance(document.getElementById('editUsernameModal')).hide();
-        });
+        }, 5000);
       }
 
-      // Email
-      const saveEmailBtn = document.getElementById('saveEmailBtn');
-      if (saveEmailBtn) {
-        saveEmailBtn.addEventListener('click', function() {
-          const newEmail = document.getElementById('newEmail').value;
-          document.getElementById('email').value = newEmail;
-          bootstrap.Modal.getInstance(document.getElementById('editEmailModal')).hide();
-        });
-      }
-
-      // Senha
-      const savePasswordBtn = document.getElementById('savePasswordBtn');
-      if (savePasswordBtn) {
-        savePasswordBtn.addEventListener('click', function() {
-          const newPassword = document.getElementById('newPassword').value;
-          const confirmPassword = document.getElementById('confirmPassword').value;
+      // Validação de nome de usuário em tempo real
+      const newUsernameInput = document.getElementById('newUsername');
+      const usernameFeedback = document.getElementById('usernameFeedback');
+      
+      if (newUsernameInput) {
+        newUsernameInput.addEventListener('input', function() {
+          const username = this.value.trim();
           
-          if (newPassword === confirmPassword) {
-            document.getElementById('password').value = '********'; // Apenas para demonstração
-            bootstrap.Modal.getInstance(document.getElementById('editPasswordModal')).hide();
+          if (username.length < 3) {
+            usernameFeedback.textContent = 'Nome muito curto (mínimo 3 caracteres)';
+            usernameFeedback.style.color = 'red';
+          } else if (username.length > 20) {
+            usernameFeedback.textContent = 'Nome muito longo (máximo 20 caracteres)';
+            usernameFeedback.style.color = 'red';
+          } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+            usernameFeedback.textContent = 'Use apenas letras, números e underline';
+            usernameFeedback.style.color = 'red';
           } else {
-            alert('As senhas não coincidem!');
+            usernameFeedback.textContent = 'Nome válido';
+            usernameFeedback.style.color = 'green';
+          }
+        });
+      }
+
+      // Validação de email em tempo real
+      const newEmailInput = document.getElementById('newEmail');
+      const emailFeedback = document.getElementById('emailFeedback');
+      
+      if (newEmailInput) {
+        newEmailInput.addEventListener('input', function() {
+          const email = this.value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          
+          if (!emailRegex.test(email)) {
+            emailFeedback.textContent = 'Email inválido';
+            emailFeedback.style.color = 'red';
+          } else {
+            emailFeedback.textContent = 'Email válido';
+            emailFeedback.style.color = 'green';
           }
         });
       }
 
       // Validação de senha em tempo real
       const newPasswordInput = document.getElementById('newPassword');
+      const passwordFeedback = document.getElementById('passwordFeedback');
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+      const confirmFeedback = document.getElementById('confirmFeedback');
+      
       if (newPasswordInput) {
         newPasswordInput.addEventListener('input', function() {
           const password = this.value;
-          const feedback = this.nextElementSibling;
           
           if (password.length < 8) {
-            feedback.textContent = 'A senha deve ter pelo menos 8 caracteres';
-            feedback.style.color = 'red';
+            passwordFeedback.textContent = 'A senha deve ter pelo menos 8 caracteres';
+            passwordFeedback.style.color = 'red';
           } else if (!/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
-            feedback.textContent = 'A senha deve conter letras e números';
-            feedback.style.color = 'red';
+            passwordFeedback.textContent = 'A senha deve conter letras e números';
+            passwordFeedback.style.color = 'red';
           } else {
-            feedback.textContent = 'Senha válida';
-            feedback.style.color = 'green';
+            passwordFeedback.textContent = 'Senha válida';
+            passwordFeedback.style.color = 'green';
+          }
+          
+          // Verificar confirmação
+          if (confirmPasswordInput.value) {
+            if (password !== confirmPasswordInput.value) {
+              confirmFeedback.textContent = 'As senhas não coincidem';
+              confirmFeedback.style.color = 'red';
+            } else {
+              confirmFeedback.textContent = 'Senhas coincidem';
+              confirmFeedback.style.color = 'green';
+            }
           }
         });
       }
+      
+      if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', function() {
+          const confirmPassword = this.value;
+          const password = newPasswordInput.value;
+          
+          if (password !== confirmPassword) {
+            confirmFeedback.textContent = 'As senhas não coincidem';
+            confirmFeedback.style.color = 'red';
+          } else {
+            confirmFeedback.textContent = 'Senhas coincidem';
+            confirmFeedback.style.color = 'green';
+          }
+        });
+      }
+
+      // Nome de usuário - Salvar
+      const saveUsernameBtn = document.getElementById('saveUsernameBtn');
+      if (saveUsernameBtn) {
+        saveUsernameBtn.addEventListener('click', function() {
+          const newUsername = document.getElementById('newUsername').value.trim();
+          
+          if (newUsername.length < 3 || newUsername.length > 20) {
+            showMessage('Nome de usuário deve ter entre 3 e 20 caracteres', false);
+            return;
+          }
+          
+          if (!/^[a-zA-Z0-9_]+$/.test(newUsername)) {
+            showMessage('Use apenas letras, números e underline no nome de usuário', false);
+            return;
+          }
+          
+          // Enviar para o servidor
+          const formData = new FormData();
+          formData.append('action', 'update_username');
+          formData.append('novo_username', newUsername);
+          
+          fetch('atualizar_perfil.php', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              document.getElementById('username').value = newUsername;
+              document.getElementById('profile-name').textContent = newUsername;
+              bootstrap.Modal.getInstance(document.getElementById('editUsernameModal')).hide();
+              showMessage(data.message, true);
+            } else {
+              showMessage(data.message, false);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            showMessage('Erro ao atualizar nome de usuário', false);
+          });
+        });
+      }
+
+      // Email - Salvar
+      const saveEmailBtn = document.getElementById('saveEmailBtn');
+      if (saveEmailBtn) {
+        saveEmailBtn.addEventListener('click', function() {
+          const newEmail = document.getElementById('newEmail').value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          
+          if (!emailRegex.test(newEmail)) {
+            showMessage('Email inválido', false);
+            return;
+          }
+          
+          // Enviar para o servidor
+          const formData = new FormData();
+          formData.append('action', 'update_email');
+          formData.append('novo_email', newEmail);
+          
+          fetch('atualizar_perfil.php', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              document.getElementById('email').value = newEmail;
+              bootstrap.Modal.getInstance(document.getElementById('editEmailModal')).hide();
+              showMessage(data.message, true);
+            } else {
+              showMessage(data.message, false);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            showMessage('Erro ao atualizar email', false);
+          });
+        });
+      }
+
+      // Senha - Salvar
+      const savePasswordBtn = document.getElementById('savePasswordBtn');
+      if (savePasswordBtn) {
+        savePasswordBtn.addEventListener('click', function() {
+          const currentPassword = document.getElementById('currentPassword').value;
+          const newPassword = document.getElementById('newPassword').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+          
+          if (!currentPassword || !newPassword || !confirmPassword) {
+            showMessage('Todos os campos são obrigatórios', false);
+            return;
+          }
+          
+          if (newPassword !== confirmPassword) {
+            showMessage('As senhas não coincidem', false);
+            return;
+          }
+          
+          if (newPassword.length < 8) {
+            showMessage('A senha deve ter pelo menos 8 caracteres', false);
+            return;
+          }
+          
+          if (!/\d/.test(newPassword) || !/[a-zA-Z]/.test(newPassword)) {
+            showMessage('A senha deve conter letras e números', false);
+            return;
+          }
+          
+          // Enviar para o servidor
+          const formData = new FormData();
+          formData.append('action', 'update_password');
+          formData.append('senha_atual', currentPassword);
+          formData.append('nova_senha', newPassword);
+          formData.append('confirmar_senha', confirmPassword);
+          
+          fetch('atualizar_perfil.php', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // Limpar campos
+              document.getElementById('currentPassword').value = '';
+              document.getElementById('newPassword').value = '';
+              document.getElementById('confirmPassword').value = '';
+              
+              bootstrap.Modal.getInstance(document.getElementById('editPasswordModal')).hide();
+              showMessage(data.message, true);
+            } else {
+              showMessage(data.message, false);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            showMessage('Erro ao atualizar senha', false);
+          });
+        });
+      }
+
+      // Limpar feedback quando modais são fechados
+      const modals = ['editUsernameModal', 'editEmailModal', 'editPasswordModal'];
+      modals.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.addEventListener('hidden.bs.modal', function() {
+            // Limpar mensagens de feedback
+            const feedbacks = this.querySelectorAll('.form-text');
+            feedbacks.forEach(feedback => {
+              if (feedback.id !== 'usernameFeedback' && feedback.id !== 'emailFeedback' && 
+                  feedback.id !== 'passwordFeedback' && feedback.id !== 'confirmFeedback') {
+                feedback.textContent = '';
+              }
+            });
+            
+            // Limpar campos de senha
+            if (modalId === 'editPasswordModal') {
+              document.getElementById('currentPassword').value = '';
+              document.getElementById('newPassword').value = '';
+              document.getElementById('confirmPassword').value = '';
+              if (passwordFeedback) passwordFeedback.textContent = '';
+              if (confirmFeedback) confirmFeedback.textContent = '';
+            }
+          });
+        }
+      });
     });
   </script>
 </body>
