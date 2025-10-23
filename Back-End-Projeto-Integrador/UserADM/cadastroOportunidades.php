@@ -136,8 +136,6 @@
                 <select class="form-select" id="new-status" name="status_edital" required>
                     <option value="">Selecione...</option>
                     <option value="Aberto">Aberto</option>
-                    <option value="Vigente">Vigente</option>
-                    <option value="Fechado">Fechado</option>
                 </select>
             </div>
             <div class="col-md-3 mb-3">

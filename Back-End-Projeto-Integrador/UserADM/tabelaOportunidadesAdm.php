@@ -16,12 +16,39 @@
             // Conexão com o banco de dados via require
             require("../Include/conexao.php");
 
+            // LIMPEZA AUTOMÁTICA - Executa sempre que a página é carregada
+            // 1. Fechar oportunidades vencidas
+            $sql_fechar = "UPDATE oportunidades 
+                          SET status_edital = 'Fechado' 
+                          WHERE data_fechamento < CURDATE() 
+                          AND status_edital != 'Fechado'";
+            mysqli_query($con, $sql_fechar);
+            
+            // 2. Excluir oportunidades fechadas há mais de 10 dias
+            $sql_excluir = "DELETE FROM oportunidades 
+                           WHERE status_edital = 'Fechado' 
+                           AND data_fechamento <= DATE_SUB(CURDATE(), INTERVAL 10 DAY)";
+            mysqli_query($con, $sql_excluir);
+
             // Consulta para buscar TODAS as oportunidades
-            $sql = "SELECT * FROM oportunidades";
+            $sql = "SELECT * FROM oportunidades ORDER BY data_fechamento ASC";
             $result = mysqli_query($con, $sql);
 
             if (mysqli_num_rows($result) > 0) {
                 while ($oportunidade = mysqli_fetch_assoc($result)) {
+                    // Calcular datas
+                    $data_fechamento = new DateTime($oportunidade['data_fechamento']);
+                    $data_atual = new DateTime();
+                    $data_exclusao = clone $data_fechamento;
+                    $data_exclusao->modify('+10 days');
+                    
+                    // Verificar status atual
+                    $esta_fechada = ($oportunidade['status_edital'] === 'Fechado');
+                    $esta_vencida = ($data_fechamento < $data_atual);
+                    
+                    // Se está vencida mas não foi fechada ainda, mostrar como será fechada
+                    $sera_fechada = ($esta_vencida && !$esta_fechada);
+
                     // Determinar a classe do badge com base na modalidade
                     $badgeClass = '';
                     if ($oportunidade['modalidade'] === 'Online') $badgeClass = 'badge-online';
@@ -31,7 +58,13 @@
                     // Determinar a classe do badge com base no status
                     $statusClass = '';
                     $statusIcon = '';
-                    if ($oportunidade['status_edital'] === 'Aberto') {
+                    $statusTexto = $oportunidade['status_edital'];
+                    
+                    if ($sera_fechada) {
+                        $statusClass = 'badge-fechado';
+                        $statusIcon = 'bi-clock';
+                        $statusTexto = 'A Fechar';
+                    } else if ($oportunidade['status_edital'] === 'Aberto') {
                         $statusClass = 'badge-aberto';
                         $statusIcon = 'bi-check-circle';
                     } else if ($oportunidade['status_edital'] === 'Vigente') {
@@ -43,24 +76,52 @@
                     }
 
                     // Verificar se o botão de detalhes deve estar desabilitado
-                    $disabled = ($oportunidade['status_edital'] === 'Fechado') ? 'disabled' : '';
-                    $btnClass = ($oportunidade['status_edital'] === 'Fechado') ? 'btn-outline-secondary' : 'btn-details';
+                    $disabled = ($esta_fechada || $sera_fechada) ? 'disabled' : '';
+                    $btnClass = ($esta_fechada || $sera_fechada) ? 'btn-outline-secondary' : 'btn-details';
+                    
+                    // Formatar datas para exibição
+                    $data_abertura_formatada = date('d/m/Y', strtotime($oportunidade['data_abertura']));
+                    $data_fechamento_formatada = date('d/m/Y', strtotime($oportunidade['data_fechamento']));
+                    $data_exclusao_formatada = date('d/m/Y', strtotime($oportunidade['data_fechamento'] . ' + 10 days'));
                     
                     echo "
                     <tr data-id=\"{$oportunidade['id_oportunidade']}\">
-                        <td>{$oportunidade['titulo']}</td>
+                        <td>
+                            <strong>{$oportunidade['titulo']}</strong>
+                            <br>
+                            <small class=\"text-muted\">
+                                Aberto em: {$data_abertura_formatada}
+                                <br>
+                                " . ($esta_fechada ? 
+                                    'Encerrou em: <span class=\"text-danger\">' . $data_fechamento_formatada . '</span>' : 
+                                    ($sera_fechada ?
+                                        'Encerrou em: <span class=\"text-warning\">' . $data_fechamento_formatada . '</span>' :
+                                        'Encerra em: <span class=\"text-success\">' . $data_fechamento_formatada . '</span>'
+                                    )
+                                ) . "
+                            </small>
+                        </td>
                         <td class=\"text-center\">{$oportunidade['tipo']}</td>
                         <td class=\"text-center\"><span class=\"badge {$badgeClass} rounded-pill\">{$oportunidade['modalidade']}</span></td>
                         <td class=\"text-center\">{$oportunidade['local']}</td>
                         <td class=\"text-center\">{$oportunidade['area']}</td>
                         <td class=\"text-center\">
                             <span class=\"badge {$statusClass} rounded-pill\">
-                                <i class=\"bi {$statusIcon} me-1\"></i> {$oportunidade['status_edital']}
+                                <i class=\"bi {$statusIcon} me-1\"></i> {$statusTexto}
                             </span>
+                            " . ($esta_fechada ? 
+                                '<br><small class=\"text-muted mt-1 d-block\">Exclui em:<br>' . $data_exclusao_formatada . '</small>' : 
+                                ($sera_fechada ?
+                                    '<br><small class=\"text-warning mt-1 d-block\">Fechará automaticamente</small>' :
+                                    ''
+                                )
+                            ) . "
                         </td>
                         <td class=\"text-center\">
                             <div class=\"d-flex justify-content-center gap-2\">
-                                <a href=\"{$oportunidade['link_detalhes']}\" class=\"btn btn-sm {$btnClass} rounded-pill px-3\" {$disabled}>Detalhes</a>
+                                <a href=\"{$oportunidade['link_detalhes']}\" class=\"btn btn-sm {$btnClass} rounded-pill px-3\" {$disabled}>
+                                    Detalhes
+                                </a>
                                 <button class=\"btn btn-sm btn-trash delete-oportunidade\" data-oportunidade-id=\"{$oportunidade['id_oportunidade']}\">
                                     <i class=\"bi bi-trash\"></i>
                                 </button>
@@ -72,6 +133,9 @@
             } else {
                 echo "<tr><td colspan='7' class='text-center'>Nenhuma oportunidade encontrada.</td></tr>";
             }
+            
+            // Fechar conexão
+            mysqli_close($con);
             ?>
         </tbody>
     </table>
@@ -98,7 +162,6 @@
             </div>
         </div>
     </div>
-    <!-- Fim Modal -->
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {

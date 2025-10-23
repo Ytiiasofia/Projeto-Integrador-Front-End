@@ -84,7 +84,6 @@
                     <option value="">Todos</option>
                     <option value="Aberto">Aberto</option>
                     <option value="Fechado">Fechado</option>
-                    <option value="Vigente">Vigente</option>
                 </select>
             </div>
         </div>
