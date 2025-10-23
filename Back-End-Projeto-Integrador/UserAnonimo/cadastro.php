@@ -1,82 +1,3 @@
-<?php
-// processa cadastro se o formulário for enviado
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-      // Configurações do banco de dados
-      $host = "db";       
-      $user = "root";     // Usuário: root
-      $pass = "root";     // Senha: root
-      $dbname = "meu_banco"; 
-      $port = 3306;       
-
-      // Conexão com o banco
-      $con = mysqli_connect($host, $user, $pass, $dbname, $port);
-
-      // Verifica se a conexão foi bem-sucedida
-      if (!$con) {
-          die("Erro ao conectar com o banco de dados: " . mysqli_connect_error());
-      }
-
-      // Recebe dados do formulário
-      $nome_usuario = trim($_POST['username']);
-      $email = trim($_POST['email']);
-      $senha = $_POST['password'];
-      $confirmSenha = $_POST['confirmPassword'];
-      $is_admin = 0; // padrão: usuário normal
-
-      // Validações básicas para criação de conta
-  if (strlen($nome_usuario) < 4) {
-      $error = "Nome de usuário deve ter pelo menos 4 caracteres.";
-  } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      $error = "E-mail inválido.";
-  } elseif (strlen($senha) < 8) {
-      $error = "Senha deve ter pelo menos 8 caracteres.";
-  } elseif ($senha !== $confirmSenha) {
-      $error = "As senhas não coincidem.";
-  }
-
-// Verifica se o nome de usuário não está repetido
-if (!isset($error)) {
-    $stmt = $con->prepare("SELECT * FROM usuarios WHERE nome_usuario = ?");
-    $stmt->bind_param("s", $nome_usuario);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $error = "Este nome de usuário já está em uso.";
-    }
-    $stmt->close();
-}
-
-// Verifica se o e-mail não está repetido
-if (!isset($error)) {
-    $stmt = $con->prepare("SELECT * FROM usuarios WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $error = "Este e-mail já está cadastrado.";
-    }
-    $stmt->close();
-}
-
-// Se não houver erro, insere usuário
-    if (!isset($error)) {
-      $stmt = $con->prepare("INSERT INTO usuarios (nome_usuario, email, senha, is_admin) VALUES (?, ?, ?, ?)");
-      $stmt->bind_param("sssi", $nome_usuario, $email, $senha, $is_admin);
-
-        if ($stmt->execute()) {
-            $success = "Cadastro realizado com sucesso!";
-        } else {
-            $error = "Erro ao cadastrar: " . $stmt->error;
-        }
-
-        $stmt->close();
-    }
-
-    $con->close();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -124,20 +45,30 @@ if (!isset($error)) {
             <h2 class="text-center mb-4">Junte-se à nossa comunidade</h2>
 
             <!-- Mensagens de feedback de cadastro -->
-            <?php if (isset($error)) { echo "<div class='alert alert-error'>$error</div>"; } ?>
-            <?php if (isset($success)) { echo "<div class='alert alert-success'>$success</div>"; } ?>
+            <?php 
+            // Exibir mensagens de retorno do processamento
+            if (isset($_GET['success']) && $_GET['success'] == '1') {
+                echo "<div class='alert alert-success'>Cadastro realizado com sucesso!</div>";
+            }
+            if (isset($_GET['error'])) {
+                $error_message = htmlspecialchars($_GET['error']);
+                echo "<div class='alert alert-error'>$error_message</div>";
+            }
+            ?>
             <!-- Fim das mensagens de feedback de cadastro -->
 
-            <form id="signupForm" method="POST" action="">
+            <form id="signupForm" method="POST" action="processa_cadastro.php">
               <div class="mb-3">
                 <label for="username" class="form-label">Nome de usuário</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Escolha um nome de usuário" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Escolha um nome de usuário" 
+                       value="<?php echo isset($_GET['username']) ? htmlspecialchars($_GET['username']) : ''; ?>" required>
                 <div class="form-note">Mínimo de 4 caracteres</div>
               </div>
               
               <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Seu e-mail" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Seu e-mail" 
+                       value="<?php echo isset($_GET['email']) ? htmlspecialchars($_GET['email']) : ''; ?>" required>
               </div>
               
               <div class="mb-3">
@@ -146,7 +77,7 @@ if (!isset($error)) {
                 <div class="password-strength">
                   <div class="password-strength-bar" id="passwordStrength"></div>
                 </div>
-                <div class="form-note">Mínimo de 8 caracteres, incluindo números e letras maiúsculas e minúsculas</div>
+                <div class="form-note">Mínimo de 8 caracteres, incluindo números e letras</div>
               </div>
               
               <div class="mb-3">

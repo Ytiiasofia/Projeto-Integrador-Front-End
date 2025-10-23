@@ -9,20 +9,24 @@ if (isset($_POST['login'])) {
     $usuario = mysqli_real_escape_string($con, $_POST['usuario']);
     $senha = $_POST['senha'];
 
-    // Busca o usuário pelo nome ou email
-    $sql = "SELECT * FROM usuarios WHERE email = '$usuario' OR nome_usuario = '$usuario'";
-    $result = mysqli_query($con, $sql);
-
-    if (!$result) {
-        die("Erro na consulta SQL: " . mysqli_error($con));
+    // Busca o usuário pelo nome ou email usando prepared statement
+    $sql = "SELECT * FROM usuarios WHERE email = ? OR nome_usuario = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    
+    if (!$stmt) {
+        die("Erro na preparação da consulta: " . mysqli_error($con));
     }
+    
+    mysqli_stmt_bind_param($stmt, "ss", $usuario, $usuario);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
     // Verifica se encontrou um usuário
     if (mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
 
-        // Verficação de senha sem o HASH
-        if ($senha === $row['senha']) {
+        // Verificação de senha COM HASH usando password_verify()
+        if (password_verify($senha, $row['senha'])) {
             $_SESSION['usuario_id'] = $row['usuario_id'];
             $_SESSION['usuario_nome'] = $row['nome_usuario'];
             $_SESSION['is_admin'] = $row['is_admin'];
@@ -43,8 +47,13 @@ if (isset($_POST['login'])) {
         header("Location: ../UserAnonimo/contact.php?status=erro");
         exit();
     }
+    
+    mysqli_stmt_close($stmt);
 } else {
     header("Location: ../UserAnonimo/contact.php");
     exit();
 }
+
+// Fechar conexão
+mysqli_close($con);
 ?>
