@@ -88,9 +88,6 @@ require_once __DIR__ . '/../Include/menuADM.php';
                 </div>
                 <h2 class="mt-3" id="profile-name"><?php echo htmlspecialchars($usuario['nome_usuario']); ?></h2>
                 <p class="text-muted">Membro desde <?php echo $data_cadastro; ?></p>
-                <?php if ($usuario['is_admin'] == 1): ?>
-                    <span class="badge bg-primary">Administrador</span>
-                <?php endif; ?>
             </div>
               
               <form>

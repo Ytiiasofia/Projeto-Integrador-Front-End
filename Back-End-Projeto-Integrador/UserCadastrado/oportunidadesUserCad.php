@@ -56,7 +56,7 @@
   <?php
     require("../Include/scriptScr.php");
   ?>
-<script src="../UserADM/scriptBusca.js"></script>
+<script src="../Include/scriptBusca.js"></script>
 
 </body>
 </html>

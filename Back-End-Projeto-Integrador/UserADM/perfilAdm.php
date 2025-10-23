@@ -1,3 +1,37 @@
+<?php
+session_start();
+require("../Include/conexao.php");
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: ../login/login.php");
+    exit();
+}
+
+// Buscar dados do usuário administrador
+$usuario_id = $_SESSION['usuario_id'];
+$sql = "SELECT usuario_id, nome_usuario, email, is_admin, data_cadastro FROM usuarios WHERE usuario_id = ?";
+$stmt = mysqli_prepare($con, $sql);
+mysqli_stmt_bind_param($stmt, "i", $usuario_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$usuario = mysqli_fetch_assoc($result);
+
+if (!$usuario) {
+    echo "Usuário não encontrado!";
+    exit();
+}
+
+// Formatar data de cadastro
+if (isset($usuario['data_cadastro']) && !empty($usuario['data_cadastro'])) {
+    $data_cadastro = date('F Y', strtotime($usuario['data_cadastro']));
+    $meses_ingles = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    $meses_portugues = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+    $data_cadastro = str_replace($meses_ingles, $meses_portugues, $data_cadastro);
+} else {
+    $data_cadastro = "Janeiro 2022"; // Placeholder
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -69,6 +103,24 @@
       background-color: #6a62d4;
       border-color: #5a52c4;
     }
+    
+    .readonly-field {
+      position: relative;
+    }
+    
+    .readonly-field .input-group-text {
+      background-color: #f8f9fa;
+      border: 1px solid #ced4da;
+    }
+    
+    .security-note {
+      background-color: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 4px;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 0.875rem;
+    }
   </style>
 </head>
 
@@ -97,19 +149,17 @@
           <div class="col-lg-8">
             <div class="profile-card shadow-sm p-4 rounded">
               <div class="text-center mb-4">
-                <!-- Foto de perfil circular com botão de edição -->
+                <!-- Foto de perfil circular -->
                 <div class="position-relative d-inline-block">
                   <div class="profile-picture-circle" style="width: 150px; height: 150px;">
-                    <img src="https://via.placeholder.com/150" class="rounded-circle img-fluid border" style="width: 100%; height: 100%; object-fit: cover;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-circle img-fluid border">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
                   </div>
-                  <button class="btn btn-light rounded-circle position-absolute bottom-0 end-0" 
-                          style="width: 36px; height: 36px;"
-                          data-bs-toggle="modal" data-bs-target="#editPhotoModal">
-                    <i class="bi bi-pencil-fill"></i>
-                  </button>
                 </div>
-                <h2 class="mt-3">Admin She Innovates <span class="admin-badge">ADMIN</span></h2>
-                <p class="text-muted">Administrador desde Janeiro 2022</p>
+                <h2 class="mt-3"><?php echo htmlspecialchars($usuario['nome_usuario']); ?> <span class="admin-badge">ADMIN</span></h2>
+                <p class="text-muted">Administrador desde <?php echo $data_cadastro; ?></p>
               </div>
               
               <div class="admin-section">
@@ -145,26 +195,52 @@
               </div>
               
               <form>
-                <!-- Email -->
+                <!-- Nome de Usuário (apenas leitura) -->
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <div class="input-group">
-                    <input type="email" class="form-control" id="email" value="admin@sheinnovates.com" readonly>
-                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editEmailModal">
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
+                  <label for="username" class="form-label">Nome de Usuário</label>
+                  <div class="input-group readonly-field">
+                    <input type="text" class="form-control" id="username" value="<?php echo htmlspecialchars($usuario['nome_usuario']); ?>" readonly>
+                    <span class="input-group-text">
+                      <i class="bi bi-lock-fill text-muted" title="Nome de usuário não pode ser alterado"></i>
+                    </span>
+                  </div>
+                  <div class="form-text text-muted">
+                    <small>O nome de usuário do administrador não pode ser alterado por questões de segurança.</small>
                   </div>
                 </div>
                 
-                <!-- Senha -->
+                <!-- Email (apenas leitura) -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <div class="input-group readonly-field">
+                    <input type="email" class="form-control" id="email" value="<?php echo htmlspecialchars($usuario['email']); ?>" readonly>
+                    <span class="input-group-text">
+                      <i class="bi bi-lock-fill text-muted" title="Email não pode ser alterado"></i>
+                    </span>
+                  </div>
+                  <div class="form-text text-muted">
+                    <small>O email do administrador não pode ser alterado por questões de segurança.</small>
+                  </div>
+                </div>
+                
+                <!-- Senha (apenas visualização) -->
                 <div class="mb-3">
                   <label for="password" class="form-label">Senha</label>
-                  <div class="input-group">
-                    <input type="password" class="form-control" id="password" value="********" readonly>
-                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editPasswordModal">
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
+                  <div class="input-group readonly-field">
+                    <input type="password" class="form-control" id="password" value="••••••••" readonly>
+                    <span class="input-group-text">
+                      <i class="bi bi-lock-fill text-muted" title="Senha não pode ser alterada por aqui"></i>
+                    </span>
                   </div>
+                  <div class="form-text text-muted">
+                    <small>Para alterar a senha, entre em contato com o suporte técnico.</small>
+                  </div>
+                </div>
+
+                <!-- Nota de segurança -->
+                <div class="security-note">
+                  <h6><i class="bi bi-shield-lock"></i> Nota de Segurança</h6>
+                  <p class="mb-0">A conta de administrador possui configurações bloqueadas para garantir a segurança do sistema. Para alterar qualquer informação da conta administrativa, entre em contato com a equipe de suporte técnico.</p>
                 </div>
           
                 <!-- Botão de Logout -->
@@ -180,110 +256,6 @@
       </div>
     </section><!-- End Profile Container -->
   </main>
-
-  <!-- Modals Section -->
-  <!-- Modal para edição da foto -->
-  <div class="modal fade" id="editPhotoModal" tabindex="-1" aria-labelledby="editPhotoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editPhotoModalLabel">Alterar Foto de Perfil</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="text-center mb-3">
-            <img id="currentPhoto" src="https://via.placeholder.com/150" 
-                 class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
-          </div>
-          <div class="mb-3">
-            <label for="photoUpload" class="form-label">Faça upload</label>
-            <input class="form-control" type="file" id="photoUpload" accept="image/*">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="savePhotoBtn">Salvar Alterações</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal para edição do nome de usuário -->
-  <div class="modal fade" id="editUsernameModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Alterar Nome de Usuário</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="newUsername" class="form-label">Novo nome de usuário</label>
-            <input type="text" class="form-control" id="newUsername" value="admin_sheinnovates">
-            <div class="form-text">O nome de usuário deve conter entre 3-20 caracteres</div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="saveUsernameBtn">Salvar Alterações</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal para edição de email -->
-  <div class="modal fade" id="editEmailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Alterar Email</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="newEmail" class="form-label">Novo email</label>
-            <input type="email" class="form-control" id="newEmail" value="admin@sheinnovates.com">
-            <div class="form-text">Digite um email válido</div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="saveEmailBtn">Salvar Alterações</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal para edição de senha -->
-  <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Alterar Senha</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="currentPassword" class="form-label">Senha atual</label>
-            <input type="password" class="form-control" id="currentPassword">
-          </div>
-          <div class="mb-3">
-            <label for="newPassword" class="form-label">Nova senha</label>
-            <input type="password" class="form-control" id="newPassword">
-            <div class="form-text">A senha deve conter pelo menos 12 caracteres, incluindo números, letras e caracteres especiais</div>
-          </div>
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirme a nova senha</label>
-            <input type="password" class="form-control" id="confirmPassword">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="savePasswordBtn">Salvar Alterações</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 <footer id="footer" class="footer light-background">
   <?php
@@ -302,77 +274,36 @@
   <!-- Admin Profile Script -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Nome de usuário
-      const saveUsernameBtn = document.getElementById('saveUsernameBtn');
-      if (saveUsernameBtn) {
-        saveUsernameBtn.addEventListener('click', function() {
-          const newUsername = document.getElementById('newUsername').value;
-          document.getElementById('username').value = newUsername;
-          
-          // Atualiza o nome abaixo da foto
-          const profileName = document.querySelector('.profile-card h2');
-          if (profileName) {
-            profileName.textContent = newUsername + ' <span class="admin-badge">ADMIN</span>';
+      // Função para mostrar mensagem
+      function showMessage(message, isSuccess = true) {
+        let messageDiv = document.getElementById('message-alert');
+        if (!messageDiv) {
+          messageDiv = document.createElement('div');
+          messageDiv.id = 'message-alert';
+          messageDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
+          messageDiv.style.position = 'fixed';
+          messageDiv.style.top = '20px';
+          messageDiv.style.right = '20px';
+          messageDiv.style.zIndex = '9999';
+          messageDiv.style.minWidth = '300px';
+          messageDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          `;
+          document.body.appendChild(messageDiv);
+        } else {
+          messageDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
+          messageDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          `;
+        }
+        
+        setTimeout(() => {
+          if (messageDiv && messageDiv.parentNode) {
+            messageDiv.parentNode.removeChild(messageDiv);
           }
-          
-          bootstrap.Modal.getInstance(document.getElementById('editUsernameModal')).hide();
-        });
-      }
-
-      // Email
-      const saveEmailBtn = document.getElementById('saveEmailBtn');
-      if (saveEmailBtn) {
-        saveEmailBtn.addEventListener('click', function() {
-          const newEmail = document.getElementById('newEmail').value;
-          document.getElementById('email').value = newEmail;
-          bootstrap.Modal.getInstance(document.getElementById('editEmailModal')).hide();
-        });
-      }
-      
-      // Biografia
-      const saveBioBtn = document.getElementById('saveBioBtn');
-      if (saveBioBtn) {
-        saveBioBtn.addEventListener('click', function() {
-          const newBio = document.getElementById('newBio').value;
-          document.getElementById('bio').value = newBio;
-          bootstrap.Modal.getInstance(document.getElementById('editBioModal')).hide();
-        });
-      }
-
-      // Validação de senha em tempo real - Versão mais rigorosa para admin
-      const newPasswordInput = document.getElementById('newPassword');
-      if (newPasswordInput) {
-        newPasswordInput.addEventListener('input', function() {
-          const password = this.value;
-          const feedback = this.nextElementSibling;
-          
-          if (password.length < 12) {
-            feedback.textContent = 'A senha deve ter pelo menos 12 caracteres';
-            feedback.style.color = 'red';
-          } else if (!/\d/.test(password)) {
-            feedback.textContent = 'A senha deve conter números';
-            feedback.style.color = 'red';
-          } else if (!/[a-zA-Z]/.test(password)) {
-            feedback.textContent = 'A senha deve conter letras';
-            feedback.style.color = 'red';
-          } else if (!/[^a-zA-Z0-9]/.test(password)) {
-            feedback.textContent = 'A senha deve conter caracteres especiais';
-            feedback.style.color = 'red';
-          } else {
-            feedback.textContent = 'Senha forte';
-            feedback.style.color = 'green';
-          }
-        });
-      }
-
-      // Logout
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-          if (confirm('Tem certeza que deseja sair da sua conta de administrador?')) {
-            window.location.href = '../UserAnonimo/index.php'; 
-          }
-        });
+        }, 5000);
       }
       
       // Botão de Backup
@@ -392,7 +323,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
                   </div>
                   <div class="toast-body">
-                    Backup do sistema realizado com sucesso em 19/07/2023 às ${new Date().toLocaleTimeString()}.
+                    Backup do sistema realizado com sucesso em <?php echo date('d/m/Y'); ?> às ${new Date().toLocaleTimeString()}.
                   </div>
                 </div>
               </div>

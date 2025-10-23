@@ -116,7 +116,7 @@
 
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
 <?php require("../Include/scriptScr.php"); ?>
-<script src="scriptBusca.js"></script>
+<script src="../Include/scriptBusca.js"></script>
 
 </body>
 </html>
