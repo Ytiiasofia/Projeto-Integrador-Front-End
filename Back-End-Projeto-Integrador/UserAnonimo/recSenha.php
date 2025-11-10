@@ -149,8 +149,7 @@
   ?>
   
   <?php
-    require("../Include/scriptScr.php");
-  ?>
+require("../includeJS/scriptScr.php");  ?>
 
   <!-- Recovery Form Script -->
   <script>

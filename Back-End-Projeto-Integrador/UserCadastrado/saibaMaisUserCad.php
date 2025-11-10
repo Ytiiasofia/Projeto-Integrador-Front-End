@@ -85,8 +85,7 @@
   ?>
 
   <?php
-    require("../Include/scriptScr.php");
-  ?>
+require("../includeJS/scriptScr.php");  ?>
 
 </body>
 

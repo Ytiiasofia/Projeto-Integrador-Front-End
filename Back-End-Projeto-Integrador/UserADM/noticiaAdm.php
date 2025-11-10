@@ -415,7 +415,7 @@
   ?>
 
   <?php
-    require("../Include/scriptScr.php");
+    require("../includeJS/scriptScr.php");
   ?>
   <!-- Script para a seção de adicionar notícias -->
   <script>

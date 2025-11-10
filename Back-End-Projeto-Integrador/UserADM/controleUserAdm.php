@@ -136,8 +136,7 @@ mysqli_close($con);
 </footer>
 
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
-<?php require("../Include/scriptScr.php"); ?>
-
+<?php require("../includeJS/scriptScr.php"); ?>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const deleteButtons = document.querySelectorAll('.delete-user');

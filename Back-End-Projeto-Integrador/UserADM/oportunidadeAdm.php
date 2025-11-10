@@ -115,8 +115,8 @@
 </footer>
 
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
-<?php require("../Include/scriptScr.php"); ?>
-<script src="../Include/scriptBusca.js"></script>
+<?php require("../includeJS/scriptScr.php"); ?>
+<script src="../includeJS/scriptBusca.js"></script>
 
 </body>
 </html>

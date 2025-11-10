@@ -268,7 +268,7 @@ if (isset($usuario['data_cadastro']) && !empty($usuario['data_cadastro'])) {
   ?>
 
   <?php
-    require("../Include/scriptScr.php");
+    require("../includeJS/scriptScr.php");
   ?>
 
   <!-- Admin Profile Script -->

@@ -265,8 +265,7 @@
     ?>
 
     <?php
-        require("../Include/scriptScr.php");
-    ?>
+    require("../includeJS/scriptScr.php");    ?>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Modal para Publicar

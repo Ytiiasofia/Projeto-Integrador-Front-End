@@ -112,8 +112,7 @@
 </footer>
 
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
-<?php require("../Include/scriptScr.php"); ?>
-
+<?php require("../includeJS/scriptScr.php"); ?>
 <!-- Script para barra de força da senha -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {

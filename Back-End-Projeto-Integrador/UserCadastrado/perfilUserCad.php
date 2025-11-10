@@ -258,8 +258,7 @@ require_once __DIR__ . '/../Include/menuADM.php';
   ?>
 
   <?php
-    require("../Include/scriptScr.php");
-  ?>
+require("../includeJS/scriptScr.php");  ?>
 
   <!-- Profile Script -->
   <script>
