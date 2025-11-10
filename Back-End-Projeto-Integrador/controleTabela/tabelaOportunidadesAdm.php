@@ -154,7 +154,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <form method="POST" action="deleteOportunidades.php" style="display:inline;">
+                    <form method="POST" action="../controleTabela/deleteOportunidades.php" style="display:inline;">
                         <input type="hidden" name="oportunidade_id" id="oportunidadeIdToDelete">
                         <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Excluir</button>
                     </form>

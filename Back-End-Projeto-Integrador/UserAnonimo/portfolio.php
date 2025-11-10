@@ -37,9 +37,9 @@
         <div class="opportunities-container">
             <div class="container">
                 <!-- Formulário de Busca -->
-                <?php require("../UserADM/buscaTabelaOportunidades.php"); ?>
+                <?php require("../controleTabela/buscaTabelaOportunidades.php"); ?>
                 <!-- Tabela de Oportunidades -->
-                <?php require("../UserCadastrado/tabelaoportunidadesUserCad.php"); ?>
+                <?php require("../controleTabela/tabelaoportunidadesUserCad.php"); ?>
             </div>
         </div>
     </main>
@@ -56,6 +56,6 @@
   
   <?php
 require("../includeJS/scriptScr.php");  ?>
-<script src="../Include/scriptBusca.js"></script>
+<script src="../includeJS/scriptBusca.js"></script>
 </body>
 </html>
