@@ -57,7 +57,7 @@
             ?>
             <!-- Fim das mensagens de feedback de cadastro -->
 
-            <form id="signupForm" method="POST" action="processa_cadastro.php">
+            <form id="signupForm" method="POST" action="../login/processa_cadastro.php">
               <div class="mb-3">
                 <label for="username" class="form-label">Nome de usuário</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Escolha um nome de usuário" 
@@ -114,26 +114,6 @@
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
 <?php require("../includeJS/scriptScr.php"); ?>
 <!-- Script para barra de força da senha -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const passwordInput = document.getElementById('password');
-  const passwordStrength = document.getElementById('passwordStrength');
-  
-  passwordInput.addEventListener('input', function() {
-    const password = this.value;
-    let strength = 0;
-    if (password.length >= 8) strength += 25;
-    if (/[A-Z]/.test(password)) strength += 25;
-    if (/[0-9]/.test(password)) strength += 25;
-    if (/[^A-Za-z0-9]/.test(password)) strength += 25;
-    strength = Math.min(strength, 100);
-    passwordStrength.style.width = strength + '%';
-    if (strength < 40) passwordStrength.style.backgroundColor = '#dc3545';
-    else if (strength < 70) passwordStrength.style.backgroundColor = '#fd7e14';
-    else passwordStrength.style.backgroundColor = '#28a745';
-  });
-});
-</script>
-
+<script src="../includeJS/barraDeForcaSenha.js"></script>
 </body>
 </html>

@@ -77,7 +77,7 @@ if (empty($errors)) {
 
     if ($stmt->execute()) {
         // Sucesso - redireciona com mensagem de sucesso
-        header("Location: cadastro.php?success=1");
+        header("Location: ../UserAnonimo/cadastro.php?success=1");
         exit();
     } else {
         $errors[] = "Erro ao cadastrar: " . $stmt->error;
@@ -90,7 +90,7 @@ if (!empty($errors)) {
     $error_string = urlencode(implode(" ", $errors));
     $username_param = urlencode($nome_usuario);
     $email_param = urlencode($email);
-    header("Location: cadastro.php?error=$error_string&username=$username_param&email=$email_param");
+    header("Location: ../UserAnonimo/cadastro.php?error=$error_string&username=$username_param&email=$email_param");
     exit();
 }
 

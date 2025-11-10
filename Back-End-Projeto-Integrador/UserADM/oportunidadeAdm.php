@@ -73,16 +73,16 @@
 
         <?php 
             // Seção para Adicionar Nova Oportunidade
-            require("cadastroOportunidades.php");
+            require("../controleTabela/cadastroOportunidades.php");
         ?>
 
             <!-- Formulário de Busca -->
         <?php 
-            require("buscaTabelaOportunidades.php");
+            require("../controleTabela/buscaTabelaOportunidades.php");
         ?>
 
             <?php
-                require("tabelaOportunidadesAdm.php");
+                require("../controleTabela/tabelaOportunidadesAdm.php");
             ?>
 
                     <!-- Paginação -->

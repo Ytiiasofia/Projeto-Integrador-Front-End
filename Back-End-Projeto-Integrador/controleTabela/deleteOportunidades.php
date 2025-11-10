@@ -29,6 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oportunidade_id'])) {
 }
 
 // Redirecionar de volta para a página de oportunidades
-header("Location: oportunidadeADM.php");
+header("Location: ../UserADM/oportunidadeAdm.php");
 exit();
 ?>
