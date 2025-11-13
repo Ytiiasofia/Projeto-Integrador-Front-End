@@ -153,6 +153,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_stmt_close($stmt_update);
             break;
             
+        case 'update_photo':
+            // Diretório para salvar as fotos
+            $upload_dir = "../uploads/fotos_perfil/";
+            
+            // Criar diretório se não existir
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+            
+            // Verificar se arquivo foi enviado
+            if (!isset($_FILES['foto_perfil']) || $_FILES['foto_perfil']['error'] !== UPLOAD_ERR_OK) {
+                $response['message'] = 'Erro no upload do arquivo';
+                break;
+            }
+            
+            $file = $_FILES['foto_perfil'];
+            
+            // Validar tipo de arquivo
+            $allowed_types = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $file['tmp_name']);
+            finfo_close($finfo);
+            
+            if (!in_array($mime_type, $allowed_types)) {
+                $response['message'] = 'Tipo de arquivo não permitido';
+                break;
+            }
+            
+            // Validar tamanho do arquivo (2MB)
+            if ($file['size'] > 2 * 1024 * 1024) {
+                $response['message'] = 'Arquivo muito grande. Máximo 2MB.';
+                break;
+            }
+            
+            // Gerar nome único para o arquivo
+            $extensao = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $nome_arquivo = 'perfil_' . $usuario_id . '_' . time() . '.' . $extensao;
+            $caminho_completo = $upload_dir . $nome_arquivo;
+            
+            // Mover arquivo para o diretório de uploads
+            if (move_uploaded_file($file['tmp_name'], $caminho_completo)) {
+                
+                // Iniciar transação
+                mysqli_begin_transaction($con);
+                
+                try {
+                    // Marcar todas as fotos anteriores como não atuais
+                    $sql_desativar = "UPDATE usuario_fotos SET is_atual = 0 WHERE usuario_id = ?";
+                    $stmt_desativar = mysqli_prepare($con, $sql_desativar);
+                    mysqli_stmt_bind_param($stmt_desativar, "i", $usuario_id);
+                    mysqli_stmt_execute($stmt_desativar);
+                    mysqli_stmt_close($stmt_desativar);
+                    
+                    // Inserir nova foto
+                    $sql_inserir = "INSERT INTO usuario_fotos (usuario_id, nome_arquivo, caminho_arquivo, is_atual) VALUES (?, ?, ?, 1)";
+                    $stmt_inserir = mysqli_prepare($con, $sql_inserir);
+                    mysqli_stmt_bind_param($stmt_inserir, "iss", $usuario_id, $nome_arquivo, $caminho_completo);
+                    
+                    if (mysqli_stmt_execute($stmt_inserir)) {
+                        mysqli_commit($con);
+                        $response['success'] = true;
+                        $response['message'] = 'Foto de perfil atualizada com sucesso!';
+                        $response['foto_url'] = $caminho_completo;
+                    } else {
+                        throw new Exception('Erro ao inserir foto no banco de dados');
+                    }
+                    
+                    mysqli_stmt_close($stmt_inserir);
+                    
+                } catch (Exception $e) {
+                    mysqli_rollback($con);
+                    // Deletar arquivo se houve erro no banco
+                    if (file_exists($caminho_completo)) {
+                        unlink($caminho_completo);
+                    }
+                    $response['message'] = 'Erro ao salvar foto: ' . $e->getMessage();
+                }
+                
+            } else {
+                $response['message'] = 'Erro ao salvar arquivo';
+            }
+            break;
+            
         default:
             $response['message'] = 'Ação inválida';
     }

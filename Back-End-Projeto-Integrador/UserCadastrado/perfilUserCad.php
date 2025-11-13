@@ -22,6 +22,19 @@ if (!$usuario) {
     exit();
 }
 
+// Buscar foto de perfil atual do usuário
+$sql_foto = "SELECT nome_arquivo, caminho_arquivo FROM usuario_fotos WHERE usuario_id = ? AND is_atual = 1 ORDER BY data_upload DESC LIMIT 1";
+$stmt_foto = mysqli_prepare($con, $sql_foto);
+mysqli_stmt_bind_param($stmt_foto, "i", $usuario_id);
+mysqli_stmt_execute($stmt_foto);
+$result_foto = mysqli_stmt_get_result($stmt_foto);
+$foto_perfil = mysqli_fetch_assoc($result_foto);
+
+$foto_url = "../assets/img/avatar-placeholder.png"; // Foto padrão
+if ($foto_perfil && file_exists($foto_perfil['caminho_arquivo'])) {
+    $foto_url = $foto_perfil['caminho_arquivo'];
+}
+
 // Formatar data de cadastro
 if (isset($usuario['data_cadastro']) && !empty($usuario['data_cadastro'])) {
     $data_cadastro = date('F Y', strtotime($usuario['data_cadastro']));
@@ -75,10 +88,11 @@ require_once __DIR__ . '/../Include/menuADM.php';
                 <!-- Foto de perfil circular com botão de edição -->
                 <div class="position-relative d-inline-block">
                 <div class="profile-picture-circle" style="width: 150px; height: 150px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-circle img-fluid border">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
+                    <img id="currentProfilePhoto" src="<?php echo $foto_url; ?>" 
+                         class="rounded-circle img-fluid border" 
+                         style="width: 150px; height: 150px; object-fit: cover;"
+                         alt="Foto de perfil de <?php echo htmlspecialchars($usuario['nome_usuario']); ?>"
+                         onerror="this.src='../assets/img/avatar-placeholder.png'">
                 </div>
                 <button class="btn btn-light rounded-circle position-absolute bottom-0 end-0" 
                         style="width: 36px; height: 36px;"
@@ -150,13 +164,19 @@ require_once __DIR__ . '/../Include/menuADM.php';
         </div>
         <div class="modal-body">
           <div class="text-center mb-3">
-            <img id="currentPhoto" src="https://via.placeholder.com/150" 
-                 class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+            <img id="currentPhotoPreview" src="<?php echo $foto_url; ?>" 
+                 class="rounded-circle mb-3" 
+                 style="width: 120px; height: 120px; object-fit: cover;"
+                 onerror="this.src='../assets/img/avatar-placeholder.png'">
           </div>
-          <div class="mb-3">
-            <label for="photoUpload" class="form-label">Faça upload</label>
-            <input class="form-control" type="file" id="photoUpload" accept="image/*">
-          </div>
+          <form id="photoUploadForm" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="photoUpload" class="form-label">Selecione uma imagem</label>
+              <input class="form-control" type="file" id="photoUpload" name="foto_perfil" accept="image/jpeg,image/png,image/jpg,image/gif" required>
+              <div class="form-text">Formatos permitidos: JPG, PNG, GIF. Tamanho máximo: 2MB</div>
+              <div id="photoFeedback" class="form-text"></div>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -295,6 +315,103 @@ require("../includeJS/scriptScr.php");  ?>
             messageDiv.parentNode.removeChild(messageDiv);
           }
         }, 5000);
+      }
+
+      // Upload e preview de foto
+      const photoUpload = document.getElementById('photoUpload');
+      const currentPhotoPreview = document.getElementById('currentPhotoPreview');
+      const savePhotoBtn = document.getElementById('savePhotoBtn');
+
+      if (photoUpload) {
+          photoUpload.addEventListener('change', function(e) {
+              const file = e.target.files[0];
+              const feedback = document.getElementById('photoFeedback');
+              
+              if (file) {
+                  // Validar tipo de arquivo
+                  const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                  if (!validTypes.includes(file.type)) {
+                      feedback.textContent = 'Formato de arquivo inválido. Use JPG, PNG ou GIF.';
+                      feedback.style.color = 'red';
+                      savePhotoBtn.disabled = true;
+                      return;
+                  }
+                  
+                  // Validar tamanho do arquivo (2MB)
+                  if (file.size > 2 * 1024 * 1024) {
+                      feedback.textContent = 'Arquivo muito grande. Máximo 2MB.';
+                      feedback.style.color = 'red';
+                      savePhotoBtn.disabled = true;
+                      return;
+                  }
+                  
+                  feedback.textContent = 'Arquivo válido';
+                  feedback.style.color = 'green';
+                  savePhotoBtn.disabled = false;
+                  
+                  // Preview da imagem
+                  const reader = new FileReader();
+                  reader.onload = function(e) {
+                      currentPhotoPreview.src = e.target.result;
+                  }
+                  reader.readAsDataURL(file);
+              }
+          });
+      }
+
+      // Salvar foto
+      if (savePhotoBtn) {
+          savePhotoBtn.addEventListener('click', function() {
+              const fileInput = document.getElementById('photoUpload');
+              const file = fileInput.files[0];
+              
+              if (!file) {
+                  showMessage('Selecione uma imagem para upload', false);
+                  return;
+              }
+              
+              const formData = new FormData();
+              formData.append('action', 'update_photo');
+              formData.append('foto_perfil', file);
+              
+              fetch('atualizar_perfil.php', {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      // Atualizar a foto na página
+                      document.getElementById('currentProfilePhoto').src = data.foto_url + '?t=' + new Date().getTime();
+                      bootstrap.Modal.getInstance(document.getElementById('editPhotoModal')).hide();
+                      showMessage(data.message, true);
+                      
+                      // Resetar o formulário
+                      document.getElementById('photoUploadForm').reset();
+                      document.getElementById('photoFeedback').textContent = '';
+                  } else {
+                      showMessage(data.message, false);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  showMessage('Erro ao fazer upload da foto', false);
+              });
+          });
+      }
+
+      // Limpar feedback quando modal de foto é fechado
+      const editPhotoModal = document.getElementById('editPhotoModal');
+      if (editPhotoModal) {
+          editPhotoModal.addEventListener('hidden.bs.modal', function() {
+              document.getElementById('photoUploadForm').reset();
+              document.getElementById('photoFeedback').textContent = '';
+              savePhotoBtn.disabled = false;
+              
+              // Restaurar preview original
+              const currentProfilePhoto = document.getElementById('currentProfilePhoto').src;
+              document.getElementById('currentPhotoPreview').src = currentProfilePhoto;
+          });
       }
 
       // Validação de nome de usuário em tempo real
