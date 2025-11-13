@@ -123,11 +123,19 @@ try {
     <?php else: ?>
         <?php foreach ($posts as $post): 
             $comentarios = $controller->listarComentariosPorPost($post['post_id']);
-            $tags = $controller->getTagsDoPost($post['post_id']); // LINHA CORRIGIDA
+            $tags = $controller->getTagsDoPost($post['post_id']);
+            
+            // DEBUG TEMPORÁRIO - REMOVER DEPOIS
+            $foto_perfil = $controller->getFotoPerfilUsuario($post['usuario_id']);
+            error_log("=== DEBUG POST ===");
+            error_log("Post ID: " . $post['post_id']);
+            error_log("Usuário ID: " . $post['usuario_id']);
+            error_log("Nome Usuário: " . $post['nome_usuario']);
+            error_log("Foto retornada: " . $foto_perfil);
         ?>
             <div class="forum-post" data-aos="fade-up" id="post-<?php echo $post['post_id']; ?>">
                 <div class="d-flex mb-3">
-                    <img src="https://randomuser.me/api/portraits/women/<?php echo rand(1, 90); ?>.jpg" alt="User" class="user-avatar me-3">
+                    <img src="<?php echo htmlspecialchars($foto_perfil); ?>" alt="Foto de <?php echo htmlspecialchars($post['nome_usuario']); ?>" class="user-avatar me-3">
                     <div>
                         <h5 class="mb-1"><?php echo htmlspecialchars($post['titulo']); ?></h5>
                         <p class="text-muted small mb-0">
@@ -170,7 +178,10 @@ try {
                     <?php foreach ($comentarios_principais as $comentario): ?>
                         <div class="comment mb-3">
                             <div class="d-flex">
-                                <img src="https://randomuser.me/api/portraits/women/<?php echo rand(1, 90); ?>.jpg" alt="User" class="user-avatar me-3">
+                                <?php 
+                                $foto_comentario = $controller->getFotoPerfilUsuario($comentario['usuario_id']);
+                                ?>
+                                <img src="<?php echo htmlspecialchars($foto_comentario); ?>" alt="Foto de <?php echo htmlspecialchars($comentario['nome_usuario']); ?>" class="user-avatar me-3">
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                         <strong><?php echo htmlspecialchars($comentario['nome_usuario']); ?></strong>
@@ -192,7 +203,10 @@ try {
                                     <?php foreach ($respostas as $resposta): ?>
                                         <div class="comment-reply mt-3 ps-3 border-start">
                                             <div class="d-flex">
-                                                <img src="https://randomuser.me/api/portraits/women/<?php echo rand(1, 90); ?>.jpg" alt="User" class="user-avatar me-3">
+                                                <?php 
+                                                $foto_resposta = $controller->getFotoPerfilUsuario($resposta['usuario_id']);
+                                                ?>
+                                                <img src="<?php echo htmlspecialchars($foto_resposta); ?>" alt="Foto de <?php echo htmlspecialchars($resposta['nome_usuario']); ?>" class="user-avatar me-3">
                                                 <div>
                                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                                         <strong><?php echo htmlspecialchars($resposta['nome_usuario']); ?></strong>

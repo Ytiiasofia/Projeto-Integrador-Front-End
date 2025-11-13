@@ -165,9 +165,6 @@ if (isset($usuario['data_cadastro']) && !empty($usuario['data_cadastro'])) {
               <div class="admin-section">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <h5><i class="bi bi-graph-up"></i> Estatísticas da Plataforma</h5>
-                  <button class="btn btn-sm backup-btn" id="backupBtn">
-                    <i class="bi bi-database"></i> Fazer Backup
-                  </button>
                 </div>
                 <div class="row">
                   <div class="col-md-4">
@@ -304,42 +301,6 @@ if (isset($usuario['data_cadastro']) && !empty($usuario['data_cadastro'])) {
             messageDiv.parentNode.removeChild(messageDiv);
           }
         }, 5000);
-      }
-      
-      // Botão de Backup
-      const backupBtn = document.getElementById('backupBtn');
-      if (backupBtn) {
-        backupBtn.addEventListener('click', function() {
-          this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Fazendo backup...';
-          this.disabled = true;
-          
-          // Simulação de backup
-          setTimeout(() => {
-            const toastHTML = `
-              <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-                <div id="backupToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-                  <div class="toast-header bg-success text-white">
-                    <strong class="me-auto"><i class="bi bi-check-circle-fill"></i> Backup concluído</strong>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
-                  </div>
-                  <div class="toast-body">
-                    Backup do sistema realizado com sucesso em <?php echo date('d/m/Y'); ?> às ${new Date().toLocaleTimeString()}.
-                  </div>
-                </div>
-              </div>
-            `;
-            
-            document.body.insertAdjacentHTML('beforeend', toastHTML);
-            
-            setTimeout(() => {
-              const toast = document.getElementById('backupToast');
-              if (toast) toast.remove();
-            }, 5000);
-            
-            this.innerHTML = '<i class="bi bi-database"></i> Fazer Backup';
-            this.disabled = false;
-          }, 2000);
-        });
       }
     });
   </script>

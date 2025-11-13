@@ -3,8 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../Include/conexao.php'; // Caminho corrigido
-require_once __DIR__ . '/forumModel.php'; // Agora no mesmo diretório
+require_once __DIR__ . '/../Include/conexao.php';
+require_once __DIR__ . '/forumModel.php';
 
 class ForumController {
     private $forumModel;
@@ -12,6 +12,15 @@ class ForumController {
     public function __construct() {
         $this->forumModel = new ForumModel();
     }
+    
+    public function getFotoPerfilUsuario($usuario_id) {
+        return $this->forumModel->getFotoPerfilUsuario($usuario_id);
+    }
+    
+    public function getTagsDoPost($post_id) {
+        return $this->forumModel->getTagsDoPost($post_id);
+    }
+    
     public function criarPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_SESSION['usuario_id'])) {
@@ -42,9 +51,7 @@ class ForumController {
             exit;
         }
     }
-    public function getTagsDoPost($post_id) {
-        return $this->forumModel->getTagsDoPost($post_id);
-    }
+    
     public function adicionarComentario() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_SESSION['usuario_id'])) {

@@ -26,7 +26,44 @@ class ForumModel {
             throw $e;
         }
     }
-    
+
+public function getFotoPerfilUsuario($usuario_id) {
+    try {
+        $sql = "SELECT caminho_arquivo 
+                FROM usuario_fotos 
+                WHERE usuario_id = ? AND is_atual = 1 
+                ORDER BY data_upload DESC 
+                LIMIT 1";
+        
+        error_log("=== BUSCA FOTO USUÁRIO {$usuario_id} ===");
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $usuario_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $foto = $result->fetch_assoc();
+        $stmt->close();
+        
+        if ($foto && !empty($foto['caminho_arquivo'])) {
+            $caminho_bd = $foto['caminho_arquivo'];
+            error_log("✅ FOTO ENCONTRADA - Caminho no BD: '{$caminho_bd}'");
+            
+            // Converte o caminho do BD para caminho web
+            $caminho_limpo = ltrim($caminho_bd, './');
+            $caminho_web = "/Back-End-Projeto-Integrador/" . $caminho_limpo;
+            
+            error_log("✅ Caminho web final: '{$caminho_web}'");
+            return $caminho_web;
+        } else {
+            error_log("❌ NENHUMA FOTO - Usuário {$usuario_id} não tem foto na tabela usuario_fotos");
+            return "/Back-End-Projeto-Integrador/assets/img/avatar-placeholder.png";
+        }
+        
+    } catch (Exception $e) {
+        error_log("❌ ERRO na tabela usuario_fotos: " . $e->getMessage());
+        return "/Back-End-Projeto-Integrador/assets/img/avatar-placeholder.png";
+    }
+}
         public function criarPost($usuario_id, $titulo, $conteudo, $tags) {
             try {
                 // Inserir o post
