@@ -162,16 +162,6 @@ try {
                         </div>
                     </div>
 
-                    <!-- Indicador de Busca -->
-                    <?php if (!empty($termo_busca)): ?>
-                    <div class="alert alert-info mb-4" role="alert" data-aos="fade-up">
-                        <i class="bi bi-search me-2"></i>
-                        Resultados da busca por: <strong>"<?php echo htmlspecialchars($termo_busca); ?>"</strong>
-                        <span class="badge bg-primary ms-2"><?php echo count($posts); ?> resultado(s)</span>
-                        <a href="?" class="btn btn-sm btn-outline-primary ms-2">Limpar busca</a>
-                    </div>
-                    <?php endif; ?>
-
                     <!-- Lista de Posts -->
                     <div id="posts-container">
                         <?php if (empty($posts)): ?>
