@@ -9,13 +9,19 @@ if (session_status() === PHP_SESSION_NONE) {
 // Inicializar a variável $posts como array vazio
 $posts = [];
 
+// Verificar qual filtro está ativo
+$filtro_atual = isset($_GET['filtro']) ? $_GET['filtro'] : 'recentes';
+
 try {
     require_once __DIR__ . '/../controleForum/postsForum.php';
     $controller = new ForumController();
-    $posts = $controller->listarPosts();
+    
+    // Carregar posts com filtro
+    $posts = $controller->listarPostsFiltrados($filtro_atual);
     
     // DEBUG
     error_log("Controller criado com sucesso");
+    error_log("Filtro atual: " . $filtro_atual);
     error_log("Total de posts: " . count($posts));
     
 } catch (Exception $e) {
@@ -100,12 +106,19 @@ try {
                         <div class="d-flex justify-content-between mb-4" data-aos="fade-up">
                             <div class="dropdown">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filtrar por
+                                    <?php 
+                                    switch($filtro_atual) {
+                                        case 'recentes': echo 'Mais recentes'; break;
+                                        case 'populares': echo 'Mais populares'; break;
+                                        case 'sem_respostas': echo 'Sem respostas'; break;
+                                        default: echo 'Filtrar por'; break;
+                                    }
+                                    ?>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                                    <li><a class="dropdown-item" href="#">Mais recentes</a></li>
-                                    <li><a class="dropdown-item" href="#">Mais populares</a></li>
-                                    <li><a class="dropdown-item" href="#">Sem respostas</a></li>
+                                    <li><a class="dropdown-item <?php echo $filtro_atual == 'recentes' ? 'active' : ''; ?>" href="?filtro=recentes">Mais recentes</a></li>
+                                    <li><a class="dropdown-item <?php echo $filtro_atual == 'populares' ? 'active' : ''; ?>" href="?filtro=populares">Mais populares</a></li>
+                                    <li><a class="dropdown-item <?php echo $filtro_atual == 'sem_respostas' ? 'active' : ''; ?>" href="?filtro=sem_respostas">Sem respostas</a></li>
                                 </ul>
                             </div>
                             <div>
@@ -124,14 +137,10 @@ try {
         <?php foreach ($posts as $post): 
             $comentarios = $controller->listarComentariosPorPost($post['post_id']);
             $tags = $controller->getTagsDoPost($post['post_id']);
-            
-            // DEBUG TEMPORÁRIO - REMOVER DEPOIS
             $foto_perfil = $controller->getFotoPerfilUsuario($post['usuario_id']);
-            error_log("=== DEBUG POST ===");
-            error_log("Post ID: " . $post['post_id']);
-            error_log("Usuário ID: " . $post['usuario_id']);
-            error_log("Nome Usuário: " . $post['nome_usuario']);
-            error_log("Foto retornada: " . $foto_perfil);
+            
+            // Verificar se o usuário logado já curtiu este post
+            $esta_curtido = isset($_SESSION['usuario_id']) ? $controller->verificarCurtidaPost($_SESSION['usuario_id'], $post['post_id']) : false;
         ?>
             <div class="forum-post" data-aos="fade-up" id="post-<?php echo $post['post_id']; ?>">
                 <div class="d-flex mb-3">
@@ -155,8 +164,9 @@ try {
                 <?php endif; ?>
                 
                 <div class="post-actions d-flex">
-                    <div class="action-btn like-btn">
-                        <i class="bi bi-heart me-1"></i> <span><?php echo $post['curtidas']; ?></span>
+                    <div class="action-btn like-btn" data-post-id="<?php echo $post['post_id']; ?>">
+                        <i class="bi bi-heart<?php echo $esta_curtido ? '-fill text-danger' : ''; ?> me-1"></i> 
+                        <span class="like-count"><?php echo $post['curtidas']; ?></span>
                     </div>
                     <div class="action-btn comment-btn">
                         <i class="bi bi-chat-left-text me-1"></i> <span><?php echo $post['total_comentarios']; ?></span>
@@ -175,12 +185,13 @@ try {
                     $comentarios_principais = array_filter($comentarios, function($c) { return $c['comentario_pai_id'] === null; });
                     ?>
                     
-                    <?php foreach ($comentarios_principais as $comentario): ?>
+                    <?php foreach ($comentarios_principais as $comentario): 
+                        $foto_comentario = $controller->getFotoPerfilUsuario($comentario['usuario_id']);
+                        $total_curtidas_comentario = $controller->getTotalCurtidasComentario($comentario['comentario_id']);
+                        $esta_curtido_comentario = isset($_SESSION['usuario_id']) ? $controller->verificarCurtidaComentario($_SESSION['usuario_id'], $comentario['comentario_id']) : false;
+                    ?>
                         <div class="comment mb-3">
                             <div class="d-flex">
-                                <?php 
-                                $foto_comentario = $controller->getFotoPerfilUsuario($comentario['usuario_id']);
-                                ?>
                                 <img src="<?php echo htmlspecialchars($foto_comentario); ?>" alt="Foto de <?php echo htmlspecialchars($comentario['nome_usuario']); ?>" class="user-avatar me-3">
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
@@ -189,7 +200,10 @@ try {
                                     </div>
                                     <p class="mb-2"><?php echo htmlspecialchars($comentario['comentario']); ?></p>
                                     <div class="comment-actions">
-                                        <a href="#" class="text-muted small me-3"><i class="bi bi-heart"></i> Curtir</a>
+                                        <a href="#" class="text-muted small me-3 like-comment-btn" data-comentario-id="<?php echo $comentario['comentario_id']; ?>">
+                                            <i class="bi bi-heart<?php echo $esta_curtido_comentario ? '-fill text-danger' : ''; ?>"></i> 
+                                            <span class="comment-like-count"><?php echo $total_curtidas_comentario; ?></span>
+                                        </a>
                                         <a href="#" class="text-muted small reply-btn" data-comentario-id="<?php echo $comentario['comentario_id']; ?>">Responder</a>
                                     </div>
                                     
@@ -200,12 +214,13 @@ try {
                                     });
                                     ?>
                                     
-                                    <?php foreach ($respostas as $resposta): ?>
+                                    <?php foreach ($respostas as $resposta): 
+                                        $foto_resposta = $controller->getFotoPerfilUsuario($resposta['usuario_id']);
+                                        $total_curtidas_resposta = $controller->getTotalCurtidasComentario($resposta['comentario_id']);
+                                        $esta_curtido_resposta = isset($_SESSION['usuario_id']) ? $controller->verificarCurtidaComentario($_SESSION['usuario_id'], $resposta['comentario_id']) : false;
+                                    ?>
                                         <div class="comment-reply mt-3 ps-3 border-start">
                                             <div class="d-flex">
-                                                <?php 
-                                                $foto_resposta = $controller->getFotoPerfilUsuario($resposta['usuario_id']);
-                                                ?>
                                                 <img src="<?php echo htmlspecialchars($foto_resposta); ?>" alt="Foto de <?php echo htmlspecialchars($resposta['nome_usuario']); ?>" class="user-avatar me-3">
                                                 <div>
                                                     <div class="d-flex justify-content-between align-items-center mb-1">
@@ -214,7 +229,10 @@ try {
                                                     </div>
                                                     <p class="mb-2"><?php echo htmlspecialchars($resposta['comentario']); ?></p>
                                                     <div class="comment-actions">
-                                                        <a href="#" class="text-muted small me-3"><i class="bi bi-heart"></i> Curtir</a>
+                                                        <a href="#" class="text-muted small me-3 like-comment-btn" data-comentario-id="<?php echo $resposta['comentario_id']; ?>">
+                                                            <i class="bi bi-heart<?php echo $esta_curtido_resposta ? '-fill text-danger' : ''; ?>"></i> 
+                                                            <span class="comment-like-count"><?php echo $total_curtidas_resposta; ?></span>
+                                                        </a>
                                                         <a href="#" class="text-muted small reply-btn" data-comentario-id="<?php echo $comentario['comentario_id']; ?>">Responder</a>
                                                     </div>
                                                 </div>
@@ -302,6 +320,42 @@ require("../includeJS/scriptScr.php");  ?>
   
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Sistema de Filtros
+    const filterLinks = document.querySelectorAll('.dropdown-item[href*="filtro"]');
+    filterLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Mostrar loading
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = `
+                <div class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <p class="mt-2">Aplicando filtro...</p>
+                </div>
+            `;
+        });
+    });
+
+    // Manter o scroll position após filtro
+    const currentUrl = new URL(window.location.href);
+    const currentFilter = currentUrl.searchParams.get('filtro');
+    if (currentFilter) {
+        // Restaurar scroll position se existir
+        const scrollPosition = sessionStorage.getItem('forumScrollPosition');
+        if (scrollPosition) {
+            window.scrollTo(0, parseInt(scrollPosition));
+            sessionStorage.removeItem('forumScrollPosition');
+        }
+    }
+
+    // Salvar scroll position antes de aplicar filtro
+    document.querySelectorAll('.dropdown-item[href*="filtro"]').forEach(link => {
+        link.addEventListener('click', function() {
+            sessionStorage.setItem('forumScrollPosition', window.scrollY);
+        });
+    });
+
     // Simular salvamento de posts
     document.querySelectorAll('.save-btn').forEach(function(saveBtn) {
         saveBtn.addEventListener('click', function(e) {
@@ -386,6 +440,95 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Agora você está respondendo a um comentário!');
         }
     });
+
+    // Sistema de Curtidas
+    // Curtir posts
+    document.querySelectorAll('.like-btn').forEach(function(likeBtn) {
+        likeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const postId = this.getAttribute('data-post-id');
+            curtirPost(postId, this);
+        });
+    });
+
+    // Curtir comentários
+    document.querySelectorAll('.like-comment-btn').forEach(function(likeBtn) {
+        likeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const comentarioId = this.getAttribute('data-comentario-id');
+            curtirComentario(comentarioId, this);
+        });
+    });
+
+    function curtirPost(postId, element) {
+        fetch('../controleForum/postsForum.php?action=curtir_post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'post_id=' + postId
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const heartIcon = element.querySelector('i');
+                const countSpan = element.querySelector('.like-count');
+                
+                // Atualiza ícone
+                if (data.esta_curtido) {
+                    heartIcon.classList.remove('bi-heart');
+                    heartIcon.classList.add('bi-heart-fill', 'text-danger');
+                } else {
+                    heartIcon.classList.remove('bi-heart-fill', 'text-danger');
+                    heartIcon.classList.add('bi-heart');
+                }
+                
+                // Atualiza contador
+                countSpan.textContent = data.total_curtidas;
+            } else {
+                alert('Erro ao curtir post: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao processar curtida');
+        });
+    }
+
+    function curtirComentario(comentarioId, element) {
+        fetch('../controleForum/postsForum.php?action=curtir_comentario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'comentario_id=' + comentarioId
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const heartIcon = element.querySelector('i');
+                const countSpan = element.querySelector('.comment-like-count');
+                
+                // Atualiza ícone
+                if (data.esta_curtido) {
+                    heartIcon.classList.remove('bi-heart');
+                    heartIcon.classList.add('bi-heart-fill', 'text-danger');
+                } else {
+                    heartIcon.classList.remove('bi-heart-fill', 'text-danger');
+                    heartIcon.classList.add('bi-heart');
+                }
+                
+                // Atualiza contador
+                countSpan.textContent = data.total_curtidas;
+            } else {
+                alert('Erro ao curtir comentário: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao processar curtida');
+        });
+    }
 }); 
 </script>
 </body>

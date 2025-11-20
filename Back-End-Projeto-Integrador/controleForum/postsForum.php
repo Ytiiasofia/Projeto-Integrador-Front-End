@@ -13,6 +13,8 @@ class ForumController {
         $this->forumModel = new ForumModel();
     }
     
+    // ========== MÉTODOS PARA FOTO DE PERFIL ==========
+    
     public function getFotoPerfilUsuario($usuario_id) {
         return $this->forumModel->getFotoPerfilUsuario($usuario_id);
     }
@@ -20,6 +22,86 @@ class ForumController {
     public function getTagsDoPost($post_id) {
         return $this->forumModel->getTagsDoPost($post_id);
     }
+    
+    // ========== MÉTODOS PARA CURTIDAS DE POSTS ==========
+    
+    public function curtirPost() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($_SESSION['usuario_id'])) {
+                echo json_encode(['success' => false, 'message' => 'Usuário não logado']);
+                exit;
+            }
+            
+            $usuario_id = $_SESSION['usuario_id'];
+            $post_id = intval($_POST['post_id']);
+            
+            $result = $this->forumModel->curtirPost($usuario_id, $post_id);
+            
+            if ($result['success']) {
+                $total_curtidas = $this->forumModel->getTotalCurtidasPost($post_id);
+                $esta_curtido = $this->forumModel->verificarCurtidaPost($usuario_id, $post_id);
+                
+                echo json_encode([
+                    'success' => true,
+                    'action' => $result['action'],
+                    'total_curtidas' => $total_curtidas,
+                    'esta_curtido' => $esta_curtido
+                ]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erro ao processar curtida']);
+            }
+            exit;
+        }
+    }
+
+    public function verificarCurtidaPost($usuario_id, $post_id) {
+        return $this->forumModel->verificarCurtidaPost($usuario_id, $post_id);
+    }
+
+    public function getTotalCurtidasPost($post_id) {
+        return $this->forumModel->getTotalCurtidasPost($post_id);
+    }
+
+    // ========== MÉTODOS PARA CURTIDAS DE COMENTÁRIOS ==========
+    
+    public function curtirComentario() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($_SESSION['usuario_id'])) {
+                echo json_encode(['success' => false, 'message' => 'Usuário não logado']);
+                exit;
+            }
+            
+            $usuario_id = $_SESSION['usuario_id'];
+            $comentario_id = intval($_POST['comentario_id']);
+            
+            $result = $this->forumModel->curtirComentario($usuario_id, $comentario_id);
+            
+            if ($result['success']) {
+                $total_curtidas = $this->forumModel->getTotalCurtidasComentario($comentario_id);
+                $esta_curtido = $this->forumModel->verificarCurtidaComentario($usuario_id, $comentario_id);
+                
+                echo json_encode([
+                    'success' => true,
+                    'action' => $result['action'],
+                    'total_curtidas' => $total_curtidas,
+                    'esta_curtido' => $esta_curtido
+                ]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erro ao processar curtida']);
+            }
+            exit;
+        }
+    }
+
+    public function verificarCurtidaComentario($usuario_id, $comentario_id) {
+        return $this->forumModel->verificarCurtidaComentario($usuario_id, $comentario_id);
+    }
+
+    public function getTotalCurtidasComentario($comentario_id) {
+        return $this->forumModel->getTotalCurtidasComentario($comentario_id);
+    }
+    
+    // ========== MÉTODOS PARA POSTS ==========
     
     public function criarPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -52,6 +134,18 @@ class ForumController {
         }
     }
     
+    public function listarPosts() {
+        return $this->forumModel->listarPosts();
+    }
+
+    // ========== MÉTODOS PARA FILTRAGEM ==========
+
+    public function listarPostsFiltrados($filtro = 'recentes') {
+        return $this->forumModel->listarPostsFiltrados($filtro);
+    }
+    
+    // ========== MÉTODOS PARA COMENTÁRIOS ==========
+    
     public function adicionarComentario() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_SESSION['usuario_id'])) {
@@ -83,16 +177,13 @@ class ForumController {
         }
     }
     
-    public function listarPosts() {
-        return $this->forumModel->listarPosts();
-    }
-    
     public function listarComentariosPorPost($post_id) {
         return $this->forumModel->listarComentariosPorPost($post_id);
     }
 }
 
-// Processar ações
+// ========== PROCESSAR AÇÕES ==========
+
 if (isset($_GET['action'])) {
     $controller = new ForumController();
     
@@ -102,6 +193,12 @@ if (isset($_GET['action'])) {
             break;
         case 'adicionar_comentario':
             $controller->adicionarComentario();
+            break;
+        case 'curtir_post':
+            $controller->curtirPost();
+            break;
+        case 'curtir_comentario':
+            $controller->curtirComentario();
             break;
         default:
             header('Location: ../UserCadastrado/forumUserCad.php');
