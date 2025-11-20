@@ -143,6 +143,12 @@ class ForumController {
     public function listarPostsFiltrados($filtro = 'recentes') {
         return $this->forumModel->listarPostsFiltrados($filtro);
     }
+
+    // ========== MÉTODOS PARA BUSCA ==========
+
+    public function buscarPosts($termo) {
+        return $this->forumModel->buscarPosts($termo);
+    }
     
     // ========== MÉTODOS PARA COMENTÁRIOS ==========
     

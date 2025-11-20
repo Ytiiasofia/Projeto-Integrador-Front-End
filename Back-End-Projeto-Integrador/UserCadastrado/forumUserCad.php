@@ -9,19 +9,27 @@ if (session_status() === PHP_SESSION_NONE) {
 // Inicializar a variável $posts como array vazio
 $posts = [];
 
-// Verificar qual filtro está ativo
+// Verificar qual filtro está ativo e se há busca
 $filtro_atual = isset($_GET['filtro']) ? $_GET['filtro'] : 'recentes';
+$termo_busca = isset($_GET['busca']) ? trim($_GET['busca']) : '';
 
 try {
     require_once __DIR__ . '/../controleForum/postsForum.php';
     $controller = new ForumController();
     
-    // Carregar posts com filtro
-    $posts = $controller->listarPostsFiltrados($filtro_atual);
+    // Carregar posts com filtro ou busca
+    if (!empty($termo_busca)) {
+        $posts = $controller->buscarPosts($termo_busca);
+        $modo_busca = true;
+    } else {
+        $posts = $controller->listarPostsFiltrados($filtro_atual);
+        $modo_busca = false;
+    }
     
     // DEBUG
     error_log("Controller criado com sucesso");
     error_log("Filtro atual: " . $filtro_atual);
+    error_log("Termo busca: " . $termo_busca);
     error_log("Total de posts: " . count($posts));
     
 } catch (Exception $e) {
@@ -122,7 +130,12 @@ try {
                                 </ul>
                             </div>
                             <div>
-                                <input type="text" class="form-control" placeholder="Buscar no fórum...">
+                                <form method="GET" action="" class="d-flex">
+                                    <input type="text" class="form-control" name="busca" placeholder="Buscar por título ou tags..." value="<?php echo htmlspecialchars($termo_busca); ?>">
+                                    <?php if (!empty($termo_busca)): ?>
+                                        <a href="?" class="btn btn-outline-secondary ms-2">Limpar</a>
+                                    <?php endif; ?>
+                                </form>
                             </div>
                         </div>
 
@@ -130,8 +143,20 @@ try {
 <div id="posts-container">
     <?php if (empty($posts)): ?>
         <div class="text-center py-5" data-aos="fade-up">
-            <h5>Nenhum post encontrado</h5>
-            <p class="text-muted">Seja a primeira a criar um post no fórum!</p>
+            <h5>
+                <?php if (!empty($termo_busca)): ?>
+                    Nenhum post encontrado para "<?php echo htmlspecialchars($termo_busca); ?>"
+                <?php else: ?>
+                    Nenhum post encontrado
+                <?php endif; ?>
+            </h5>
+            <p class="text-muted">
+                <?php if (!empty($termo_busca)): ?>
+                    Tente buscar com outros termos ou <a href="?" class="text-primary">limpe a busca</a> para ver todos os posts.
+                <?php else: ?>
+                    Seja a primeira a criar um post no fórum!
+                <?php endif; ?>
+            </p>
         </div>
     <?php else: ?>
         <?php foreach ($posts as $post): 
@@ -337,11 +362,56 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Manter o scroll position após filtro
+    // Sistema de Busca
+    const searchForm = document.querySelector('form[name="busca"]');
+    const searchInput = document.querySelector('input[name="busca"]');
+    
+    if (searchForm && searchInput) {
+        let searchTimeout;
+        
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                if (this.value.trim().length >= 2 || this.value.trim().length === 0) {
+                    // Mostrar loading para buscas com 2+ caracteres ou quando limpar
+                    const postsContainer = document.getElementById('posts-container');
+                    postsContainer.innerHTML = `
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Buscando...</span>
+                            </div>
+                            <p class="mt-2">Buscando posts...</p>
+                        </div>
+                    `;
+                    searchForm.submit();
+                }
+            }, 800); // 800ms de delay
+        });
+
+        // Submeter form quando pressionar Enter
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const postsContainer = document.getElementById('posts-container');
+                postsContainer.innerHTML = `
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Buscando...</span>
+                        </div>
+                        <p class="mt-2">Buscando posts...</p>
+                    </div>
+                `;
+                searchForm.submit();
+            }
+        });
+    }
+
+    // Manter o scroll position após filtro/busca
     const currentUrl = new URL(window.location.href);
     const currentFilter = currentUrl.searchParams.get('filtro');
-    if (currentFilter) {
-        // Restaurar scroll position se existir
+    const currentSearch = currentUrl.searchParams.get('busca');
+    
+    if (currentFilter || currentSearch) {
         const scrollPosition = sessionStorage.getItem('forumScrollPosition');
         if (scrollPosition) {
             window.scrollTo(0, parseInt(scrollPosition));
@@ -349,12 +419,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Salvar scroll position antes de aplicar filtro
+    // Salvar scroll position antes de aplicar filtro/busca
     document.querySelectorAll('.dropdown-item[href*="filtro"]').forEach(link => {
         link.addEventListener('click', function() {
             sessionStorage.setItem('forumScrollPosition', window.scrollY);
         });
     });
+
+    if (searchForm) {
+        searchForm.addEventListener('submit', function() {
+            sessionStorage.setItem('forumScrollPosition', window.scrollY);
+        });
+    }
 
     // Simular salvamento de posts
     document.querySelectorAll('.save-btn').forEach(function(saveBtn) {
@@ -486,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Atualiza contador
                 countSpan.textContent = data.total_curtidas;
             } else {
-                alert('Erro ao curtir post: ' + data.message);
+                alert('Erro ao curtir post: ' . data.message);
             }
         })
         .catch(error => {
@@ -521,7 +597,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Atualiza contador
                 countSpan.textContent = data.total_curtidas;
             } else {
-                alert('Erro ao curtir comentário: ' + data.message);
+                alert('Erro ao curtir comentário: ' . data.message);
             }
         })
         .catch(error => {

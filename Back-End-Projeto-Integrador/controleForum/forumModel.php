@@ -151,6 +151,53 @@ class ForumModel {
         }
     }
 
+    // ========== MÉTODO PARA BUSCA DE POSTS ==========
+
+    public function buscarPosts($termo) {
+        try {
+            $termo = $this->conn->real_escape_string($termo);
+            $sql = "SELECT DISTINCT
+                        fp.post_id,
+                        fp.titulo,
+                        fp.conteudo,
+                        fp.data_criacao,
+                        u.usuario_id,
+                        u.nome_usuario,
+                        (SELECT COUNT(*) FROM post_curtidas pc WHERE pc.post_id = fp.post_id) as curtidas,
+                        (SELECT COUNT(*) FROM post_comentarios pco WHERE pco.post_id = fp.post_id) as total_comentarios
+                    FROM forum_posts fp
+                    INNER JOIN usuarios u ON fp.usuario_id = u.usuario_id
+                    LEFT JOIN post_tags pt ON fp.post_id = pt.post_id
+                    LEFT JOIN forum_tags ft ON pt.tag_id = ft.tag_id
+                    WHERE fp.ativo = 1
+                    AND (fp.titulo LIKE '%$termo%' 
+                         OR ft.nome LIKE '%$termo%')
+                    ORDER BY fp.data_criacao DESC";
+            
+            error_log("SQL de Busca: " . $sql);
+            
+            $result = $this->conn->query($sql);
+            
+            if (!$result) {
+                error_log("Erro na query de busca: " . $this->conn->error);
+                return [];
+            }
+            
+            $posts = [];
+            
+            while ($row = $result->fetch_assoc()) {
+                $posts[] = $row;
+            }
+            
+            error_log("Posts encontrados na busca: " . count($posts));
+            return $posts;
+            
+        } catch (Exception $e) {
+            error_log("Erro ao buscar posts: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public function getTagsDoPost($post_id) {
         try {
             $sql = "SELECT ft.nome 
