@@ -101,11 +101,14 @@ try {
                                 <div class="mb-3">
                                     <input type="text" class="form-control" id="post-tags" name="tags" placeholder="Tags (separadas por vírgula)">
                                 </div>
+                                
                                 <div class="form-buttons">
                                     <button type="submit" class="btn btn-primary rounded-pill shadow">Publicar</button>
+                                <!--
                                     <button type="button" class="btn btn-primary saved-posts-btn rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#savedPostsModal">
                                         <i class="bi bi-bookmark-fill me-2"></i> Posts salvos
                                     </button>
+                                 -->
                                 </div>
                             </form>
                         </div>
@@ -138,6 +141,7 @@ try {
                                 </form>
                             </div>
                         </div>
+
 
 <!-- Lista de Posts -->
 <div id="posts-container">
@@ -196,9 +200,11 @@ try {
                     <div class="action-btn comment-btn">
                         <i class="bi bi-chat-left-text me-1"></i> <span><?php echo $post['total_comentarios']; ?></span>
                     </div>
+                    <!--
                     <div class="action-btn save-btn ms-auto">
                         <i class="bi bi-bookmark me-1"></i> Salvar
                     </div>
+                    -->
                 </div>
                 
                 <!-- Seção de Comentários -->
@@ -292,7 +298,7 @@ try {
         <!-- Fim da Seção do Fórum -->
     </main>
 
-<!-- Modal de Posts Salvos -->
+<!-- Modal de Posts Salvos 
 <div class="modal fade" id="savedPostsModal" tabindex="-1" aria-labelledby="savedPostsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -328,7 +334,7 @@ try {
         </div>
     </div>
 </div>
-
+-->
     <!-- Rodapé -->
     <footer id="footer" class="footer light-background">
         <?php

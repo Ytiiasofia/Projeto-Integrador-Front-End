@@ -186,6 +186,31 @@ class ForumController {
     public function listarComentariosPorPost($post_id) {
         return $this->forumModel->listarComentariosPorPost($post_id);
     }
+
+    // ========== MÉTODOS PARA ADMIN ==========
+    
+    public function deletarPost() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($_SESSION['usuario_id']) || $_SESSION['is_admin'] != 1) {
+                $_SESSION['erro'] = 'Acesso negado. Apenas administradores podem deletar posts.';
+                header('Location: ../UserADM/forumAdm.php');
+                exit;
+            }
+            
+            $post_id = intval($_POST['post_id']);
+            
+            $sucesso = $this->forumModel->deletarPost($post_id);
+            
+            if ($sucesso) {
+                $_SESSION['sucesso'] = 'Post e todos os comentários associados foram deletados com sucesso!';
+            } else {
+                $_SESSION['erro'] = 'Erro ao deletar post. Tente novamente.';
+            }
+            
+            header('Location: ../UserADM/forumAdm.php');
+            exit;
+        }
+    }
 }
 
 // ========== PROCESSAR AÇÕES ==========
@@ -205,6 +230,9 @@ if (isset($_GET['action'])) {
             break;
         case 'curtir_comentario':
             $controller->curtirComentario();
+            break;
+        case 'deletar_post':
+            $controller->deletarPost();
             break;
         default:
             header('Location: ../UserCadastrado/forumUserCad.php');

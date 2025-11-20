@@ -418,6 +418,64 @@ class ForumModel {
         }
     }
 
+    // ========== MÉTODOS PARA ADMIN ==========
+
+    public function deletarPost($post_id) {
+        try {
+            // Iniciar transação para garantir que tudo seja deletado ou nada
+            $this->conn->begin_transaction();
+            
+            // 1. Deletar curtidas dos comentários deste post
+            $sql1 = "DELETE cc FROM comentario_curtidas cc 
+                    INNER JOIN post_comentarios pc ON cc.comentario_id = pc.comentario_id 
+                    WHERE pc.post_id = ?";
+            $stmt1 = $this->conn->prepare($sql1);
+            $stmt1->bind_param("i", $post_id);
+            $stmt1->execute();
+            $stmt1->close();
+            
+            // 2. Deletar todos os comentários do post
+            $sql2 = "DELETE FROM post_comentarios WHERE post_id = ?";
+            $stmt2 = $this->conn->prepare($sql2);
+            $stmt2->bind_param("i", $post_id);
+            $stmt2->execute();
+            $stmt2->close();
+            
+            // 3. Deletar curtidas do post
+            $sql3 = "DELETE FROM post_curtidas WHERE post_id = ?";
+            $stmt3 = $this->conn->prepare($sql3);
+            $stmt3->bind_param("i", $post_id);
+            $stmt3->execute();
+            $stmt3->close();
+            
+            // 4. Deletar tags associadas ao post
+            $sql4 = "DELETE FROM post_tags WHERE post_id = ?";
+            $stmt4 = $this->conn->prepare($sql4);
+            $stmt4->bind_param("i", $post_id);
+            $stmt4->execute();
+            $stmt4->close();
+            
+            // 5. Finalmente deletar o post
+            $sql5 = "DELETE FROM forum_posts WHERE post_id = ?";
+            $stmt5 = $this->conn->prepare($sql5);
+            $stmt5->bind_param("i", $post_id);
+            $result = $stmt5->execute();
+            $stmt5->close();
+            
+            // Confirmar transação
+            $this->conn->commit();
+            
+            error_log("Post {$post_id} deletado com sucesso com todos os dados associados");
+            return $result;
+            
+        } catch (Exception $e) {
+            // Rollback em caso de erro
+            $this->conn->rollback();
+            error_log("Erro ao deletar post {$post_id}: " . $e->getMessage());
+            return false;
+        }
+    }
+
     // ========== MÉTODOS AUXILIARES ==========
 
     public function getFotoPerfilUsuario($usuario_id) {
