@@ -97,65 +97,65 @@
 
     <div class="container">
       <!-- Seção para Adicionar Notícia -->
-      <section id="add-news" class="add-news-section" data-aos="fade-up">
-        <h3><i class="bi bi-plus-circle"></i> Adicionar Nova Notícia</h3>
-        <form id="news-form">
-          <div class="mb-3">
+    <section id="add-news" class="add-news-section" data-aos="fade-up">
+    <h3><i class="bi bi-plus-circle"></i> Adicionar Nova Notícia</h3>
+    <form id="news-form" enctype="multipart/form-data">
+        <div class="mb-3">
             <label for="news-title" class="form-label">Título</label>
-            <input type="text" class="form-control" id="news-title" placeholder="Digite o título da notícia" required>
-          </div>
-          
-          <div class="mb-3">
+            <input type="text" class="form-control" id="news-title" name="titulo" placeholder="Digite o título da notícia" required>
+        </div>
+        
+        <div class="mb-3">
             <label for="news-content" class="form-label">Conteúdo</label>
-            <textarea class="form-control" id="news-content" rows="5" placeholder="Digite o conteúdo da notícia" required></textarea>
-          </div>
-          
-          <div class="mb-3">
+            <textarea class="form-control" id="news-content" name="conteudo" rows="5" placeholder="Digite o conteúdo da notícia" required></textarea>
+        </div>
+        
+        <div class="mb-3">
             <label for="news-image" class="form-label">Imagem de Capa</label>
-            <input type="file" class="form-control" id="news-image" accept="image/*">
-          </div>
-          
-          <div class="mb-3">
+            <input type="file" class="form-control" id="news-image" name="imagem_capa" accept="image/*">
+        </div>
+        
+        <div class="mb-3">
             <label class="form-label">Categoria</label>
             <div>
-              <div class="category-option" data-category="inovacao">Inovação e Tendências</div>
-              <div class="category-option" data-category="carreira">Carreira e Oportunidades</div>
-              <div class="category-option" data-category="educacao">Educação e Capacitação</div>
-              <div class="category-option" data-category="startups">Startups e Iniciativas Inovadoras</div>
-              <div class="category-option" data-category="eventos">Eventos e Conexões</div>
-              <div class="category-option" data-category="tecnologia">Tecnologia e Impacto Social</div>
+                <div class="category-option" data-category="inovacao">Inovação e Tendências</div>
+                <div class="category-option" data-category="carreira">Carreira e Oportunidades</div>
+                <div class="category-option" data-category="educacao">Educação e Capacitação</div>
+                <div class="category-option" data-category="startups">Startups e Iniciativas Inovadoras</div>
+                <div class="category-option" data-category="eventos">Eventos e Conexões</div>
+                <div class="category-option" data-category="tecnologia">Tecnologia e Impacto Social</div>
             </div>
-            <input type="hidden" id="selected-category" name="category">
-          </div>
-          
-          <div class="mb-3">
+            <input type="hidden" id="selected-category" name="categoria">
+        </div>
+        
+        <div class="mb-3">
             <label class="form-label">Tags</label>
             <div class="mb-2">
-              <span class="badge tag-badge" data-tag="IA">IA</span>
-              <span class="badge tag-badge" data-tag="FrontEnd">FrontEnd</span>
-              <span class="badge tag-badge" data-tag="BackEnd">BackEnd</span>
-              <span class="badge tag-badge" data-tag="Estágio">Estágio</span>
-              <span class="badge tag-badge" data-tag="VagaTech">VagaTech</span>
-              <span class="badge tag-badge" data-tag="Mentoria">Mentoria</span>
-              <span class="badge tag-badge" data-tag="Networking">Networking</span>
-              <span class="badge tag-badge" data-tag="Currículo">Currículo</span>
-              <span class="badge tag-badge" data-tag="Workshops">Workshops</span>
-              <span class="badge tag-badge" data-tag="Certificação">Certificação</span>
-              <span class="badge tag-badge" data-tag="Cursos Online">Cursos Online</span>
-              <span class="badge tag-badge" data-tag="Notícia">Notícia</span>
-              <span class="badge tag-badge" data-tag="Entrevista">Entrevista</span>
+                <span class="badge tag-badge" data-tag="IA">IA</span>
+                <span class="badge tag-badge" data-tag="FrontEnd">FrontEnd</span>
+                <span class="badge tag-badge" data-tag="BackEnd">BackEnd</span>
+                <span class="badge tag-badge" data-tag="Estágio">Estágio</span>
+                <span class="badge tag-badge" data-tag="VagaTech">VagaTech</span>
+                <span class="badge tag-badge" data-tag="Mentoria">Mentoria</span>
+                <span class="badge tag-badge" data-tag="Networking">Networking</span>
+                <span class="badge tag-badge" data-tag="Currículo">Currículo</span>
+                <span class="badge tag-badge" data-tag="Workshops">Workshops</span>
+                <span class="badge tag-badge" data-tag="Certificação">Certificação</span>
+                <span class="badge tag-badge" data-tag="Cursos Online">Cursos Online</span>
+                <span class="badge tag-badge" data-tag="Notícia">Notícia</span>
+                <span class="badge tag-badge" data-tag="Entrevista">Entrevista</span>
             </div>
             <div id="tag-container" class="mb-2"></div>
             <input type="text" class="form-control" id="new-tag" placeholder="Digite uma nova tag e pressione Enter">
             <input type="hidden" id="selected-tags" name="tags">
-          </div>
-          
-          <div class="d-flex justify-content-end">
+        </div>
+        
+        <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-secondary me-2" id="clear-form">Limpar</button>
-            <button type="submit" class="btn btn-primary">Publicar Notícia</button>
-          </div>
-        </form>
-      </section>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Publicar Notícia</button>
+        </div>
+    </form>
+</section>
 
       <div class="row">
         <div class="col-lg-8">
@@ -483,11 +483,14 @@
           const badge = document.createElement('span');
           badge.className = 'badge me-1 mb-1';
           badge.style.backgroundColor = '#6a62d4';
+          badge.style.color = 'white';
+          badge.style.cursor = 'default';
           badge.textContent = tag;
           
           const removeBtn = document.createElement('span');
           removeBtn.innerHTML = ' &times;';
           removeBtn.style.cursor = 'pointer';
+          removeBtn.style.fontWeight = 'bold';
           removeBtn.addEventListener('click', () => {
             selectedTags = selectedTags.filter(t => t !== tag);
             updateTagContainer();
@@ -530,26 +533,106 @@
         e.preventDefault();
         
         // Validação básica
+        const titulo = document.getElementById('news-title').value.trim();
+        const conteudo = document.getElementById('news-content').value.trim();
+        
+        if (!titulo) {
+            showAlert('Por favor, digite um título para a notícia', 'warning');
+            return;
+        }
+        
+        if (!conteudo) {
+            showAlert('Por favor, digite o conteúdo da notícia', 'warning');
+            return;
+        }
+        
         if (!selectedCategoryInput.value) {
-          alert('Por favor, selecione uma categoria');
-          return;
+            showAlert('Por favor, selecione uma categoria', 'warning');
+            return;
         }
         
         if (selectedTags.length === 0) {
-          alert('Por favor, adicione pelo menos uma tag');
-          return;
+            showAlert('Por favor, adicione pelo menos uma tag', 'warning');
+            return;
         }
+
+        // Desabilitar botão para evitar múltiplos envios
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Publicando...';
+
+        // Criar FormData para enviar arquivos
+        const formData = new FormData(this);
         
-        // Simulação de envio
-        alert('Notícia enviada para aprovação!');
-        this.reset();
-        selectedTags = [];
-        updateTagContainer();
-        updateSelectedTagsInput();
-        selectedCategoryInput.value = '';
-        categoryOptions.forEach(opt => opt.classList.remove('selected'));
-        tagBadges.forEach(badge => badge.classList.remove('selected'));
+        // Enviar via AJAX
+        fetch('../controleNoticias/processar_noticia.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showAlert(data.message, 'success');
+                // Limpar formulário
+                this.reset();
+                selectedTags = [];
+                updateTagContainer();
+                updateSelectedTagsInput();
+                selectedCategoryInput.value = '';
+                categoryOptions.forEach(opt => opt.classList.remove('selected'));
+                tagBadges.forEach(badge => badge.classList.remove('selected'));
+                
+                // Recarregar a lista de notícias após 2 segundos
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            } else {
+                showAlert('Erro: ' + data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            showAlert('Erro ao publicar notícia. Tente novamente.', 'error');
+        })
+        .finally(() => {
+            // Reabilitar botão
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Publicar Notícia';
+        });
       });
+
+      // Função para mostrar alertas personalizados
+      function showAlert(message, type) {
+          // Remove alertas existentes
+          const existingAlert = document.querySelector('.custom-alert');
+          if (existingAlert) {
+              existingAlert.remove();
+          }
+
+          // Cria novo alerta
+          const alert = document.createElement('div');
+          alert.className = `custom-alert alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+          alert.style.cssText = `
+              position: fixed;
+              top: 20px;
+              right: 20px;
+              z-index: 9999;
+              min-width: 300px;
+          `;
+          alert.innerHTML = `
+              ${message}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          `;
+
+          document.body.appendChild(alert);
+
+          // Remove automaticamente após 5 segundos
+          setTimeout(() => {
+              if (alert.parentNode) {
+                  alert.remove();
+              }
+          }, 5000);
+      }
     });
   </script>
 </body>
