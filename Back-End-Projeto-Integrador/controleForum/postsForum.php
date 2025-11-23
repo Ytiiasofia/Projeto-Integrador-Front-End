@@ -117,7 +117,12 @@ class ForumController {
             
             if (empty($titulo) || empty($conteudo)) {
                 $_SESSION['erro'] = 'Título e conteúdo são obrigatórios';
-                header('Location: ../UserCadastrado/forumUserCad.php');
+                // REDIRECIONAMENTO CORRIGIDO - Verifica se é admin
+                if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
+                    header('Location: ../UserADM/forumAdm.php');
+                } else {
+                    header('Location: ../UserCadastrado/forumUserCad.php');
+                }
                 exit;
             }
             
@@ -129,7 +134,12 @@ class ForumController {
                 $_SESSION['erro'] = 'Erro ao criar post. Tente novamente.';
             }
             
-            header('Location: ../UserCadastrado/forumUserCad.php');
+            // REDIRECIONAMENTO CORRIGIDO - Verifica se é admin
+            if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
+                header('Location: ../UserADM/forumAdm.php');
+            } else {
+                header('Location: ../UserCadastrado/forumUserCad.php');
+            }
             exit;
         }
     }
@@ -166,7 +176,12 @@ class ForumController {
             
             if (empty($comentario) || $post_id <= 0) {
                 $_SESSION['erro'] = 'Comentário e post são obrigatórios';
-                header('Location: ../UserCadastrado/forumUserCad.php');
+                // REDIRECIONAMENTO CORRIGIDO - Verifica se é admin
+                if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
+                    header('Location: ../UserADM/forumAdm.php');
+                } else {
+                    header('Location: ../UserCadastrado/forumUserCad.php');
+                }
                 exit;
             }
             
@@ -178,7 +193,12 @@ class ForumController {
                 $_SESSION['erro'] = 'Erro ao adicionar comentário. Tente novamente.';
             }
             
-            header('Location: ../UserCadastrado/forumUserCad.php');
+            // REDIRECIONAMENTO CORRIGIDO - Verifica se é admin
+            if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
+                header('Location: ../UserADM/forumAdm.php');
+            } else {
+                header('Location: ../UserCadastrado/forumUserCad.php');
+            }
             exit;
         }
     }
