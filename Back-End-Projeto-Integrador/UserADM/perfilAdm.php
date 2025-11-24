@@ -2,6 +2,54 @@
 session_start();
 require("../Include/conexao.php");
 require("../includePerfil/dadosUsuario.php");
+
+// Consultas para obter estatísticas reais
+$estatisticas = [];
+
+try {
+    // Verificar se a conexão existe - usar $con em vez de $conn
+    if (!isset($con) || $con === null) {
+        throw new Exception("Conexão com o banco de dados não estabelecida");
+    }
+
+    // Contar usuários registrados - tabela: usuarios
+    $query_usuarios = "SELECT COUNT(*) as total_usuarios FROM usuarios";
+    $result_usuarios = $con->query($query_usuarios);
+    if ($result_usuarios) {
+        $estatisticas['total_usuarios'] = $result_usuarios->fetch_assoc()['total_usuarios'];
+    } else {
+        $estatisticas['total_usuarios'] = 0;
+    }
+
+    // Contar posts no fórum - tabela: forum_posts
+    $query_posts = "SELECT COUNT(*) as total_posts FROM forum_posts";
+    $result_posts = $con->query($query_posts);
+    if ($result_posts) {
+        $estatisticas['total_posts'] = $result_posts->fetch_assoc()['total_posts'];
+    } else {
+        $estatisticas['total_posts'] = 0;
+    }
+
+    // Contar oportunidades - tabela: oportunidades
+    $query_oportunidades = "SELECT COUNT(*) as total_oportunidades FROM oportunidades";
+    $result_oportunidades = $con->query($query_oportunidades);
+    if ($result_oportunidades) {
+        $estatisticas['total_oportunidades'] = $result_oportunidades->fetch_assoc()['total_oportunidades'];
+    } else {
+        $estatisticas['total_oportunidades'] = 0;
+    }
+
+    // Data e hora da última atualização
+    $estatisticas['ultima_atualizacao'] = date('d/m/Y \à\s H:i');
+
+} catch (Exception $e) {
+    // Em caso de erro, definir valores padrão
+    $estatisticas['total_usuarios'] = 0;
+    $estatisticas['total_posts'] = 0;
+    $estatisticas['total_oportunidades'] = 0;
+    $estatisticas['ultima_atualizacao'] = 'Erro ao carregar';
+    error_log("Erro ao carregar estatísticas: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -92,6 +140,22 @@ require("../includePerfil/dadosUsuario.php");
       margin-top: 20px;
       font-size: 0.875rem;
     }
+    
+    .bi-arrow-clockwise.spin {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .error-stats {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 
@@ -142,29 +206,40 @@ require("../includePerfil/dadosUsuario.php");
               <div class="admin-section">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <h5><i class="bi bi-graph-up"></i> Estatísticas da Plataforma</h5>
+                  <button class="btn btn-sm btn-outline-primary" onclick="atualizarEstatisticas()">
+                    <i class="bi bi-arrow-clockwise"></i> Atualizar
+                  </button>
                 </div>
+                
+                <?php if ($estatisticas['total_usuarios'] === 0 && $estatisticas['total_posts'] === 0 && $estatisticas['total_oportunidades'] === 0): ?>
+                <div class="error-stats">
+                  <i class="bi bi-exclamation-triangle"></i> 
+                  Erro ao carregar estatísticas. Verifique os nomes das tabelas no banco de dados.
+                </div>
+                <?php endif; ?>
+                
                 <div class="row">
                   <div class="col-md-4">
                     <div class="stats-card">
                       <h6>Usuários Registrados</h6>
-                      <div class="number">1,248</div>
+                      <div class="number" id="stat-usuarios"><?php echo $estatisticas['total_usuarios']; ?></div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="stats-card">
                       <h6>Posts no Fórum</h6>
-                      <div class="number">3,756</div>
+                      <div class="number" id="stat-posts"><?php echo $estatisticas['total_posts']; ?></div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="stats-card">
                       <h6>Oportunidades</h6>
-                      <div class="number">142</div>
+                      <div class="number" id="stat-oportunidades"><?php echo $estatisticas['total_oportunidades']; ?></div>
                     </div>
                   </div>
                 </div>
                 <div class="text-end small text-muted mt-2">
-                  Última atualização: hoje às 14:30
+                  Última atualização: <span id="stat-atualizacao"><?php echo $estatisticas['ultima_atualizacao']; ?></span>
                 </div>
               </div>
               
@@ -565,6 +640,41 @@ require("../includePerfil/dadosUsuario.php");
         });
       }
     });
+
+    // Função para atualizar estatísticas
+    function atualizarEstatisticas() {
+      const btnAtualizar = event.target.closest('button');
+      const originalHTML = btnAtualizar.innerHTML;
+      
+      // Mostrar loading
+      btnAtualizar.innerHTML = '<i class="bi bi-arrow-clockwise spin"></i> Atualizando...';
+      btnAtualizar.disabled = true;
+      
+      fetch('../includePerfil/obter_estatisticas.php')
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Atualizar os números
+            document.getElementById('stat-usuarios').textContent = data.total_usuarios;
+            document.getElementById('stat-posts').textContent = data.total_posts;
+            document.getElementById('stat-oportunidades').textContent = data.total_oportunidades;
+            document.getElementById('stat-atualizacao').textContent = data.ultima_atualizacao;
+            
+            showMessage('Estatísticas atualizadas com sucesso!', true);
+          } else {
+            showMessage('Erro ao atualizar estatísticas', false);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showMessage('Erro ao atualizar estatísticas', false);
+        })
+        .finally(() => {
+          // Restaurar botão
+          btnAtualizar.innerHTML = originalHTML;
+          btnAtualizar.disabled = false;
+        });
+    }
   </script>
 </body>
 </html>
