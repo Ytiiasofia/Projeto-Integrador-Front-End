@@ -1,37 +1,181 @@
+<?php
+require_once '../Include/conexao.php';
+
+// Verificar se o ID foi passado
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    header('Location: noticiaAdm.php');
+    exit;
+}
+
+$noticia_id = mysqli_real_escape_string($con, $_GET['id']);
+
+// Buscar a notícia
+$query = "SELECT n.*, c.nome_categoria, u.nome_usuario 
+          FROM noticias n 
+          JOIN categorias c ON n.categoria_id = c.categoria_id 
+          JOIN usuarios u ON n.autor_id = u.usuario_id 
+          WHERE n.noticia_id = '$noticia_id' AND n.status = 'publicado'";
+
+$result = mysqli_query($con, $query);
+
+if (!$result || mysqli_num_rows($result) === 0) {
+    header('Location: blog-details.php');
+    exit;
+}
+
+$noticia = mysqli_fetch_assoc($result);
+
+// Buscar tags da notícia
+$tags_query = "SELECT t.nome_tag 
+               FROM tags t 
+               JOIN noticias_tags nt ON t.tag_id = nt.tag_id 
+               WHERE nt.noticia_id = '$noticia_id'";
+$tags_result = mysqli_query($con, $tags_query);
+$tags = [];
+if ($tags_result) {
+    while ($tag = mysqli_fetch_assoc($tags_result)) {
+        $tags[] = $tag['nome_tag'];
+    }
+}
+
+// Converter nome da categoria para exibição
+$categoria_display = [
+    'inovacao' => 'Inovação e Tendências',
+    'carreira' => 'Carreira e Oportunidades', 
+    'educacao' => 'Educação e Capacitação',
+    'startups' => 'Startups e Iniciativas Inovadoras',
+    'eventos' => 'Eventos e Conexões',
+    'tecnologia' => 'Tecnologia e Impacto Social'
+];
+
+$categoria_nome = $categoria_display[$noticia['nome_categoria']] ?? $noticia['nome_categoria'];
+
+// Formatar data
+$data_formatada = date('d/m/Y', strtotime($noticia['data_publicacao']));
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Blog Details - Nova Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  
+  <title><?php echo htmlspecialchars($noticia['titulo']); ?> - She Innovates</title>
+  <meta name="description" content="<?php echo substr(strip_tags($noticia['conteudo']), 0, 150); ?>...">
+  <meta name="keywords" content="notícias, tecnologia, inovação">
+
   <?php
   require("../Include/hrefCssHead.php");
   ?>
 
+  <style>
+    .blog-details .post-img {
+        width: 100%;
+        height: 400px;
+        border-radius: 8px;
+    }
+    
+    .blog-details .post-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    
+    .blog-details .content {
+        text-align: justify;
+        line-height: 1.8;
+    }
+    
+    .blog-details .content p {
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        text-align: justify;
+        text-justify: inter-word;
+    }
+    
+    .blog-details .content li {
+        line-height: 1.8;
+        margin-bottom: 0.5rem;
+        text-align: justify;
+    }
+    
+    .blog-details .content blockquote {
+        border-left: 4px solid #6a62d4;
+        padding-left: 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        color: #555;
+        text-align: justify;
+    }
+    
+    .blog-details .content strong,
+    .blog-details .content b {
+        font-weight: 600;
+    }
+    
+    .blog-details .content em,
+    .blog-details .content i {
+        font-style: italic;
+    }
+    
+    .tags-badge {
+        background-color: #6a62d4;
+        color: white;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    
+    /* Responsividade para a imagem */
+    @media (max-width: 768px) {
+        .blog-details .post-img {
+            height: 300px;
+        }
+        
+        .blog-details .content {
+            text-align: left;
+        }
+        
+        .blog-details .content p {
+            text-align: left;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .blog-details .post-img {
+            height: 250px;
+        }
+        
+        .blog-details .content p {
+            text-align: left;
+        }
+        
+        .blog-details .content ul,
+        .blog-details .content ol {
+            padding-left: 1.5rem;
+        }
+    }
+  </style>
 </head>
 
 <body class="blog-details-page">
 
-<?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
+  <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
 
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(../../assets/img/blog-page-title-bg.jpg);">
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(../assets/img/blog-page-title-bg.jpg);">
       <div class="container">
         <h1>Notícias</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.php">Início</a></li>
-            <li class="current">Notícias</li>
+            <li><a href="blog.php">Notícias</a></li>
+            <li> Detalhes</li>
           </ol>
         </nav>
       </div>
-    </div>
+    </div><!-- End Page Title -->
 
     <div class="container">
       <div class="row">
@@ -45,156 +189,97 @@
               <article class="article">
 
                 <div class="post-img">
-                  <img src="../../assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+                  <?php if ($noticia['imagem_capa']): ?>
+                    <img src="../<?php echo $noticia['imagem_capa']; ?>" alt="<?php echo htmlspecialchars($noticia['titulo']); ?>" class="img-fluid">
+                  <?php else: ?>
+                    <img src="../assets/img/blog/blog-1.jpg" alt="Imagem padrão" class="img-fluid">
+                  <?php endif; ?>
                 </div>
 
-                <h2 class="title">Dolorum optio tempore voluptas dignissimos cumque fuga qui quibusdam quia</h2>
+                <h2 class="title"><?php echo htmlspecialchars($noticia['titulo']); ?></h2>
 
                 <div class="meta-top">
                   <ul>
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.php">John Doe</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.php"><time datetime="2020-01-01">Jan 1, 2022</time></a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.php">12 Comments</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> 
+                      <a href="#"><?php echo htmlspecialchars($noticia['nome_usuario']); ?></a>
+                    </li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> 
+                      <a href="#"><time datetime="<?php echo $noticia['data_publicacao']; ?>">
+                        <?php echo $data_formatada; ?>
+                      </time></a>
+                    </li>
+                    <li class="d-flex align-items-center"><i class="bi bi-folder"></i> 
+                      <a href="#"><?php echo $categoria_nome; ?></a>
+                    </li>
                   </ul>
-                </div>
+                </div><!-- End meta top -->
 
                 <div class="content">
-                  <p>Similique neque nam consequuntur ad non maxime aliquam quas. Quibusdam animi praesentium. Aliquam et laboriosam eius aut nostrum quidem aliquid dicta.
-                    Et eveniet enim. Qui velit est ea dolorem doloremque deleniti aperiam unde soluta. Est cum et quod quos aut ut et sit sunt. Voluptate porro consequatur assumenda perferendis dolore.</p>
-
-                  <p>Sit repellat hic cupiditate hic ut nemo. Quis nihil sunt non reiciendis. Sequi in accusamus harum vel aspernatur. Excepturi numquam nihil cumque odio. Et voluptate cupiditate.</p>
-
-                  <blockquote>
-                    <p>Et vero doloremque tempore voluptatem ratione vel aut. Deleniti sunt animi aut. Aut eos aliquam doloribus minus autem quos.</p>
-                  </blockquote>
-
-                  <p>Sed quo laboriosam qui architecto. Occaecati repellendus omnis dicta inventore tempore provident voluptas mollitia aliquid. Id repellendus quia. Asperiores nihil magni dicta est suscipit perspiciatis. Voluptate ex rerum assumenda dolores nihil quaerat.
-                    Dolor porro tempora et quibusdam voluptas. Beatae aut at ad qui tempore corrupti velit quisquam rerum. Omnis dolorum exercitationem harum qui qui blanditiis neque.
-                    Iusto autem itaque. Repudiandae hic quae aspernatur ea neque qui. Architecto voluptatem magni. Vel magnam quod et tempora deleniti error rerum nihil tempora.</p>
-
-                  <h3>Et quae iure vel ut odit alias.</h3>
-                  <p>Officiis animi maxime nulla quo et harum eum quis a. Sit hic in qui quos fugit ut rerum atque. Optio provident dolores atque voluptatem rem excepturi molestiae qui. Voluptatem laborum omnis ullam quibusdam perspiciatis nulla nostrum. Voluptatum est libero eum nesciunt aliquid qui.
-                    Quia et suscipit non sequi. Maxime sed odit. Beatae nesciunt nesciunt accusamus quia aut ratione aspernatur dolor. Sint harum eveniet dicta exercitationem minima. Exercitationem omnis asperiores natus aperiam dolor consequatur id ex sed. Quibusdam rerum dolores sint consequatur quidem ea.
-                    Beatae minima sunt libero soluta sapiente in rem assumenda. Et qui odit voluptatem. Cum quibusdam voluptatem voluptatem accusamus mollitia aut atque aut.</p>
-
-                  <img src="../../assets/img/blog/blog-inside-post.jpg" class="img-fluid" alt="">
-
-                  <h3>Ut repellat blanditiis est dolore sunt dolorum quae.</h3>
-                  <p>Rerum ea est assumenda pariatur quasi et quam. Facilis nam porro amet nostrum. In assumenda quia quae a id praesentium. Quos deleniti libero sed occaecati aut porro autem. Consectetur sed excepturi sint non placeat quia repellat incidunt labore. Autem facilis hic dolorum dolores vel.
-                    Consectetur quasi id et optio praesentium aut asperiores eaque aut. Explicabo omnis quibusdam esse. Ex libero illum iusto totam et ut aut blanditiis. Veritatis numquam ut illum ut a quam vitae.</p>
-
-                  <p>Alias quia non aliquid. Eos et ea velit. Voluptatem maxime enim omnis ipsa voluptas incidunt. Nulla sit eaque mollitia nisi asperiores est veniam.</p>
-                </div>
+                  <?php 
+                  // Exibir o conteúdo formatado mantendo quebras de linha
+                  $conteudo_formatado = nl2br(htmlspecialchars($noticia['conteudo']));
+                  echo '<div class="text-justified">' . $conteudo_formatado . '</div>';
+                  ?>
+                </div><!-- End post content -->
 
                 <div class="meta-bottom">
-                  <i class="bi bi-folder"></i>
-                  <ul class="cats">
-                    <li><a href="#">Business</a></li>
-                  </ul>
-
                   <i class="bi bi-tags"></i>
                   <ul class="tags">
-                    <li><a href="#">Creative</a></li>
-                    <li><a href="#">Tips</a></li>
-                    <li><a href="#">Marketing</a></li>
+                    <?php foreach ($tags as $tag): ?>
+                      <li><a href="#"><?php echo $tag; ?></a></li>
+                    <?php endforeach; ?>
                   </ul>
-                </div>
+                </div><!-- End meta bottom -->
 
               </article>
 
             </div>
-          </section>
-
+          </section><!-- /Blog Details Section -->
         </div>
 
         <div class="col-lg-4 sidebar">
 
           <div class="widgets-container">
 
-            <div class="search-widget widget-item">
-              <h3 class="widget-title">Search</h3>
-              <form action="">
-                <input type="text">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-              </form>
-            </div>
-
-            <div class="categories-widget widget-item">
-              <h3 class="widget-title">Categories</h3>
-              <ul class="mt-3">
-                <li><a href="#">Inovação e Tendências <span>(25)</span></a></li>
-                <li><a href="#">Carreira e Oportunidades <span>(12)</span></a></li>
-                <li><a href="#">Educação e Capacitação <span>(5)</span></a></li>
-                <li><a href="#">Startups e Iniciativas Inovadoras <span>(22)</span></a></li>
-                <li><a href="#">Eventos e Conexões <span>(8)</span></a></li>
-                <li><a href="#">Tecnologia e Impacto Social <span>(14)</span></a></li>
-              </ul>
-            </div>
-
+            <!-- Recent Posts Widget -->
             <div class="recent-posts-widget widget-item">
-              <h3 class="widget-title">Recent Posts</h3>
-
-              <div class="post-item">
-                <img src="../../assets/img/blog/blog-recent-1.jpg" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.php">Nihil blanditiis at in nihil autem</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div>
-
-              <div class="post-item">
-                <img src="../../assets/img/blog/blog-recent-2.jpg" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.php">Quidem autem et impedit</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div>
-
-              <div class="post-item">
-                <img src="../../assets/img/blog/blog-recent-3.jpg" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.php">Id quia et et ut maxime similique occaecati ut</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div>
-
-              <div class="post-item">
-                <img src="../../assets/img/blog/blog-recent-4.jpg" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.php">Laborum corporis quo dara net para</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div>
-
-              <div class="post-item">
-                <img src="../../assets/img/blog/blog-recent-5.jpg" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.php">Et dolores corrupti quae illo quod dolor</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="tags-widget widget-item">
-              <h3 class="widget-title">Tags</h3>
-              <ul>
-                <li><a href="#">IA</a></li>
-                <li><a href="#">FrontEnd</a></li>
-                <li><a href="#">BackEnd</a></li>
-                <li><a href="#">Estágio</a></li>
-                <li><a href="#">VagaTech</a></li>
-                <li><a href="#">Mentoria</a></li>
-                <li><a href="#">Networking</a></li>
-                <li><a href="#">Currículo</a></li>
-                <li><a href="#">Workshops</a></li>
-                <li><a href="#">Certificação</a></li>
-                <li><a href="#">Cursos Online</a></li>
-                <li><a href="#">Notícia</a></li>
-                <li><a href="#">Entrevista</a></li>
-              </ul>
-            </div>
-
+              <h3 class="widget-title">Posts Recentes</h3>
+              <?php
+              // Buscar posts recentes (excluindo a notícia atual)
+              $recent_query = "SELECT n.noticia_id, n.titulo, n.imagem_capa, n.data_publicacao 
+                              FROM noticias n 
+                              WHERE n.status = 'publicado' 
+                              AND n.noticia_id != '$noticia_id'
+                              ORDER BY n.data_publicacao DESC 
+                              LIMIT 5";
+              $recent_result = mysqli_query($con, $recent_query);
+              
+              if ($recent_result && mysqli_num_rows($recent_result) > 0) {
+                  while ($recent = mysqli_fetch_assoc($recent_result)) {
+                      $recent_data = date('d/m/Y', strtotime($recent['data_publicacao']));
+                      ?>
+                      <div class="post-item">
+                          <?php if ($recent['imagem_capa']): ?>
+                              <img src="../<?php echo $recent['imagem_capa']; ?>" alt="<?php echo htmlspecialchars($recent['titulo']); ?>" class="flex-shrink-0">
+                          <?php else: ?>
+                              <img src="../assets/img/blog/blog-recent-1.jpg" alt="Imagem padrão" class="flex-shrink-0">
+                          <?php endif; ?>
+                          <div>
+                              <h4><a href="blog-details.php?id=<?php echo $recent['noticia_id']; ?>">
+                                  <?php echo htmlspecialchars($recent['titulo']); ?>
+                              </a></h4>
+                              <time datetime="<?php echo $recent['data_publicacao']; ?>"><?php echo $recent_data; ?></time>
+                          </div>
+                      </div><!-- End recent post item-->
+                      <?php
+                  }
+              } else {
+                  echo '<p>Nenhum post recente encontrado.</p>';
+              }
+              
+              mysqli_close($con);
+              ?>
+            </div><!--/Recent Posts Widget -->
           </div>
 
         </div>
@@ -204,19 +289,12 @@
 
   </main>
 
-<footer id="footer" class="footer light-background">
-  <?php
-    require("../Include/footer.php");
-  ?>
-</footer>
+  <footer id="footer" class="footer light-background">
+    <?php require("../Include/footer.php"); ?>
+  </footer>
 
-  <?php
-    require("../Include/preloaderAndScrollTop.php");
-  ?>
-  
-  <?php
-require("../includeJS/scriptScr.php");  ?>
+  <?php require("../Include/preloaderAndScrollTop.php"); ?>
+  <?php require("../includeJS/scriptScr.php"); ?>
 
 </body>
-
 </html>

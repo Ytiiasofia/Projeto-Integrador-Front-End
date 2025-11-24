@@ -55,7 +55,7 @@
 
   <?php
 require("../includeJS/scriptScr.php");  ?>
-<script src="../includeJS/scriptBusca.js"></script>
+<script src="../controleTabela/scriptBusca.js"></script>
 
 </body>
 </html>
