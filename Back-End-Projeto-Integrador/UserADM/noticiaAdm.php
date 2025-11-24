@@ -172,7 +172,6 @@
               <span class="badge tag-badge" data-tag="Entrevista">Entrevista</span>
             </div>
             <div id="tag-container" class="mb-2"></div>
-            <input type="text" class="form-control" id="new-tag" placeholder="Digite uma nova tag e pressione Enter">
             <input type="hidden" id="selected-tags" name="tags">
           </div>
           

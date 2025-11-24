@@ -4,7 +4,6 @@ const sistemaTags = {
     this.etiquetas = document.querySelectorAll('.tag-badge');
     this.containerTags = document.getElementById('tag-container');
     this.tagsSelecionadasInput = document.getElementById('selected-tags');
-    this.novaTagInput = document.getElementById('new-tag');
     this.tagsSelecionadas = [];
     
     if (this.etiquetas.length > 0) {
@@ -19,16 +18,6 @@ const sistemaTags = {
         this.alternarTag(etiqueta);
       });
     });
-    
-    // Event listener para nova tag
-    if (this.novaTagInput) {
-      this.novaTagInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          this.adicionarNovaTag();
-        }
-      });
-    }
   },
 
   alternarTag: function(etiqueta) {
