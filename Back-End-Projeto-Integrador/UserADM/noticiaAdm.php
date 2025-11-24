@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Notícias - She Innovates</title>
-  <meta name="description" content="Página de notícias para usuários cadastrados">
+  <meta name="description" content="Página de notícias para administradores">
   <meta name="keywords" content="notícias, tecnologia, inovação">
 
   <?php
@@ -81,7 +81,8 @@
       transform: translateY(-2px);
       transition: transform 0.2s ease;
     }
-        /* Estilo para resultados de busca */
+    
+    /* Estilo para resultados de busca */
     .search-results-info {
       background-color: #f8f9fa;
       padding: 15px;
@@ -246,6 +247,11 @@
                   if ($has_search) {
                     $total_results = mysqli_num_rows($result);
                     echo '<div class="search-results-info mb-4">';
+                    echo '<h5>Resultados da busca para: "' . htmlspecialchars($search_term) . '"</h5>';
+                    echo '<p class="mb-0">Encontrados ' . $total_results . ' resultado(s)';
+                    echo '<a href="?" class="btn btn-outline-secondary btn-sm clear-search">Limpar busca</a>';
+                    echo '</p>';
+                    echo '</div>';
                   } else if ($has_categoria) {
                     $total_results = mysqli_num_rows($result);
                     $categoria_display = [
@@ -259,7 +265,9 @@
                     $categoria_nome = $categoria_display[$categoria_filter] ?? $categoria_filter;
                     echo '<div class="search-results-info mb-4">';
                     echo '<h5>Categoria: ' . $categoria_nome . '</h5>';
-                    echo '<p class="mb-0">Encontrados ' . $total_results . ' notícia(s)</p>';
+                    echo '<p class="mb-0">Encontrados ' . $total_results . ' notícia(s)';
+                    echo '<a href="?" class="btn btn-outline-secondary btn-sm clear-search">Mostrar todas</a>';
+                    echo '</p>';
                     echo '</div>';
                   }
                   
@@ -294,7 +302,7 @@
                     $data_formatada = date('d/m/Y', strtotime($noticia['data_publicacao']));
                     ?>
                     <div class="col-lg-6">
-                      <article>
+                      <article class="article">
                         <div class="post-img">
                           <?php if ($noticia['imagem_capa']): ?>
                             <img src="../<?php echo $noticia['imagem_capa']; ?>" alt="<?php echo $noticia['titulo']; ?>" class="img-fluid">
@@ -343,6 +351,7 @@
                     echo '<div class="col-12 no-results">';
                     echo '<h4>Nenhum resultado encontrado</h4>';
                     echo '<p>Não encontramos nenhuma notícia para: "' . htmlspecialchars($search_term) . '"</p>';
+                    echo '<a href="?" class="btn btn-primary">Ver todas as notícias</a>';
                     echo '</div>';
                   } else if ($has_categoria) {
                     $categoria_display = [
@@ -357,9 +366,13 @@
                     echo '<div class="col-12 no-results">';
                     echo '<h4>Nenhuma notícia encontrada</h4>';
                     echo '<p>Não encontramos nenhuma notícia na categoria: "' . $categoria_nome . '"</p>';
+                    echo '<a href="?" class="btn btn-primary">Ver todas as notícias</a>';
                     echo '</div>';
                   } else {
-                    echo '<div class="col-12"><p class="text-center">Nenhuma notícia publicada ainda.</p></div>';
+                    echo '<div class="col-12 no-results">';
+                    echo '<h4>Nenhuma notícia publicada</h4>';
+                    echo '<p>Aguarde novas publicações em breve!</p>';
+                    echo '</div>';
                   }
                 }
                 ?>
