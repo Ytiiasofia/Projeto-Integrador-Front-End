@@ -81,6 +81,24 @@
       transform: translateY(-2px);
       transition: transform 0.2s ease;
     }
+        /* Estilo para resultados de busca */
+    .search-results-info {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #6a62d4;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #6c757d;
+    }
+
+    .clear-search {
+      margin-left: 10px;
+    }
   </style>
 </head>
 
@@ -170,23 +188,83 @@
           <!-- Blog Posts Section -->
           <section id="blog-posts" class="blog-posts section">
             <div class="container">
-              <div class="row gy-4">
+
+              <div class="row gy-4" id="news-container">
                 <?php
                 // Conexão e consulta para as notícias principais
                 require_once '../Include/conexao.php';
                 
-                // Consulta para buscar notícias
-                $query = "SELECT n.*, c.nome_categoria, u.nome_usuario 
-                          FROM noticias n 
-                          JOIN categorias c ON n.categoria_id = c.categoria_id 
-                          JOIN usuarios u ON n.autor_id = u.usuario_id 
-                          WHERE n.status = 'publicado' 
-                          ORDER BY n.data_publicacao DESC 
-                          LIMIT 6";
+                // Verificar se há busca
+                $search_term = isset($_GET['search']) ? trim($_GET['search']) : '';
+                $has_search = !empty($search_term);
+                
+                // Verificar se há filtro por categoria
+                $categoria_filter = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
+                $has_categoria = !empty($categoria_filter);
+                
+                if ($has_search) {
+                  // Consulta de busca
+                  $search_term_clean = mysqli_real_escape_string($con, $search_term);
+                  $query = "SELECT DISTINCT n.*, c.nome_categoria, u.nome_usuario 
+                            FROM noticias n 
+                            JOIN categorias c ON n.categoria_id = c.categoria_id 
+                            JOIN usuarios u ON n.autor_id = u.usuario_id 
+                            LEFT JOIN noticias_tags nt ON n.noticia_id = nt.noticia_id 
+                            LEFT JOIN tags t ON nt.tag_id = t.tag_id 
+                            WHERE n.status = 'publicado' 
+                            AND (n.titulo LIKE '%$search_term_clean%' 
+                                 OR n.conteudo LIKE '%$search_term_clean%'
+                                 OR t.nome_tag LIKE '%$search_term_clean%'
+                                 OR c.nome_categoria LIKE '%$search_term_clean%')
+                            ORDER BY n.data_publicacao DESC 
+                            LIMIT 12";
+                } else if ($has_categoria) {
+                  // Consulta por categoria
+                  $categoria_clean = mysqli_real_escape_string($con, $categoria_filter);
+                  $query = "SELECT n.*, c.nome_categoria, u.nome_usuario 
+                            FROM noticias n 
+                            JOIN categorias c ON n.categoria_id = c.categoria_id 
+                            JOIN usuarios u ON n.autor_id = u.usuario_id 
+                            WHERE n.status = 'publicado' 
+                            AND c.nome_categoria = '$categoria_clean'
+                            ORDER BY n.data_publicacao DESC 
+                            LIMIT 12";
+                } else {
+                  // Consulta normal para buscar notícias
+                  $query = "SELECT n.*, c.nome_categoria, u.nome_usuario 
+                            FROM noticias n 
+                            JOIN categorias c ON n.categoria_id = c.categoria_id 
+                            JOIN usuarios u ON n.autor_id = u.usuario_id 
+                            WHERE n.status = 'publicado' 
+                            ORDER BY n.data_publicacao DESC 
+                            LIMIT 6";
+                }
                 
                 $result = mysqli_query($con, $query);
                 
                 if ($result && mysqli_num_rows($result) > 0) {
+                  // Mostrar info da busca se houver
+                  if ($has_search) {
+                    $total_results = mysqli_num_rows($result);
+                    echo '<div class="search-results-info mb-4">';
+                  } else if ($has_categoria) {
+                    $total_results = mysqli_num_rows($result);
+                    $categoria_display = [
+                      'inovacao' => 'Inovação e Tendências',
+                      'carreira' => 'Carreira e Oportunidades', 
+                      'educacao' => 'Educação e Capacitação',
+                      'startups' => 'Startups e Iniciativas Inovadoras',
+                      'eventos' => 'Eventos e Conexões',
+                      'tecnologia' => 'Tecnologia e Impacto Social'
+                    ];
+                    $categoria_nome = $categoria_display[$categoria_filter] ?? $categoria_filter;
+                    echo '<div class="search-results-info mb-4">';
+                    echo '<h5>Categoria: ' . $categoria_nome . '</h5>';
+                    echo '<p class="mb-0">Encontrados ' . $total_results . ' notícia(s)</p>';
+                    echo '<button id="clear-search" class="btn btn-outline-secondary btn-sm mt-2">Ver Todas as Notícias</button>';
+                    echo '</div>';
+                  }
+                  
                   while ($noticia = mysqli_fetch_assoc($result)) {
                     // Buscar tags da notícia
                     $tags_query = "SELECT t.nome_tag 
@@ -233,7 +311,6 @@
                           </a>
                         </h2>
                         <div class="d-flex align-items-center">
-                          <img src="../assets/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
                           <div class="post-meta">
                             <p class="post-author"><?php echo htmlspecialchars($noticia['nome_usuario']); ?></p>
                             <p class="post-date">
@@ -264,7 +341,30 @@
                     <?php
                   }
                 } else {
-                  echo '<div class="col-12"><p class="text-center">Nenhuma notícia publicada ainda.</p></div>';
+                  if ($has_search) {
+                    echo '<div class="col-12 no-results">';
+                    echo '<h4>Nenhum resultado encontrado</h4>';
+                    echo '<p>Não encontramos nenhuma notícia para: "' . htmlspecialchars($search_term) . '"</p>';
+                    echo '<button id="clear-search" class="btn btn-primary">Ver Todas as Notícias</button>';
+                    echo '</div>';
+                  } else if ($has_categoria) {
+                    $categoria_display = [
+                      'inovacao' => 'Inovação e Tendências',
+                      'carreira' => 'Carreira e Oportunidades', 
+                      'educacao' => 'Educação e Capacitação',
+                      'startups' => 'Startups e Iniciativas Inovadoras',
+                      'eventos' => 'Eventos e Conexões',
+                      'tecnologia' => 'Tecnologia e Impacto Social'
+                    ];
+                    $categoria_nome = $categoria_display[$categoria_filter] ?? $categoria_filter;
+                    echo '<div class="col-12 no-results">';
+                    echo '<h4>Nenhuma notícia encontrada</h4>';
+                    echo '<p>Não encontramos nenhuma notícia na categoria: "' . $categoria_nome . '"</p>';
+                    echo '<button id="clear-search" class="btn btn-primary">Ver Todas as Notícias</button>';
+                    echo '</div>';
+                  } else {
+                    echo '<div class="col-12"><p class="text-center">Nenhuma notícia publicada ainda.</p></div>';
+                  }
                 }
                 ?>
               </div>
@@ -277,8 +377,8 @@
             <!-- Search Widget -->
             <div class="search-widget widget-item">
               <h3 class="widget-title">Pesquisa</h3>
-              <form action="">
-                <input type="text">
+              <form id="search-form" method="GET" action="">
+                <input type="text" name="search" id="search-input" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" placeholder="Buscar notícias...">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
               </form>
             </div><!--/Search Widget -->
@@ -287,12 +387,31 @@
             <div class="categories-widget widget-item">
               <h3 class="widget-title">Categorias</h3>
               <ul class="mt-3">
-                <li><a href="#">Inovação e Tendências <span>(25)</span></a></li>
-                <li><a href="#">Carreira e Oportunidades <span>(12)</span></a></li>
-                <li><a href="#">Educação e Capacitação <span>(5)</span></a></li>
-                <li><a href="#">Startups e Iniciativas Inovadoras <span>(22)</span></a></li>
-                <li><a href="#">Eventos e Conexões <span>(8)</span></a></li>
-                <li><a href="#">Tecnologia e Impacto Social <span>(14)</span></a></li>
+                <?php
+                // Consulta para contar notícias por categoria
+                $cat_query = "SELECT c.nome_categoria, COUNT(n.noticia_id) as total 
+                              FROM categorias c 
+                              LEFT JOIN noticias n ON c.categoria_id = n.categoria_id AND n.status = 'publicado' 
+                              GROUP BY c.categoria_id, c.nome_categoria 
+                              ORDER BY total DESC";
+                $cat_result = mysqli_query($con, $cat_query);
+                
+                $categoria_display = [
+                  'inovacao' => 'Inovação e Tendências',
+                  'carreira' => 'Carreira e Oportunidades', 
+                  'educacao' => 'Educação e Capacitação',
+                  'startups' => 'Startups e Iniciativas Inovadoras',
+                  'eventos' => 'Eventos e Conexões',
+                  'tecnologia' => 'Tecnologia e Impacto Social'
+                ];
+                
+                if ($cat_result && mysqli_num_rows($cat_result) > 0) {
+                  while ($cat = mysqli_fetch_assoc($cat_result)) {
+                    $cat_nome = $categoria_display[$cat['nome_categoria']] ?? $cat['nome_categoria'];
+                    echo '<li><a href="?categoria=' . $cat['nome_categoria'] . '">' . $cat_nome . ' <span>(' . $cat['total'] . ')</span></a></li>';
+                  }
+                }
+                ?>
               </ul>
             </div><!--/Categories Widget -->
 
@@ -342,19 +461,13 @@
             <div class="tags-widget widget-item">
               <h3 class="widget-title">Tags</h3>
               <ul>
-                <li><a href="#">IA</a></li>
-                <li><a href="#">FrontEnd</a></li>
-                <li><a href="#">BackEnd</a></li>
-                <li><a href="#">Estágio</a></li>
-                <li><a href="#">VagaTech</a></li>
-                <li><a href="#">Mentoria</a></li>
-                <li><a href="#">Networking</a></li>
-                <li><a href="#">Currículo</a></li>
-                <li><a href="#">Workshops</a></li>
-                <li><a href="#">Certificação</a></li>
-                <li><a href="#">Cursos Online</a></li>
-                <li><a href="#">Notícia</a></li>
-                <li><a href="#">Entrevista</a></li>
+                <?php
+                // Tags mais populares
+                $popular_tags = ['IA', 'FrontEnd', 'BackEnd', 'Estágio', 'VagaTech', 'Mentoria', 'Networking', 'Currículo', 'Workshops', 'Certificação', 'Cursos Online', 'Notícia', 'Entrevista'];
+                foreach ($popular_tags as $tag) {
+                  echo '<li><a href="?search=' . urlencode($tag) . '">' . $tag . '</a></li>';
+                }
+                ?>
               </ul>
             </div><!--/Tags Widget -->
           </div>
@@ -557,6 +670,9 @@
       // Configurar botões de deletar
       setupDeleteButtons();
 
+      // Configurar sistema de busca
+      setupSearchSystem();
+
       // Função para mostrar alertas personalizados
       function showAlert(message, type) {
         // Remove alertas existentes
@@ -656,6 +772,38 @@
           // Reabilitar botão em caso de erro
           buttonElement.disabled = false;
           buttonElement.innerHTML = '<i class="bi bi-trash"></i> Deletar';
+        });
+      }
+
+      // Função para configurar o sistema de busca
+      function setupSearchSystem() {
+        const searchForm = document.getElementById('search-form');
+        const clearSearchButtons = document.querySelectorAll('#clear-search');
+        const searchInput = document.getElementById('search-input');
+
+        // Foco no campo de busca
+        searchInput.focus();
+
+        // Limpar busca
+        clearSearchButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            window.location.href = window.location.pathname;
+          });
+        });
+
+        // Busca em tempo real (opcional)
+        searchInput.addEventListener('input', function() {
+          // Aqui você pode implementar busca em tempo real com AJAX se preferir
+        });
+
+        // Validação do formulário de busca
+        searchForm.addEventListener('submit', function(e) {
+          const searchValue = searchInput.value.trim();
+          if (!searchValue) {
+            e.preventDefault();
+            showAlert('Por favor, digite um termo para buscar', 'warning');
+            searchInput.focus();
+          }
         });
       }
     });

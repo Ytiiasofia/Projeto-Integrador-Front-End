@@ -241,28 +241,6 @@ $data_formatada = date('d/m/Y', strtotime($noticia['data_publicacao']));
 
           <div class="widgets-container">
 
-            <!-- Search Widget -->
-            <div class="search-widget widget-item">
-              <h3 class="widget-title">Pesquisa</h3>
-              <form action="">
-                <input type="text">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-              </form>
-            </div><!--/Search Widget -->
-
-            <!-- Categories Widget -->
-            <div class="categories-widget widget-item">
-              <h3 class="widget-title">Categorias</h3>
-              <ul class="mt-3">
-                <li><a href="#">Inovação e Tendências <span>(25)</span></a></li>
-                <li><a href="#">Carreira e Oportunidades <span>(12)</span></a></li>
-                <li><a href="#">Educação e Capacitação <span>(5)</span></a></li>
-                <li><a href="#">Startups e Iniciativas Inovadoras <span>(22)</span></a></li>
-                <li><a href="#">Eventos e Conexões <span>(8)</span></a></li>
-                <li><a href="#">Tecnologia e Impacto Social <span>(14)</span></a></li>
-              </ul>
-            </div><!--/Categories Widget -->
-
             <!-- Recent Posts Widget -->
             <div class="recent-posts-widget widget-item">
               <h3 class="widget-title">Posts Recentes</h3>
@@ -302,27 +280,6 @@ $data_formatada = date('d/m/Y', strtotime($noticia['data_publicacao']));
               mysqli_close($con);
               ?>
             </div><!--/Recent Posts Widget -->
-
-            <!-- Tags Widget -->
-            <div class="tags-widget widget-item">
-              <h3 class="widget-title">Tags</h3>
-              <ul>
-                <li><a href="#">IA</a></li>
-                <li><a href="#">FrontEnd</a></li>
-                <li><a href="#">BackEnd</a></li>
-                <li><a href="#">Estágio</a></li>
-                <li><a href="#">VagaTech</a></li>
-                <li><a href="#">Mentoria</a></li>
-                <li><a href="#">Networking</a></li>
-                <li><a href="#">Currículo</a></li>
-                <li><a href="#">Workshops</a></li>
-                <li><a href="#">Certificação</a></li>
-                <li><a href="#">Cursos Online</a></li>
-                <li><a href="#">Notícia</a></li>
-                <li><a href="#">Entrevista</a></li>
-              </ul>
-            </div><!--/Tags Widget -->
-
           </div>
 
         </div>
