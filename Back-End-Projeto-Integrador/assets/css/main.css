@@ -1078,9 +1078,6 @@ section,
     transition: color 0.3s;
 }
 
-.commentactions a:hover {
-}
-
 .add-comment {
     margin-top: 20px;
 }

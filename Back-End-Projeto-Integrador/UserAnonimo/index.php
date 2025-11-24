@@ -24,7 +24,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="../../assets/img/ImagemApp2.jpg" alt="" data-aos="fade-in">
+      <img src="../assets/img/ImagemApp2.jpg" alt="" data-aos="fade-in">
 
       <div class="container">
         <div class="row">
@@ -50,7 +50,7 @@
         <div class="row g-0">
 
           <div class="col-xl-5 img-bg" data-aos="fade-up" data-aos-delay="100">
-            <img src="../../assets/img/ImagemApp1.png" alt="">
+            <img src="../assets/img/ImagemApp1.png" alt="">
           </div>
 
           <div class="col-xl-7 slides position-relative" data-aos="fade-up" data-aos-delay="200">
@@ -158,7 +158,7 @@
     <!-- Call To Action Section -->
     <section id="call-to-action" class="call-to-action section dark-background">
 
-      <img src="../../assets/img/ImagemApp3.png" alt="">
+      <img src="../assets/img/ImagemApp3.png" alt="">
 
       <div class="container">
         <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
@@ -189,7 +189,7 @@
 
           <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="post-box">
-              <div class="post-img"><img src="../../assets/img/blog/blog-1.jpg" class="img-fluid" alt=""></div>
+              <div class="post-img"><img src="../assets/img/blog/blog-1.jpg" class="img-fluid" alt=""></div>
               <div class="meta">
                 <span class="post-date">Tue, December 12</span>
                 <span class="post-author"> / Julia Parker</span>
@@ -202,7 +202,7 @@
 
           <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="post-box">
-              <div class="post-img"><img src="../../assets/img/blog/blog-2.jpg" class="img-fluid" alt=""></div>
+              <div class="post-img"><img src="../assets/img/blog/blog-2.jpg" class="img-fluid" alt=""></div>
               <div class="meta">
                 <span class="post-date">Fri, September 05</span>
                 <span class="post-author"> / Mario Douglas</span>
@@ -215,7 +215,7 @@
 
           <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="600">
             <div class="post-box">
-              <div class="post-img"><img src="../../assets/img/blog/blog-3.jpg" class="img-fluid" alt=""></div>
+              <div class="post-img"><img src="../assets/img/blog/blog-3.jpg" class="img-fluid" alt=""></div>
               <div class="meta">
                 <span class="post-date">Tue, July 27</span>
                 <span class="post-author"> / Lisa Hunter</span>
@@ -228,7 +228,7 @@
 
           <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="600">
             <div class="post-box">
-              <div class="post-img"><img src="../../assets/img/blog/blog-4.jpg" class="img-fluid" alt=""></div>
+              <div class="post-img"><img src="../assets/img/blog/blog-4.jpg" class="img-fluid" alt=""></div>
               <div class="meta">
                 <span class="post-date">Tue, Sep 16</span>
                 <span class="post-author"> / Mario Douglas</span>
