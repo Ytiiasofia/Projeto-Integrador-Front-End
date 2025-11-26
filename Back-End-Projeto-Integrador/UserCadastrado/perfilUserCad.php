@@ -238,143 +238,16 @@ require_once __DIR__ . '/../Include/menuADM.php';
   ?>
 
   <?php
-require("../includeJS/scriptScr.php");  ?>
+    require("../includeJS/scriptScr.php");
+  ?>
 
-  <!-- Profile Script -->
+  <!-- Incluir apenas o código comum para usuários -->
+  <script src="../includeJsPerfil/codigosComuns.js"></script>
+
+  <!-- Script específico para usuário comum (apenas as funcionalidades que não estão no comum) -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Função para mostrar mensagem
-      function showMessage(message, isSuccess = true) {
-        // Criar ou atualizar elemento de mensagem
-        let messageDiv = document.getElementById('message-alert');
-        if (!messageDiv) {
-          messageDiv = document.createElement('div');
-          messageDiv.id = 'message-alert';
-          messageDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
-          messageDiv.style.position = 'fixed';
-          messageDiv.style.top = '20px';
-          messageDiv.style.right = '20px';
-          messageDiv.style.zIndex = '9999';
-          messageDiv.style.minWidth = '300px';
-          messageDiv.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          `;
-          document.body.appendChild(messageDiv);
-        } else {
-          messageDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
-          messageDiv.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          `;
-        }
-        
-        // Auto-remover após 5 segundos
-        setTimeout(() => {
-          if (messageDiv && messageDiv.parentNode) {
-            messageDiv.parentNode.removeChild(messageDiv);
-          }
-        }, 5000);
-      }
-
-      // Upload e preview de foto
-      const photoUpload = document.getElementById('photoUpload');
-      const currentPhotoPreview = document.getElementById('currentPhotoPreview');
-      const savePhotoBtn = document.getElementById('savePhotoBtn');
-
-      if (photoUpload) {
-          photoUpload.addEventListener('change', function(e) {
-              const file = e.target.files[0];
-              const feedback = document.getElementById('photoFeedback');
-              
-              if (file) {
-                  // Validar tipo de arquivo
-                  const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
-                  if (!validTypes.includes(file.type)) {
-                      feedback.textContent = 'Formato de arquivo inválido. Use JPG, PNG ou GIF.';
-                      feedback.style.color = 'red';
-                      savePhotoBtn.disabled = true;
-                      return;
-                  }
-                  
-                  // Validar tamanho do arquivo (2MB)
-                  if (file.size > 2 * 1024 * 1024) {
-                      feedback.textContent = 'Arquivo muito grande. Máximo 2MB.';
-                      feedback.style.color = 'red';
-                      savePhotoBtn.disabled = true;
-                      return;
-                  }
-                  
-                  feedback.textContent = 'Arquivo válido';
-                  feedback.style.color = 'green';
-                  savePhotoBtn.disabled = false;
-                  
-                  // Preview da imagem
-                  const reader = new FileReader();
-                  reader.onload = function(e) {
-                      currentPhotoPreview.src = e.target.result;
-                  }
-                  reader.readAsDataURL(file);
-              }
-          });
-      }
-
-      // Salvar foto
-      if (savePhotoBtn) {
-          savePhotoBtn.addEventListener('click', function() {
-              const fileInput = document.getElementById('photoUpload');
-              const file = fileInput.files[0];
-              
-              if (!file) {
-                  showMessage('Selecione uma imagem para upload', false);
-                  return;
-              }
-              
-              const formData = new FormData();
-              formData.append('action', 'update_photo');
-              formData.append('foto_perfil', file);
-              
-              fetch('atualizar_perfil.php', {
-                  method: 'POST',
-                  body: formData
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      // Atualizar a foto na página
-                      document.getElementById('currentProfilePhoto').src = data.foto_url + '?t=' + new Date().getTime();
-                      bootstrap.Modal.getInstance(document.getElementById('editPhotoModal')).hide();
-                      showMessage(data.message, true);
-                      
-                      // Resetar o formulário
-                      document.getElementById('photoUploadForm').reset();
-                      document.getElementById('photoFeedback').textContent = '';
-                  } else {
-                      showMessage(data.message, false);
-                  }
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  showMessage('Erro ao fazer upload da foto', false);
-              });
-          });
-      }
-
-      // Limpar feedback quando modal de foto é fechado
-      const editPhotoModal = document.getElementById('editPhotoModal');
-      if (editPhotoModal) {
-          editPhotoModal.addEventListener('hidden.bs.modal', function() {
-              document.getElementById('photoUploadForm').reset();
-              document.getElementById('photoFeedback').textContent = '';
-              savePhotoBtn.disabled = false;
-              
-              // Restaurar preview original
-              const currentProfilePhoto = document.getElementById('currentProfilePhoto').src;
-              document.getElementById('currentPhotoPreview').src = currentProfilePhoto;
-          });
-      }
-
-      // Validação de nome de usuário em tempo real
+      // Validação de nome de usuário em tempo real (específico do usuário comum)
       const newUsernameInput = document.getElementById('newUsername');
       const usernameFeedback = document.getElementById('usernameFeedback');
       
@@ -398,7 +271,7 @@ require("../includeJS/scriptScr.php");  ?>
         });
       }
 
-      // Validação de email em tempo real
+      // Validação de email em tempo real (específico do usuário comum)
       const newEmailInput = document.getElementById('newEmail');
       const emailFeedback = document.getElementById('emailFeedback');
       
@@ -417,68 +290,23 @@ require("../includeJS/scriptScr.php");  ?>
         });
       }
 
-      // Validação de senha em tempo real
-      const newPasswordInput = document.getElementById('newPassword');
-      const passwordFeedback = document.getElementById('passwordFeedback');
-      const confirmPasswordInput = document.getElementById('confirmPassword');
-      const confirmFeedback = document.getElementById('confirmFeedback');
-      
-      if (newPasswordInput) {
-        newPasswordInput.addEventListener('input', function() {
-          const password = this.value;
-          
-          if (password.length < 8) {
-            passwordFeedback.textContent = 'A senha deve ter pelo menos 8 caracteres';
-            passwordFeedback.style.color = 'red';
-          } else if (!/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
-            passwordFeedback.textContent = 'A senha deve conter letras e números';
-            passwordFeedback.style.color = 'red';
-          } else {
-            passwordFeedback.textContent = 'Senha válida';
-            passwordFeedback.style.color = 'green';
-          }
-          
-          // Verificar confirmação
-          if (confirmPasswordInput.value) {
-            if (password !== confirmPasswordInput.value) {
-              confirmFeedback.textContent = 'As senhas não coincidem';
-              confirmFeedback.style.color = 'red';
-            } else {
-              confirmFeedback.textContent = 'Senhas coincidem';
-              confirmFeedback.style.color = 'green';
-            }
-          }
-        });
-      }
-      
-      if (confirmPasswordInput) {
-        confirmPasswordInput.addEventListener('input', function() {
-          const confirmPassword = this.value;
-          const password = newPasswordInput.value;
-          
-          if (password !== confirmPassword) {
-            confirmFeedback.textContent = 'As senhas não coincidem';
-            confirmFeedback.style.color = 'red';
-          } else {
-            confirmFeedback.textContent = 'Senhas coincidem';
-            confirmFeedback.style.color = 'green';
-          }
-        });
-      }
-
-      // Nome de usuário - Salvar
+      // Nome de usuário - Salvar (específico do usuário comum)
       const saveUsernameBtn = document.getElementById('saveUsernameBtn');
       if (saveUsernameBtn) {
         saveUsernameBtn.addEventListener('click', function() {
           const newUsername = document.getElementById('newUsername').value.trim();
           
           if (newUsername.length < 3 || newUsername.length > 20) {
-            showMessage('Nome de usuário deve ter entre 3 e 20 caracteres', false);
+            if (window.profileManager) {
+              window.profileManager.showMessage('Nome de usuário deve ter entre 3 e 20 caracteres', false);
+            }
             return;
           }
           
           if (!/^[a-zA-Z0-9_]+$/.test(newUsername)) {
-            showMessage('Use apenas letras, números e underline no nome de usuário', false);
+            if (window.profileManager) {
+              window.profileManager.showMessage('Use apenas letras, números e underline no nome de usuário', false);
+            }
             return;
           }
           
@@ -497,19 +325,25 @@ require("../includeJS/scriptScr.php");  ?>
               document.getElementById('username').value = newUsername;
               document.getElementById('profile-name').textContent = newUsername;
               bootstrap.Modal.getInstance(document.getElementById('editUsernameModal')).hide();
-              showMessage(data.message, true);
+              if (window.profileManager) {
+                window.profileManager.showMessage(data.message, true);
+              }
             } else {
-              showMessage(data.message, false);
+              if (window.profileManager) {
+                window.profileManager.showMessage(data.message, false);
+              }
             }
           })
           .catch(error => {
             console.error('Error:', error);
-            showMessage('Erro ao atualizar nome de usuário', false);
+            if (window.profileManager) {
+              window.profileManager.showMessage('Erro ao atualizar nome de usuário', false);
+            }
           });
         });
       }
 
-      // Email - Salvar
+      // Email - Salvar (específico do usuário comum)
       const saveEmailBtn = document.getElementById('saveEmailBtn');
       if (saveEmailBtn) {
         saveEmailBtn.addEventListener('click', function() {
@@ -517,7 +351,9 @@ require("../includeJS/scriptScr.php");  ?>
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           
           if (!emailRegex.test(newEmail)) {
-            showMessage('Email inválido', false);
+            if (window.profileManager) {
+              window.profileManager.showMessage('Email inválido', false);
+            }
             return;
           }
           
@@ -535,101 +371,37 @@ require("../includeJS/scriptScr.php");  ?>
             if (data.success) {
               document.getElementById('email').value = newEmail;
               bootstrap.Modal.getInstance(document.getElementById('editEmailModal')).hide();
-              showMessage(data.message, true);
+              if (window.profileManager) {
+                window.profileManager.showMessage(data.message, true);
+              }
             } else {
-              showMessage(data.message, false);
+              if (window.profileManager) {
+                window.profileManager.showMessage(data.message, false);
+              }
             }
           })
           .catch(error => {
             console.error('Error:', error);
-            showMessage('Erro ao atualizar email', false);
-          });
-        });
-      }
-
-      // Senha - Salvar
-      const savePasswordBtn = document.getElementById('savePasswordBtn');
-      if (savePasswordBtn) {
-        savePasswordBtn.addEventListener('click', function() {
-          const currentPassword = document.getElementById('currentPassword').value;
-          const newPassword = document.getElementById('newPassword').value;
-          const confirmPassword = document.getElementById('confirmPassword').value;
-          
-          if (!currentPassword || !newPassword || !confirmPassword) {
-            showMessage('Todos os campos são obrigatórios', false);
-            return;
-          }
-          
-          if (newPassword !== confirmPassword) {
-            showMessage('As senhas não coincidem', false);
-            return;
-          }
-          
-          if (newPassword.length < 8) {
-            showMessage('A senha deve ter pelo menos 8 caracteres', false);
-            return;
-          }
-          
-          if (!/\d/.test(newPassword) || !/[a-zA-Z]/.test(newPassword)) {
-            showMessage('A senha deve conter letras e números', false);
-            return;
-          }
-          
-          // Enviar para o servidor
-          const formData = new FormData();
-          formData.append('action', 'update_password');
-          formData.append('senha_atual', currentPassword);
-          formData.append('nova_senha', newPassword);
-          formData.append('confirmar_senha', confirmPassword);
-          
-          fetch('atualizar_perfil.php', {
-            method: 'POST',
-            body: formData
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              // Limpar campos
-              document.getElementById('currentPassword').value = '';
-              document.getElementById('newPassword').value = '';
-              document.getElementById('confirmPassword').value = '';
-              
-              bootstrap.Modal.getInstance(document.getElementById('editPasswordModal')).hide();
-              showMessage(data.message, true);
-            } else {
-              showMessage(data.message, false);
+            if (window.profileManager) {
+              window.profileManager.showMessage('Erro ao atualizar email', false);
             }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            showMessage('Erro ao atualizar senha', false);
           });
         });
       }
 
-      // Limpar feedback quando modais são fechados
-      const modals = ['editUsernameModal', 'editEmailModal', 'editPasswordModal'];
+      // Limpar feedback quando modais são fechados (apenas os específicos do usuário)
+      const modals = ['editUsernameModal', 'editEmailModal'];
       modals.forEach(modalId => {
         const modal = document.getElementById(modalId);
         if (modal) {
           modal.addEventListener('hidden.bs.modal', function() {
-            // Limpar mensagens de feedback
+            // Limpar mensagens de feedback específicas
             const feedbacks = this.querySelectorAll('.form-text');
             feedbacks.forEach(feedback => {
-              if (feedback.id !== 'usernameFeedback' && feedback.id !== 'emailFeedback' && 
-                  feedback.id !== 'passwordFeedback' && feedback.id !== 'confirmFeedback') {
+              if (feedback.id === 'usernameFeedback' || feedback.id === 'emailFeedback') {
                 feedback.textContent = '';
               }
             });
-            
-            // Limpar campos de senha
-            if (modalId === 'editPasswordModal') {
-              document.getElementById('currentPassword').value = '';
-              document.getElementById('newPassword').value = '';
-              document.getElementById('confirmPassword').value = '';
-              if (passwordFeedback) passwordFeedback.textContent = '';
-              if (confirmFeedback) confirmFeedback.textContent = '';
-            }
           });
         }
       });

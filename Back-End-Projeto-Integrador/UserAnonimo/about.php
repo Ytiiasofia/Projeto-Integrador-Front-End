@@ -23,7 +23,7 @@
   <main class="main">
 
     <!-- Título -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(../../assets/img/about-page-title-bg.jpg);">
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(../assets/img/about-page-title-bg.jpg);">
       <div class="container">
         <h1>Sobre</h1>
         <nav class="breadcrumbs">
@@ -41,7 +41,7 @@
       <div class="container">
         <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
           <div class="col-lg-5">
-            <img src="../../assets/img/team-page-title-bg.jpg" class="img-fluid" alt="">
+            <img src="../assets/img/team-page-title-bg.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
             <div class="content">
@@ -59,7 +59,7 @@
     <!-- Seção Firula -->
     <section id="call-to-action" class="call-to-action section dark-background">
 
-      <img src="../../assets/img/ImagemApp3.png" alt="">
+      <img src="../assets/img/ImagemApp3.png" alt="">
 
       <div class="container">
         <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
