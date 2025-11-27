@@ -33,7 +33,7 @@
               <p>Acreditamos que toda mulher merece trilhar seu percurso na área da tecnologia com confiança, apoio e pertencimento.</p>
             </blockquote>
             <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <a href="saibaMaisUserCad.html" class="btn-get-started">Saiba Mais</a>
+              <a href="saibaMaisUserCad.php" class="btn-get-started">Saiba Mais</a>
             </div>
           </div>
         </div>

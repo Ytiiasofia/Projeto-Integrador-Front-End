@@ -58,6 +58,13 @@ CREATE TABLE `comentario_curtidas` (
   `data_curtida` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Despejando dados para a tabela `comentario_curtidas`
+--
+
+INSERT INTO `comentario_curtidas` (`curtida_id`, `comentario_id`, `usuario_id`, `data_curtida`) VALUES
+(5, 8, 21, '2025-11-24 20:09:37');
+
 -- --------------------------------------------------------
 
 --
@@ -79,15 +86,10 @@ CREATE TABLE `forum_posts` (
 --
 
 INSERT INTO `forum_posts` (`post_id`, `usuario_id`, `titulo`, `conteudo`, `data_criacao`, `data_edicao`, `ativo`) VALUES
-(2, 15, 'que odio', 'aaaaaaa', '2025-11-10 21:22:58', NULL, 1),
-(6, 15, 'aaa', 'aaa', '2025-11-13 14:28:01', NULL, 1),
-(7, 15, 'oi', 'a', '2025-11-13 14:33:14', NULL, 1),
-(8, 15, 'oi', 'a', '2025-11-13 14:35:44', NULL, 1),
-(9, 15, 'a', 'a', '2025-11-13 14:44:05', NULL, 1),
-(10, 16, 'aaa', 'aa', '2025-11-17 11:25:52', NULL, 1),
-(12, 17, 'oi amores', 'testando os includes de js', '2025-11-23 23:38:50', NULL, 1),
-(13, 16, 'oi', 'testando os includes de js no cad', '2025-11-23 23:41:05', NULL, 1),
-(15, 17, 'teste de redirecionamento', 'eu sou mt incompetente', '2025-11-23 23:53:21', NULL, 1);
+(16, 20, 'Como organizar seus estudos para tecnologia sem surtar', 'Estudar programação pode ser assustador no começo, especialmente quando tudo parece importante. A chave é organização. Neste post, mostro métodos simples para estudar sem se estressar: usar Pomodoro, alternar teoria e prática, não tentar aprender tudo de uma vez e acompanhar conteúdos confiáveis. Disciplina constante > estudar 10 horas num único dia.', '2025-11-24 20:04:04', NULL, 1),
+(17, 20, 'Front-end em 2025: vale a pena aprender React ainda?', 'Com tantas novas bibliotecas surgindo, como Solid, Qwik e Svelte, vocês acham que React continua sendo a melhor opção para iniciantes? Estou começando agora no front-end e não sei por onde ir.', '2025-11-24 20:07:58', NULL, 1),
+(18, 21, 'Qual o maior erro de iniciantes em segurança digital?', 'Estou começando a estudar cibersegurança e queria saber de quem já tem experiência: qual o erro mais comum que quem está iniciando costuma cometer?', '2025-11-24 20:10:08', NULL, 1),
+(19, 23, 'Vale a pena montar seu próprio PC em 2025?', 'Estou pensando em montar um PC do zero, mas percebi que alguns computadores pré-montados estão com preços competitivos. Ainda compensa customizar tudo?', '2025-11-24 20:14:42', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -119,22 +121,24 @@ INSERT INTO `forum_tags` (`tag_id`, `nome`, `descricao`, `data_criacao`) VALUES
 (10, 'backend', 'Desenvolvimento backend', '2025-11-10 20:44:13'),
 (11, 'banco-de-dados', 'Bancos de dados e SQL', '2025-11-10 20:44:13'),
 (12, 'mobile', 'Desenvolvimento mobile', '2025-11-10 20:44:13'),
-(13, 'ódio', NULL, '2025-11-10 21:22:42'),
-(14, 'ranço', NULL, '2025-11-10 21:22:42'),
-(15, 'aa', NULL, '2025-11-10 21:22:58'),
-(16, 'aaa', NULL, '2025-11-10 21:22:58'),
-(17, 'a', NULL, '2025-11-10 21:33:43'),
-(18, 'teste', NULL, '2025-11-10 21:54:56'),
-(19, 'testando', NULL, '2025-11-10 21:54:56'),
-(20, 'as', NULL, '2025-11-10 22:01:52'),
-(21, 'ttt', NULL, '2025-11-10 22:01:52'),
-(22, 'oi', NULL, '2025-11-17 11:25:52'),
-(23, 'ei', NULL, '2025-11-17 11:25:52'),
-(24, 'ai', NULL, '2025-11-17 11:25:52'),
-(25, 'admPikadasgalaxias', NULL, '2025-11-20 21:57:27'),
 (26, 'jsBB', NULL, '2025-11-23 23:38:50'),
 (27, 'nTaFuncionando', NULL, '2025-11-23 23:41:05'),
-(28, 'testeIncludeJS', NULL, '2025-11-23 23:44:38');
+(28, 'testeIncludeJS', NULL, '2025-11-23 23:44:38'),
+(29, 'estudos', NULL, '2025-11-24 20:04:04'),
+(30, 'programação', NULL, '2025-11-24 20:04:04'),
+(31, 'organização', NULL, '2025-11-24 20:04:04'),
+(32, 'produtividade', NULL, '2025-11-24 20:04:04'),
+(33, 'motivação', NULL, '2025-11-24 20:04:04'),
+(34, 'front-end', NULL, '2025-11-24 20:07:58'),
+(35, 'web', NULL, '2025-11-24 20:07:58'),
+(36, 'segurança', NULL, '2025-11-24 20:10:08'),
+(37, 'cibersegurança', NULL, '2025-11-24 20:10:08'),
+(38, 'hacking', NULL, '2025-11-24 20:10:08'),
+(39, 'iniciantes', NULL, '2025-11-24 20:10:08'),
+(40, 'hardware', NULL, '2025-11-24 20:14:42'),
+(41, 'pc', NULL, '2025-11-24 20:14:42'),
+(42, 'eletrônica', NULL, '2025-11-24 20:14:42'),
+(43, 'montagem', NULL, '2025-11-24 20:14:42');
 
 -- --------------------------------------------------------
 
@@ -160,12 +164,9 @@ CREATE TABLE `noticias` (
 --
 
 INSERT INTO `noticias` (`noticia_id`, `titulo`, `conteudo`, `imagem_capa`, `categoria_id`, `autor_id`, `status`, `data_publicacao`, `data_criacao`, `data_atualizacao`) VALUES
-(5, 'Indústria adota IA generativa para acelerar inovação em produtos', 'A inteligência artificial generativa continua mudando o cenário industrial em 2025. De acordo com novos levantamentos do setor tecnológico, a adoção de IA avançada aumentou mais de 40% entre empresas de médio e grande porte nos últimos 12 meses. Esse salto está diretamente ligado à busca por eficiência, agilidade na criação de produtos e redução de custos operacionais.\r\n\r\nFabricantes de equipamentos eletrônicos, montadoras de veículos e empresas de varejo passaram a utilizar modelos generativos para tarefas como prototipação, simulação de uso, automação de testes e até criação de campanhas publicitárias. Em alguns casos, o tempo de desenvolvimento de um novo produto caiu pela metade.\r\n\r\nEspecialistas afirmam que a transformação vai além da digitalização tradicional. Agora, máquinas são capazes de analisar dados de mercado em tempo real, sugerir melhorias, prever falhas e auxiliar equipes de engenharia com insights que antes levariam semanas para serem identificados.\r\n\r\nApesar dos benefícios, a expansão da IA traz desafios importantes, como a necessidade de capacitar profissionais para interagir com os sistemas e garantir o uso ético das tecnologias. Mesmo assim, analistas projetam que, nos próximos dois anos, a IA generativa será tão comum dentro das indústrias quanto ferramentas de gestão empresarial.', 'assets/img/blog/6920a8291ce8e_1763747881.jpg', 1, 17, 'publicado', '2025-11-21 17:58:01', '2025-11-21 17:58:01', '2025-11-21 17:58:01'),
-(6, 'Startups brasileiras ampliam vagas para programas de estágio em tecnologia', 'O ecossistema de startups no Brasil segue em ritmo acelerado de expansão, e isso tem se refletido diretamente na abertura de novas oportunidades para estudantes e jovens profissionais. Em 2025, a expectativa é que o número de vagas de estágio na área de tecnologia ultrapasse 12 mil posições, concentradas principalmente em desenvolvimento Front-end, Back-end, QA, UX e Ciência de Dados.\r\n\r\nEmpresas emergentes têm investido em programas estruturados de formação, oferecendo trilhas de aprendizagem, mentorias semanais e ciclos práticos que simulam o dia a dia de um time de tecnologia. Muitas startups estão apostando em desafios gamificados e projetos reais para identificar talentos que possam ser efetivados nos meses seguintes.\r\n\r\nDe acordo com gestores de RH, o setor busca perfis curiosos, colaborativos e com boa base lógica, mais do que especialistas em ferramentas específicas. Soft skills como comunicação e capacidade de resolver problemas também têm se mostrado diferenciais decisivos nos processos seletivos.\r\n\r\nAlém disso, diversas iniciativas públicas e privadas estão surgindo para aproximar estudantes do mercado, como feiras de contratação, cursos gratuitos e plataformas de matching entre talentos e empresas. A tendência indica que 2025 será um ano marcante para quem deseja ingressar na área de tecnologia.', 'assets/img/blog/6920a8544600e_1763747924.jpg', 2, 17, 'publicado', '2025-11-21 17:58:44', '2025-11-21 17:58:44', '2025-11-21 17:58:44'),
-(8, 'Workshops sobre currículo e networking atraem jovens profissionais', 'Eventos presenciais e online focados no desenvolvimento de carreira têm ganhado enorme visibilidade entre jovens profissionais. Na última semana, uma série de workshops sobre elaboração de currículo, posicionamento profissional e estratégias de networking registrou o maior número de participantes dos últimos três anos.\r\n\r\nDurante os encontros, especialistas em recursos humanos e mentores experientes discutiram práticas modernas de construção de currículo, com ênfase em linguagem clara, apresentação visual e uso de palavras-chave alinhadas às exigências das empresas. Também foram realizadas dinâmicas de networking para ajudar os participantes a construir conexões estratégicas dentro do mercado.\r\n\r\nOrganizadores destacam que muitos jovens ainda enfrentam dificuldades em se destacar em processos seletivos altamente competitivos, e por isso os workshops buscam oferecer orientações práticas e ferramentas aplicáveis no dia a dia. Foram abordados temas como uso do LinkedIn, pitch pessoal, portfólios digitais e boas práticas durante entrevistas.\r\n\r\nA demanda crescente levou as instituições responsáveis a planejarem novos ciclos de eventos mensais. Para os jovens profissionais, as iniciativas representam uma oportunidade valiosa de aprimorar habilidades, ampliar contatos e aumentar suas chances de inserção no mercado de trabalho.', 'assets/img/blog/6920a896bced0_1763747990.jpg', 3, 17, 'publicado', '2025-11-21 17:59:50', '2025-11-21 17:59:50', '2025-11-21 17:59:50'),
-(9, 'teste', 'testando', NULL, 2, 17, 'publicado', '2025-11-24 00:51:21', '2025-11-24 00:51:21', '2025-11-24 00:51:21'),
-(10, 'teste 2', 'balaca', NULL, 1, 17, 'publicado', '2025-11-24 01:06:48', '2025-11-24 01:06:48', '2025-11-24 01:06:48'),
-(11, 'teste 3', 'lalalalallalalala', NULL, 2, 17, 'publicado', '2025-11-24 01:23:21', '2025-11-24 01:23:21', '2025-11-24 01:23:21');
+(13, 'Mercado Tech Abre 28 Mil Novas Vagas no Brasil em 2025: Áreas de Back-End e IA São Destaques', 'O setor de tecnologia brasileiro iniciou 2025 com força total. De acordo com dados divulgados pela Associação Brasileira das Empresas de TI (Brasscom), mais de 28 mil novas vagas foram abertas apenas no primeiro trimestre do ano, com destaque para as áreas de desenvolvimento back-end, ciência de dados e Inteligência Artificial.\r\n\r\nEmpresas de médio e grande porte estão ampliando seus times devido ao avanço da digitalização e da adoção de soluções em nuvem. Profissionais com habilidades em Python, Java, SQL, APIs e modelagem de IA estão entre os mais procurados. Além disso, vagas voltadas a segurança digital registraram crescimento de 41%, reflexo da preocupação crescente com ataques cibernéticos.\r\n\r\nOutro ponto relevante é a alta demanda por estagiários e trainees, especialmente em empresas que buscam desenvolver talentos internamente. Programas de capacitação gratuita e bootcamps também estão espalhados pelo país, democratizando o acesso à formação tecnológica.\r\n\r\nEspecialistas afirmam que o momento é oportuno para quem deseja iniciar ou migrar para a área de tecnologia. O mercado, antes concentrado em grandes capitais, agora se expande para cidades médias e permite trabalho remoto — ampliando possibilidades para profissionais de diferentes regiões.', 'assets/img/blog/6924be03bab3f_1764015619.png', 2, 19, 'publicado', '2025-11-24 20:20:19', '2025-11-24 20:20:19', '2025-11-24 20:20:19'),
+(14, 'IA Generativa Revoluciona o Mercado: Novas Ferramentas Prometem Automatizar 60% das Tarefas Digitais Até 2030', 'O avanço acelerado da Inteligência Artificial generativa está transformando profundamente a maneira como profissionais interagem com a tecnologia. Estudos recentes indicam que, até 2030, cerca de 60% das tarefas digitais poderão ser totalmente automatizadas, abrindo caminho para um novo cenário de produtividade e inovação.\r\n\r\nGrandes empresas de tecnologia anunciaram lançamentos de modelos de IA mais eficientes, capazes de executar desde análises de dados complexas até criação de conteúdo multimídia em poucos segundos. Além disso, o uso em áreas como saúde, educação e atendimento ao cliente está crescendo rapidamente, graças à capacidade da IA de interpretar informações e fornecer respostas cada vez mais precisas.\r\n\r\nApesar dos avanços, especialistas alertam para a necessidade de regulamentação e preparo profissional. A automação pode trazer benefícios significativos, mas também exige adaptação, especialmente na formação de novos talentos e na requalificação de trabalhadores que atuarão lado a lado com sistemas inteligentes.\r\n\r\nA expectativa é que nos próximos anos surja uma nova onda de profissões híbridas, combinando criatividade humana e eficiência algorítmica. O debate sobre ética, transparência e uso responsável da IA também cresce, reforçando a importância de desenvolver tecnologias alinhadas aos valores sociais.', 'assets/img/blog/6924be4aafc94_1764015690.jpg', 1, 19, 'publicado', '2025-11-24 20:21:30', '2025-11-24 20:21:30', '2025-11-24 20:21:30'),
+(15, 'Maior Evento de Tecnologia da América Latina Reúne 50 Mil Participantes e Anuncia Novas Tendências para 2025', 'A edição mais recente de um dos maiores eventos de tecnologia da América Latina reuniu mais de 50 mil participantes entre estudantes, profissionais, pesquisadores e grandes empresas do setor. O encontro trouxe palestras sobre Inteligência Artificial, segurança cibernética, computação em nuvem, saúde digital e tendências para o futuro do trabalho.\r\n\r\nEntre as principais novidades apresentadas estão novos modelos de IA multimodal, ferramentas avançadas de automação empresarial e dispositivos de realidade aumentada com foco em educação. Workshops práticos, hackathons e painéis de networking também foram destaques.\r\n\r\nO evento reforçou a importância da troca de conhecimento e da criação de oportunidades para jovens talentos. Empresas parceiras anunciaram vagas, bolsas de estudo e programas de aceleração para startups iniciantes.\r\n\r\nA expectativa é que, nos próximos anos, o evento continue crescendo e fortalecendo o ecossistema tecnológico brasileiro.', 'assets/img/blog/6924bec30b72e_1764015811.png', 5, 19, 'publicado', '2025-11-24 20:23:31', '2025-11-24 20:23:31', '2025-11-24 20:23:31');
 
 -- --------------------------------------------------------
 
@@ -185,22 +186,15 @@ CREATE TABLE `noticias_tags` (
 --
 
 INSERT INTO `noticias_tags` (`noticia_tag_id`, `noticia_id`, `tag_id`, `data_associacao`) VALUES
-(8, 5, 1, '2025-11-21 17:58:01'),
-(9, 5, 12, '2025-11-21 17:58:01'),
-(10, 6, 3, '2025-11-21 17:58:44'),
-(11, 6, 2, '2025-11-21 17:58:44'),
-(12, 6, 4, '2025-11-21 17:58:44'),
-(13, 6, 5, '2025-11-21 17:58:44'),
-(18, 8, 7, '2025-11-21 17:59:50'),
-(19, 8, 8, '2025-11-21 17:59:50'),
-(20, 8, 9, '2025-11-21 17:59:50'),
-(21, 8, 6, '2025-11-21 17:59:50'),
-(22, 9, 5, '2025-11-24 00:51:21'),
-(23, 9, 6, '2025-11-24 00:51:21'),
-(24, 10, 4, '2025-11-24 01:06:48'),
-(25, 10, 7, '2025-11-24 01:06:48'),
-(26, 10, 8, '2025-11-24 01:06:48'),
-(27, 11, 9, '2025-11-24 01:23:21');
+(30, 13, 3, '2025-11-24 20:20:19'),
+(31, 13, 4, '2025-11-24 20:20:19'),
+(32, 13, 8, '2025-11-24 20:20:19'),
+(33, 13, 5, '2025-11-24 20:20:19'),
+(34, 14, 1, '2025-11-24 20:21:30'),
+(35, 14, 12, '2025-11-24 20:21:30'),
+(36, 15, 7, '2025-11-24 20:23:31'),
+(37, 15, 9, '2025-11-24 20:23:31'),
+(38, 15, 12, '2025-11-24 20:23:31');
 
 -- --------------------------------------------------------
 
@@ -226,21 +220,7 @@ CREATE TABLE `oportunidades` (
 --
 
 INSERT INTO `oportunidades` (`id_oportunidade`, `titulo`, `tipo`, `modalidade`, `local`, `area`, `data_abertura`, `data_fechamento`, `link_detalhes`, `status_edital`) VALUES
-(12, 'Programa de Pós-graduação em Ciência de Dados - 2026', 'Pós-graduação', 'Presencial', 'Rio de Janeiro', 'Ciência de Dados', '2025-07-01', '2025-12-31', 'https://universidadedigital.edu.br/pos-ciencia-dados', 'Aberto'),
-(21, 'blablabla', 'Iniciação Científica', 'Presencial', 'Paraíba', 'Infraestrutura', '2025-11-16', '2025-11-17', 'https://www.youtube.com/', 'Fechado');
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `posts_salvos`
---
-
-CREATE TABLE `posts_salvos` (
-  `salvamento_id` int NOT NULL,
-  `usuario_id` int NOT NULL,
-  `post_id` int NOT NULL,
-  `data_salvamento` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+(26, 'teste de estatística ', 'Iniciação Científica', 'Online', 'Bahia', 'Desenvolvimento Front-End', '2025-11-11', '2025-11-26', 'https://www.fundatec.org.br/portal/concursos/index_concursos.php?concurso=1014', 'Aberto');
 
 -- --------------------------------------------------------
 
@@ -264,8 +244,11 @@ CREATE TABLE `post_comentarios` (
 --
 
 INSERT INTO `post_comentarios` (`comentario_id`, `post_id`, `usuario_id`, `comentario`, `comentario_pai_id`, `data_criacao`, `data_edicao`, `ativo`) VALUES
-(3, 9, 16, 'aa', NULL, '2025-11-13 15:06:57', NULL, 1),
-(4, 9, 16, 'hihihihihihi', 3, '2025-11-13 15:07:17', NULL, 1);
+(8, 17, 21, 'React ainda domina o mercado, mas conhecer pelo menos um dos novos frameworks pode ser um diferencial. Eu começaria nele mesmo e depois expandiria.', NULL, '2025-11-24 20:09:32', NULL, 1),
+(9, 18, 22, 'Achar que hacking é só ferramenta. Na real, entender redes e sistemas é muito mais importante.', NULL, '2025-11-24 20:11:45', NULL, 1),
+(10, 17, 22, 'Solid e Svelte estão crescendo muito, mas React ainda tem a melhor comunidade e mais vagas. Depende do seu objetivo.', NULL, '2025-11-24 20:12:07', NULL, 1),
+(11, 19, 19, 'Se não entende muito, os pré-montados podem ser uma opção segura. Mas customizar sempre dá mais liberdade.', NULL, '2025-11-24 20:15:21', NULL, 1),
+(12, 18, 19, 'Outro erro é focar em invasão antes de aprender defesa. O básico de segurança é o que mais evita problemas reais.', 9, '2025-11-24 20:15:51', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -285,10 +268,13 @@ CREATE TABLE `post_curtidas` (
 --
 
 INSERT INTO `post_curtidas` (`curtida_id`, `post_id`, `usuario_id`, `data_curtida`) VALUES
-(2, 10, 16, '2025-11-20 20:55:18'),
-(4, 7, 16, '2025-11-20 21:32:33'),
-(7, 13, 16, '2025-11-23 23:43:53'),
-(8, 9, 16, '2025-11-23 23:43:58');
+(9, 16, 20, '2025-11-24 20:04:19'),
+(10, 17, 20, '2025-11-24 20:08:02'),
+(11, 17, 21, '2025-11-24 20:09:22'),
+(12, 19, 19, '2025-11-24 20:15:24'),
+(13, 17, 19, '2025-11-24 20:15:29'),
+(14, 16, 19, '2025-11-24 20:15:33'),
+(15, 18, 19, '2025-11-24 20:15:35');
 
 -- --------------------------------------------------------
 
@@ -307,15 +293,23 @@ CREATE TABLE `post_tags` (
 --
 
 INSERT INTO `post_tags` (`post_tag_id`, `post_id`, `tag_id`) VALUES
-(3, 2, 15),
-(4, 2, 16),
-(14, 9, 17),
-(15, 10, 22),
-(16, 10, 23),
-(17, 10, 24),
-(19, 12, 26),
-(20, 13, 27),
-(22, 15, 13);
+(23, 16, 29),
+(24, 16, 30),
+(25, 16, 31),
+(26, 16, 32),
+(27, 16, 33),
+(29, 17, 7),
+(30, 17, 30),
+(28, 17, 34),
+(31, 17, 35),
+(32, 18, 36),
+(33, 18, 37),
+(34, 18, 38),
+(35, 18, 39),
+(36, 19, 40),
+(37, 19, 41),
+(38, 19, 42),
+(39, 19, 43);
 
 -- --------------------------------------------------------
 
@@ -368,11 +362,11 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`usuario_id`, `nome_usuario`, `email`, `senha`, `is_admin`, `data_cadastro`) VALUES
-(12, 'sofiamdavid', 'sofiamuller1551@gmail.com', '$2y$10$PL7rOL8ZiH0clFZmZeub9uvDNLboETYlb4EhXBSmh1lnUHIbxxvqG', 1, '2025-10-23 14:09:10'),
-(13, 'sofia6923', 'sofiamuller1301@gmail.com', '$2y$10$FL94093oAxRH3w/TOO615uEXmld8Py6gkSliJwLPXpF8uCxgMQN2i', 1, '2025-11-10 11:19:50'),
-(15, 'Senha123456', 'sofiamuller1201@gmail.com', '$2y$10$jCsLTVTRP.O85o4dWd9yj.IaRlu0JsOliDVijFREsBNaHQJSMuHjK', 0, '2025-11-10 20:30:56'),
-(16, 'Senha1310125', 'maria.silva@example.com', '$2y$10$gkZPCzvYELK56YYqV3KlxunrrWxSRtI2tmsAkBAxg1oBS5ZNZDBkS', 0, '2025-11-13 15:06:21'),
-(17, 'Senha18112006', 'sofiamuller1111@gmail.com', '$2y$10$TqV01RAz0lBEGJAffT7fyeg9Toi6G3EOHPBtWIWN.PirFf9UGtbrq', 1, '2025-11-17 11:21:15');
+(19, 'SheInnovatesModerator', 'sheInnovatesMOD1@gmail.com', '$2y$10$WOn1tvuSRrIunZOu6CwoheSclnCsDpfzIgzd0yfjtIv1aRn0QLk76', 1, '2025-11-24 19:48:36'),
+(20, 'astroWaveS2', 'astro.wave2@outlook.com', '$2y$10$xY5LpmcjLo.rQkQgFJurAOzHHFhvtnC8lFeh6Is4/hyuMFBI34lxa', 0, '2025-11-24 19:50:52'),
+(21, 'cyberBloom', 'c.bloom92@gmail.com', '$2y$10$TxJV4DPSMki5.lVOk72bjuHinyF3ZGQUyiSVPYLUdTGy9E5oRwChu', 0, '2025-11-24 19:51:27'),
+(22, 'lunaTech47', 'lunatech47@gmail.com', '$2y$10$ABbPbRys7pl.NCXGI8DIKOAsi75YINKwjrxGsmENJMJBhTAOihIdC', 0, '2025-11-24 19:51:58'),
+(23, 'neonRiverS2', 'neon.river8@gmail.com', '$2y$10$mRaxy4Txk4Ua7GcwYSotuuAdpIGJJ2510p18mi7HL22wUkXRT8OBm', 0, '2025-11-24 19:52:57');
 
 -- --------------------------------------------------------
 
@@ -394,11 +388,14 @@ CREATE TABLE `usuario_fotos` (
 --
 
 INSERT INTO `usuario_fotos` (`foto_id`, `usuario_id`, `nome_arquivo`, `caminho_arquivo`, `data_upload`, `is_atual`) VALUES
-(1, 15, 'perfil_15_1763043143.png', '../uploads/fotos_perfil/perfil_15_1763043143.png', '2025-11-13 14:12:23', 0),
-(2, 15, 'perfil_15_1763046344.jpeg', '../uploads/fotos_perfil/perfil_15_1763046344.jpeg', '2025-11-13 15:05:44', 1),
-(3, 16, 'perfil_16_1763046408.jpg', '../uploads/fotos_perfil/perfil_16_1763046408.jpg', '2025-11-13 15:06:48', 0),
-(4, 16, 'perfil_16_1763381436.jpg', '../uploads/fotos_perfil/perfil_16_1763381436.jpg', '2025-11-17 12:10:36', 1),
-(5, 17, 'perfil_17_1763381538.jpg', '../uploads/fotos_perfil/perfil_17_1763381538.jpg', '2025-11-17 12:12:18', 1);
+(7, 19, 'perfil_19_1764014379.jpeg', '../uploads/fotos_perfil/perfil_19_1764014379.jpeg', '2025-11-24 19:59:39', 1),
+(8, 20, 'perfil_20_1764014608.jpeg', '../uploads/fotos_perfil/perfil_20_1764014608.jpeg', '2025-11-24 20:03:28', 0),
+(9, 21, 'perfil_21_1764014951.jpeg', '../uploads/fotos_perfil/perfil_21_1764014951.jpeg', '2025-11-24 20:09:11', 1),
+(10, 22, 'perfil_22_1764015083.jpeg', '../uploads/fotos_perfil/perfil_22_1764015083.jpeg', '2025-11-24 20:11:23', 1),
+(11, 23, 'perfil_23_1764015242.jpg', '../uploads/fotos_perfil/perfil_23_1764015242.jpg', '2025-11-24 20:14:02', 1),
+(12, 20, 'perfil_20_1764183231.jpeg', '../uploads/fotos_perfil/perfil_20_1764183231.jpeg', '2025-11-26 18:53:51', 0),
+(13, 20, 'perfil_20_1764183242.jpeg', '../uploads/fotos_perfil/perfil_20_1764183242.jpeg', '2025-11-26 18:54:02', 0),
+(14, 20, 'perfil_20_1764183259.jpeg', '../uploads/fotos_perfil/perfil_20_1764183259.jpeg', '2025-11-26 18:54:19', 1);
 
 --
 -- Índices para tabelas despejadas
@@ -453,14 +450,6 @@ ALTER TABLE `noticias_tags`
 --
 ALTER TABLE `oportunidades`
   ADD PRIMARY KEY (`id_oportunidade`);
-
---
--- Índices de tabela `posts_salvos`
---
-ALTER TABLE `posts_salvos`
-  ADD PRIMARY KEY (`salvamento_id`),
-  ADD UNIQUE KEY `unique_user_saved_post` (`usuario_id`,`post_id`),
-  ADD KEY `post_id` (`post_id`);
 
 --
 -- Índices de tabela `post_comentarios`
@@ -522,61 +511,55 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `comentario_curtidas`
 --
 ALTER TABLE `comentario_curtidas`
-  MODIFY `curtida_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `curtida_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `forum_posts`
 --
 ALTER TABLE `forum_posts`
-  MODIFY `post_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `post_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `forum_tags`
 --
 ALTER TABLE `forum_tags`
-  MODIFY `tag_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `tag_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de tabela `noticias`
 --
 ALTER TABLE `noticias`
-  MODIFY `noticia_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `noticia_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `noticias_tags`
 --
 ALTER TABLE `noticias_tags`
-  MODIFY `noticia_tag_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `noticia_tag_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de tabela `oportunidades`
 --
 ALTER TABLE `oportunidades`
-  MODIFY `id_oportunidade` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
---
--- AUTO_INCREMENT de tabela `posts_salvos`
---
-ALTER TABLE `posts_salvos`
-  MODIFY `salvamento_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_oportunidade` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de tabela `post_comentarios`
 --
 ALTER TABLE `post_comentarios`
-  MODIFY `comentario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `comentario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `post_curtidas`
 --
 ALTER TABLE `post_curtidas`
-  MODIFY `curtida_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `curtida_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `post_tags`
 --
 ALTER TABLE `post_tags`
-  MODIFY `post_tag_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `post_tag_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de tabela `tags`
@@ -588,13 +571,13 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `usuario_fotos`
 --
 ALTER TABLE `usuario_fotos`
-  MODIFY `foto_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `foto_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restrições para tabelas despejadas
@@ -626,13 +609,6 @@ ALTER TABLE `noticias`
 ALTER TABLE `noticias_tags`
   ADD CONSTRAINT `noticias_tags_ibfk_1` FOREIGN KEY (`noticia_id`) REFERENCES `noticias` (`noticia_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `noticias_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`) ON DELETE CASCADE;
-
---
--- Restrições para tabelas `posts_salvos`
---
-ALTER TABLE `posts_salvos`
-  ADD CONSTRAINT `posts_salvos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `posts_salvos_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `forum_posts` (`post_id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `post_comentarios`
