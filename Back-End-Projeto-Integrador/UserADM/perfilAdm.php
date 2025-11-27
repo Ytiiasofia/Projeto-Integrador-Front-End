@@ -2,7 +2,54 @@
 session_start();
 require("../Include/conexao.php");
 require("../includePerfil/dadosUsuario.php");
-require("../includePerfil/obter_estatisticas.php");
+
+// Consultas para obter estatísticas reais
+$estatisticas = [];
+
+try {
+    // Verificar se a conexão existe - usar $con em vez de $conn
+    if (!isset($con) || $con === null) {
+        throw new Exception("Conexão com o banco de dados não estabelecida");
+    }
+
+    // Contar usuários registrados - tabela: usuarios
+    $query_usuarios = "SELECT COUNT(*) as total_usuarios FROM usuarios";
+    $result_usuarios = $con->query($query_usuarios);
+    if ($result_usuarios) {
+        $estatisticas['total_usuarios'] = $result_usuarios->fetch_assoc()['total_usuarios'];
+    } else {
+        $estatisticas['total_usuarios'] = 0;
+    }
+
+    // Contar posts no fórum - tabela: forum_posts
+    $query_posts = "SELECT COUNT(*) as total_posts FROM forum_posts";
+    $result_posts = $con->query($query_posts);
+    if ($result_posts) {
+        $estatisticas['total_posts'] = $result_posts->fetch_assoc()['total_posts'];
+    } else {
+        $estatisticas['total_posts'] = 0;
+    }
+
+    // Contar oportunidades - tabela: oportunidades
+    $query_oportunidades = "SELECT COUNT(*) as total_oportunidades FROM oportunidades";
+    $result_oportunidades = $con->query($query_oportunidades);
+    if ($result_oportunidades) {
+        $estatisticas['total_oportunidades'] = $result_oportunidades->fetch_assoc()['total_oportunidades'];
+    } else {
+        $estatisticas['total_oportunidades'] = 0;
+    }
+
+    // Data e hora da última atualização
+    $estatisticas['ultima_atualizacao'] = date('d/m/Y \à\s H:i');
+
+} catch (Exception $e) {
+    // Em caso de erro, definir valores padrão
+    $estatisticas['total_usuarios'] = 0;
+    $estatisticas['total_posts'] = 0;
+    $estatisticas['total_oportunidades'] = 0;
+    $estatisticas['ultima_atualizacao'] = 'Erro ao carregar';
+    error_log("Erro ao carregar estatísticas: " . $e->getMessage());
+}
 
 ?>
 <!DOCTYPE html>
