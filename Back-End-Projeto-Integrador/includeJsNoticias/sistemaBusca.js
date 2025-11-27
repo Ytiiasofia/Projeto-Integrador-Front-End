@@ -1,4 +1,3 @@
-// sistemaBusca.js
 const sistemaBusca = {
   iniciar: function() {
     this.formularioBusca = document.getElementById('search-form');
@@ -11,7 +10,6 @@ const sistemaBusca = {
   },
 
   configurarEventos: function() {
-    // Foco no campo de busca
     if (this.inputBusca) {
       this.inputBusca.focus();
     }
@@ -23,10 +21,10 @@ const sistemaBusca = {
       });
     });
 
-    // Busca em tempo real (opcional)
+    // Busca em tempo real 
     if (this.inputBusca) {
       this.inputBusca.addEventListener('input', () => {
-        // Aqui você pode implementar busca em tempo real com AJAX se preferir
+        // Aqui está preparado para implementar a busca em tempo real (com o AJAX) se necessário
       });
     }
 

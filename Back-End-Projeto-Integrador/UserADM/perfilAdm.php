@@ -2,54 +2,8 @@
 session_start();
 require("../Include/conexao.php");
 require("../includePerfil/dadosUsuario.php");
+require("../includePerfil/obter_estatisticas.php");
 
-// Consultas para obter estatísticas reais
-$estatisticas = [];
-
-try {
-    // Verificar se a conexão existe - usar $con em vez de $conn
-    if (!isset($con) || $con === null) {
-        throw new Exception("Conexão com o banco de dados não estabelecida");
-    }
-
-    // Contar usuários registrados - tabela: usuarios
-    $query_usuarios = "SELECT COUNT(*) as total_usuarios FROM usuarios";
-    $result_usuarios = $con->query($query_usuarios);
-    if ($result_usuarios) {
-        $estatisticas['total_usuarios'] = $result_usuarios->fetch_assoc()['total_usuarios'];
-    } else {
-        $estatisticas['total_usuarios'] = 0;
-    }
-
-    // Contar posts no fórum - tabela: forum_posts
-    $query_posts = "SELECT COUNT(*) as total_posts FROM forum_posts";
-    $result_posts = $con->query($query_posts);
-    if ($result_posts) {
-        $estatisticas['total_posts'] = $result_posts->fetch_assoc()['total_posts'];
-    } else {
-        $estatisticas['total_posts'] = 0;
-    }
-
-    // Contar oportunidades - tabela: oportunidades
-    $query_oportunidades = "SELECT COUNT(*) as total_oportunidades FROM oportunidades";
-    $result_oportunidades = $con->query($query_oportunidades);
-    if ($result_oportunidades) {
-        $estatisticas['total_oportunidades'] = $result_oportunidades->fetch_assoc()['total_oportunidades'];
-    } else {
-        $estatisticas['total_oportunidades'] = 0;
-    }
-
-    // Data e hora da última atualização
-    $estatisticas['ultima_atualizacao'] = date('d/m/Y \à\s H:i');
-
-} catch (Exception $e) {
-    // Em caso de erro, definir valores padrão
-    $estatisticas['total_usuarios'] = 0;
-    $estatisticas['total_posts'] = 0;
-    $estatisticas['total_oportunidades'] = 0;
-    $estatisticas['ultima_atualizacao'] = 'Erro ao carregar';
-    error_log("Erro ao carregar estatísticas: " . $e->getMessage());
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -160,12 +114,12 @@ try {
 </head>
 
 <body class="contact-page">
-
+<!-- Menu -->
 <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
-
+<!-- Fim do Menu -->
 
   <main class="main">
-    <!-- Page Title -->
+    <!-- Título -->
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(../assets/img/services.jpg);">
       <div class="container">
         <h1>Perfil Administrador</h1>
@@ -175,7 +129,8 @@ try {
                     </ol>
                 </nav>
       </div>
-    </div><!-- End Page Title -->
+    </div>
+    <!-- Fim do Título -->
     
     <!-- Profile Container -->
     <section class="profile-section">
@@ -297,10 +252,11 @@ try {
           </div>
         </div>
       </div>
-    </section><!-- End Profile Container -->
+    </section>
+    <!-- Fim do Container de Perfil -->
   </main>
 
-  <!-- Modals Section -->
+  <!-- Seção de Modais -->
   <!-- Modal para edição da foto -->
   <div class="modal fade" id="editPhotoModal" tabindex="-1" aria-labelledby="editPhotoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -365,13 +321,15 @@ try {
       </div>
     </div>
   </div>
+  <!-- Fim da Seção de Modais -->
 
+<!-- Rodapé -->
 <footer id="footer" class="footer light-background">
   <?php
     require("../Include/footer.php");
   ?>
 </footer>
-
+<!-- Fim do Rodapé -->
   <?php
     require("../Include/preloaderAndScrollTop.php");
   ?>

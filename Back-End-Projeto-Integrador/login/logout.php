@@ -16,7 +16,6 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Redireciona para a tela de login
 header("Location: ../UserAnonimo/contact.php");
 exit();
 ?>

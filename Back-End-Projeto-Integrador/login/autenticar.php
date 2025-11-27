@@ -1,15 +1,13 @@
 <?php
 session_start();
 
-// Conexão com o banco de dados via require
 require("../Include/conexao.php");
 
-// Verifica se o formulário foi enviado
 if (isset($_POST['login'])) {
     $usuario = mysqli_real_escape_string($con, $_POST['usuario']);
     $senha = $_POST['senha'];
 
-    // Busca o usuário pelo nome ou email usando prepared statement
+    // Busca o usuário pelo nome ou email, protegido contra SQL Injection
     $sql = "SELECT * FROM usuarios WHERE email = ? OR nome_usuario = ?";
     $stmt = mysqli_prepare($con, $sql);
     

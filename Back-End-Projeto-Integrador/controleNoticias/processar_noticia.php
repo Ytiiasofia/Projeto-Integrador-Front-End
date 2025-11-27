@@ -1,17 +1,17 @@
 <?php
 session_start();
-require_once '../Include/conexao.php'; // Usando seu arquivo de conexão
+require_once '../Include/conexao.php'; 
 
 header('Content-Type: application/json');
 
-// Verificar se o usuário é admin
+// Verificação de autenticação e autorização
 if (!isset($_SESSION['usuario_id']) || $_SESSION['is_admin'] != 1) {
     echo json_encode(['success' => false, 'message' => 'Acesso negado. Apenas administradores podem publicar notícias.']);
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Receber dados do formulário
+    // Recebebendo os dados do banco
     $titulo = mysqli_real_escape_string($con, $_POST['titulo'] ?? '');
     $conteudo = mysqli_real_escape_string($con, $_POST['conteudo'] ?? '');
     $categoria = mysqli_real_escape_string($con, $_POST['categoria'] ?? '');
@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Iniciar transação
     mysqli_begin_transaction($con);
 
     try {
@@ -74,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $noticia_id = mysqli_insert_id($con);
 
         // Processar tags
+        // Atualmente esse código não é totalmente utilizado, retirei a parte do front que possibilitava a criação de tags, mas está preparado para futuras implementações
         if (!empty($tags)) {
             $tags_array = explode(',', $tags);
             
@@ -107,19 +107,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 if (!$associar_result) {
                     // Ignora erro de duplicação (tag já associada)
-                    if (mysqli_errno($con) != 1062) { // Código de erro para entrada duplicada
+                    if (mysqli_errno($con) != 1062) { 
                         throw new Exception('Erro ao associar tag: ' . mysqli_error($con));
                     }
                 }
             }
         }
 
-        // Confirmar transação
         mysqli_commit($con);
         echo json_encode(['success' => true, 'message' => 'Notícia publicada com sucesso!']);
 
     } catch (Exception $e) {
-        // Reverter transação em caso de erro
         mysqli_rollback($con);
         echo json_encode(['success' => false, 'message' => 'Erro: ' . $e->getMessage()]);
     }
@@ -128,6 +126,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => false, 'message' => 'Método não permitido.']);
 }
 
-// Fechar conexão
 mysqli_close($con);
 ?>

@@ -297,7 +297,7 @@ try {
         </div>
         <!-- Fim da Seção do Fórum -->
     </main>
-
+<!-- Todas partes que envolvem posts salvos estão comentadas pois eu tive problemas no layout da página que não era funcional pra essa aplicação, mas mantive o css porque vai que algum dia alguém queira aplicar né -->
 <!-- Modal de Posts Salvos 
 <div class="modal fade" id="savedPostsModal" tabindex="-1" aria-labelledby="savedPostsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -335,13 +335,13 @@ try {
     </div>
 </div>
 -->
-    <!-- Rodapé -->
+<!-- Rodapé -->
     <footer id="footer" class="footer light-background">
         <?php
             require("../Include/footer.php");
         ?>
     </footer>
-
+<!-- Fim do Rodapé -->
   <?php
     require("../Include/preloaderAndScrollTop.php");
   ?>

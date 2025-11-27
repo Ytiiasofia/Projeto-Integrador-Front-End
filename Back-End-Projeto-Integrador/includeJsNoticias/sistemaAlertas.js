@@ -1,7 +1,5 @@
-// sistemaAlertas.js
 const sistemaAlertas = {
   iniciar: function() {
-    // Inicialização se necessário
   },
 
   mostrarAlerta: function(mensagem, tipo) {

@@ -1,29 +1,13 @@
 <?php
-// processa_cadastro.php
-
-// Configurações do banco de dados
-$host = "db";       
-$user = "root";     
-$pass = "root";     
-$dbname = "meu_banco"; 
-$port = 3306;       
-
-// Conexão com o banco
-$con = mysqli_connect($host, $user, $pass, $dbname, $port);
-
-// Verifica se a conexão foi bem-sucedida
-if (!$con) {
-    die("Erro ao conectar com o banco de dados: " . mysqli_connect_error());
-}
+require("../Include/conexao.php");
 
 // Recebe dados do formulário
 $nome_usuario = trim($_POST['username'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $senha = $_POST['password'] ?? '';
 $confirmSenha = $_POST['confirmPassword'] ?? '';
-$is_admin = 0; // padrão: usuário normal
+$is_admin = 0; // sempre que usuário se cadastrar, ele automaticamente não será admin
 
-// Array para armazenar erros
 $errors = [];
 
 // Validações básicas para criação de conta
@@ -69,7 +53,7 @@ if (empty($errors)) {
 
 // Se não houver erros, insere usuário
 if (empty($errors)) {
-    // Aplica hash na senha
+    // Aplicação de hash na senha
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
     
     $stmt = $con->prepare("INSERT INTO usuarios (nome_usuario, email, senha, is_admin) VALUES (?, ?, ?, ?)");

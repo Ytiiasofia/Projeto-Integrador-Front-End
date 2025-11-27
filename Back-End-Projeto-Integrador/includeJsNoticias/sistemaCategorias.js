@@ -1,4 +1,3 @@
-// sistemaCategorias.js
 const sistemaCategorias = {
   iniciar: function() {
     this.opcoesCategoria = document.querySelectorAll('.category-option');

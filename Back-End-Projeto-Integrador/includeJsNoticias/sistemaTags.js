@@ -1,4 +1,3 @@
-// sistemaTags.js
 const sistemaTags = {
   iniciar: function() {
     this.etiquetas = document.querySelectorAll('.tag-badge');
@@ -12,7 +11,6 @@ const sistemaTags = {
   },
 
   configurarEventos: function() {
-    // Event listeners para tags existentes
     this.etiquetas.forEach(etiqueta => {
       etiqueta.addEventListener('click', () => {
         this.alternarTag(etiqueta);

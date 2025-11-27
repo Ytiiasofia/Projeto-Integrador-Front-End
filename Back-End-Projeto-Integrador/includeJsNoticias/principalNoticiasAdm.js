@@ -1,6 +1,6 @@
-// principal.js
+
 document.addEventListener('DOMContentLoaded', function() {
-  // Inicializar todos os módulos
+  // Inicializar todos os sistemas
   sistemaCategorias.iniciar();
   sistemaTags.iniciar();
   sistemaFormulario .iniciar();

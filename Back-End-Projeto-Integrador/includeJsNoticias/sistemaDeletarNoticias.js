@@ -1,4 +1,3 @@
-// sistemaDeletarNoticias.js
 const sistemaDeletarNoticias = {
   iniciar: function() {
     this.configurarBotoesExclusao();
@@ -29,7 +28,7 @@ const sistemaDeletarNoticias = {
     const formData = new FormData();
     formData.append('noticia_id', noticiaId);
     
-    // Enviar via AJAX
+    // Enviar via AJAX para que a atualização seja assíncrona
     fetch('../controleNoticias/deletar_noticia.php', {
       method: 'POST',
       body: formData

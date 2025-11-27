@@ -1,4 +1,3 @@
-// sistemaFormulario.js
 const sistemaFormulario = {
   iniciar: function() {
     this.formularioNoticias = document.getElementById('news-form');

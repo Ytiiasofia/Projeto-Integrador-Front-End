@@ -60,23 +60,24 @@
 
 
     <main class="main">
-        <!-- Título da Página -->
+        <!-- Título -->
         <div class="page-title dark-background" data-aos="fade" style="background-image: url(../assets/img/mulheres-na-tecnologia-2.png);">
             <div class="container">
                 <h1>Oportunidades</h1>
             </div>
-        </div><!-- Fim do Título da Página -->
+        </div>
+        <!-- Fim do Título -->
 
         <!-- Seção de Oportunidades -->
         <div class="opportunities-container">
             <div class="container">
 
+        <!-- Seção de Adicionar Oportunidade -->
         <?php 
-            // Seção para Adicionar Nova Oportunidade
             require("../controleTabela/cadastroOportunidades.php");
         ?>
 
-            <!-- Formulário de Busca -->
+        <!-- Formulário de Busca -->
         <?php 
             require("../controleTabela/buscaTabelaOportunidades.php");
         ?>
@@ -95,7 +96,7 @@
 <footer id="footer" class="footer light-background">
   <?php require("../Include/footer.php"); ?>
 </footer>
-
+<!-- Fim do Rodapé -->
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
 <?php require("../includeJS/scriptScr.php"); ?>
 <script src="../controleTabela/scriptBusca.js"></script>

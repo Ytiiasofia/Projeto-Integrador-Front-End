@@ -12,12 +12,12 @@
 </header>
 <?php
 
-// Função para carregar o menu com base no diretório atual
+// Função para carregar o menu com base no diretório de pastas que o usuário está navegando
 function carregarMenu() {
     $current_page = basename($_SERVER['PHP_SELF']);
     $current_dir = basename(dirname($_SERVER['SCRIPT_NAME'])); 
 
-    // Menu Administrador
+    // Menu para Administrador
     if ($current_dir === 'UserADM') {
         ?>
         <ul>
@@ -29,7 +29,7 @@ function carregarMenu() {
         </ul>
         <?php
     }
-    // Menu Usuário Cadastrado
+    // Menu para Usuário Cadastrado
     elseif ($current_dir === 'UserCadastrado') {
         ?>
         <ul>
@@ -41,7 +41,7 @@ function carregarMenu() {
         </ul>
         <?php
     }
-    // Menu Usuário Anônimo
+    // Menu para Usuário Anônimo
     elseif ($current_dir === 'UserAnonimo') {
         ?>
         <ul>

@@ -27,7 +27,7 @@ class ForumModel {
         }
     }
 
-    // ========== MÉTODOS PARA POSTS ==========
+    // Métodos para posts do fórum
 
     public function criarPost($usuario_id, $titulo, $conteudo, $tags = null) {
         try {
@@ -95,7 +95,7 @@ class ForumModel {
         }
     }
 
-    // ========== MÉTODO PARA FILTRAGEM DE POSTS ==========
+    // Métodos para filtragem de posts
 
     public function listarPostsFiltrados($filtro = 'recentes') {
         try {
@@ -114,14 +114,14 @@ class ForumModel {
             
             // Aplicar filtros
             switch ($filtro) {
-                case 'populares':
+                case 'populares': // mais curtidos
                     $sql .= " ORDER BY curtidas DESC, fp.data_criacao DESC";
                     break;
-                case 'sem_respostas':
+                case 'sem_respostas': // sem comentários (vai aparecer somente os posts sem respostas)
                     $sql .= " AND (SELECT COUNT(*) FROM post_comentarios pco WHERE pco.post_id = fp.post_id) = 0";
                     $sql .= " ORDER BY fp.data_criacao DESC";
                     break;
-                case 'recentes':
+                case 'recentes': // mais recentes (esse é o modo padrão do forum)
                 default:
                     $sql .= " ORDER BY fp.data_criacao DESC";
                     break;
@@ -151,7 +151,7 @@ class ForumModel {
         }
     }
 
-    // ========== MÉTODO PARA BUSCA DE POSTS ==========
+    // Métodos para busca de posts 
 
     public function buscarPosts($termo) {
         try {
@@ -224,11 +224,11 @@ class ForumModel {
         }
     }
 
-    // ========== MÉTODOS PARA CURTIDAS DE POSTS ==========
+    // Métodos para curtidas de posts
 
     public function curtirPost($usuario_id, $post_id) {
         try {
-            // Verifica se o usuário já curtiu o post
+            // Verificação se o usuário já curtiu o post
             $sql = "SELECT curtida_id FROM post_curtidas WHERE usuario_id = ? AND post_id = ?";
             $stmt = $this->conn->prepare($sql);
             $stmt->bind_param("ii", $usuario_id, $post_id);
@@ -246,7 +246,7 @@ class ForumModel {
                 $stmt->close();
                 return ['action' => 'removed', 'success' => $result];
             } else {
-                // Adiciona a curtida
+                // Adiciona a curtida ao post
                 $sql = "INSERT INTO post_curtidas (usuario_id, post_id) VALUES (?, ?)";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bind_param("ii", $usuario_id, $post_id);
@@ -294,7 +294,7 @@ class ForumModel {
         }
     }
 
-    // ========== MÉTODOS PARA COMENTÁRIOS ==========
+    // Métodos para comentários
 
     public function adicionarComentario($usuario_id, $post_id, $comentario, $comentario_pai_id = null) {
         try {
@@ -348,7 +348,7 @@ class ForumModel {
         }
     }
 
-    // ========== MÉTODOS PARA CURTIDAS DE COMENTÁRIOS ==========
+    // Métodos para curtidas de comentários
 
     public function curtirComentario($usuario_id, $comentario_id) {
         try {
@@ -418,11 +418,11 @@ class ForumModel {
         }
     }
 
-    // ========== MÉTODOS PARA ADMIN ==========
+    // Métodos para deleção de posts
 
     public function deletarPost($post_id) {
         try {
-            // Iniciar transação para garantir que tudo seja deletado ou nada
+            
             $this->conn->begin_transaction();
             
             // 1. Deletar curtidas dos comentários deste post
@@ -455,29 +455,27 @@ class ForumModel {
             $stmt4->execute();
             $stmt4->close();
             
-            // 5. Finalmente deletar o post
+            // 5. Deletar o post em si
             $sql5 = "DELETE FROM forum_posts WHERE post_id = ?";
             $stmt5 = $this->conn->prepare($sql5);
             $stmt5->bind_param("i", $post_id);
             $result = $stmt5->execute();
             $stmt5->close();
             
-            // Confirmar transação
             $this->conn->commit();
             
             error_log("Post {$post_id} deletado com sucesso com todos os dados associados");
             return $result;
             
         } catch (Exception $e) {
-            // Rollback em caso de erro
             $this->conn->rollback();
             error_log("Erro ao deletar post {$post_id}: " . $e->getMessage());
             return false;
         }
     }
 
-    // ========== MÉTODOS AUXILIARES ==========
-
+    // Métodos auxiliares
+    // Nessa parte tem alguns debugs que eu não removi
     public function getFotoPerfilUsuario($usuario_id) {
         try {
             $sql = "SELECT caminho_arquivo 
@@ -498,8 +496,6 @@ class ForumModel {
             if ($foto && !empty($foto['caminho_arquivo'])) {
                 $caminho_bd = $foto['caminho_arquivo'];
                 error_log("✅ FOTO ENCONTRADA - Caminho no BD: '{$caminho_bd}'");
-                
-                // Converte o caminho do BD para caminho web
                 $caminho_limpo = ltrim($caminho_bd, './');
                 $caminho_web = "/Back-End-Projeto-Integrador/" . $caminho_limpo;
                 
@@ -516,7 +512,7 @@ class ForumModel {
         }
     }
 
-    // ========== MÉTODOS PRIVADOS ==========
+    // Método privado para processar tags
 
     private function processarTags($post_id, $tags) {
         $tags_array = explode(',', $tags);
@@ -525,7 +521,7 @@ class ForumModel {
             $tag_nome = trim($tag_nome);
             if (empty($tag_nome)) continue;
             
-            // Verificar se a tag já existe
+            // Verificar se a tag já existe, basicamente se for criada uma tag nova e ela já existir, não cria duplicada
             $sql = "SELECT tag_id FROM forum_tags WHERE nome = ?";
             $stmt = $this->conn->prepare($sql);
             $stmt->bind_param("s", $tag_nome);

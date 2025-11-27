@@ -13,10 +13,9 @@
         </thead>
         <tbody>
             <?php
-            // Conexão com o banco de dados via require
             require("../Include/conexao.php");
 
-            // LIMPEZA AUTOMÁTICA - Executa sempre que a página é carregada
+            // Procedimento de limpeza automatica da tabela de oportunidades, é feito toda vez que a página é carregada
             // 1. Fechar oportunidades vencidas
             $sql_fechar = "UPDATE oportunidades 
                           SET status_edital = 'Fechado' 
@@ -49,7 +48,7 @@
                     // Se está vencida mas não foi fechada ainda, mostrar como será fechada
                     $sera_fechada = ($esta_vencida && !$esta_fechada);
 
-                    // Determinar a classe do badge com base na modalidade
+                    // Determinar a classe do badge com base no tipo de modalidade
                     $badgeClass = '';
                     if ($oportunidade['modalidade'] === 'Online') $badgeClass = 'badge-online';
                     else if ($oportunidade['modalidade'] === 'Presencial') $badgeClass = 'badge-presencial';
@@ -134,7 +133,6 @@
                 echo "<tr><td colspan='7' class='text-center'>Nenhuma oportunidade encontrada.</td></tr>";
             }
             
-            // Fechar conexão
             mysqli_close($con);
             ?>
         </tbody>

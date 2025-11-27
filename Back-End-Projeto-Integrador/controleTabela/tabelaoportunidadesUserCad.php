@@ -1,3 +1,4 @@
+<!-- Nessa parte tem coisa repetida do arquivo tabelaOportunidadesAdm.php, a única diferença é que aqui não tem a parte de limpeza automática e de exclusão, enfim da pra fazer um sisteminha de reaproveitamento de código no futuro -->
 <div class="table-responsive" data-aos="fade-up">
     <table class="table table-hover align-middle" id="opportunities-table">
         <thead>
@@ -13,11 +14,10 @@
         </thead>
         <tbody>
             <?php
-            // Conexão com o banco de dados via require
             require("../Include/conexao.php");
 
-            // Consulta para buscar TODAS as oportunidades
-            $sql = "SELECT * FROM oportunidades";
+            // Consulta para buscar todas as oportunidades cadastradas
+            $sql = "SELECT * FROM oportunidades"; 
             $result = mysqli_query($con, $sql);
 
             if (mysqli_num_rows($result) > 0) {

@@ -33,7 +33,7 @@ try {
         $modo_busca = false;
     }
     
-    // DEBUG
+    // Eu decidi manter os debugs para ajudar na identificação de problemas, porque tu mexe numa coisinha e esse fórum desmonta
     error_log("Controller criado com sucesso - Modo Admin");
     error_log("Filtro atual: " . $filtro_atual);
     error_log("Termo busca: " . $termo_busca);
@@ -74,7 +74,7 @@ try {
 </head>
 <body class="services-page">
 
-<!-- Menu Admin -->
+<!-- Menu -->
 <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
 <!-- Fim do Menu -->
 
@@ -329,13 +329,13 @@ try {
             require("../Include/footer.php");
         ?>
     </footer>
+    <!-- Fim do Rodapé -->
 
   <?php
     require("../Include/preloaderAndScrollTop.php");
   ?>
 
   <?php require("../includeJS/scriptScr.php"); ?>
-  
 <script src="../includeJsForum/principalForumAdm.js"></script>
 <script src="../includeJsForum/sistemaDeletarPosts.js"></script>
 <script src="../includeJsForum/sistemaFiltros.js"></script>

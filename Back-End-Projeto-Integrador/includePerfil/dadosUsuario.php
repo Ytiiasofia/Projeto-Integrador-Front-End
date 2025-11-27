@@ -1,5 +1,4 @@
 <?php
-// Verificar se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: ../login/login.php");
     exit();
@@ -27,7 +26,7 @@ mysqli_stmt_execute($stmt_foto);
 $result_foto = mysqli_stmt_get_result($stmt_foto);
 $foto_perfil = mysqli_fetch_assoc($result_foto);
 
-$foto_url = "../assets/img/avatar-placeholder.png"; // Foto padrão
+$foto_url = "../assets/img/avatar-placeholder.png"; // Foto padrão caso não tenha foto de perfil
 if ($foto_perfil && file_exists($foto_perfil['caminho_arquivo'])) {
     $foto_url = $foto_perfil['caminho_arquivo'];
 }

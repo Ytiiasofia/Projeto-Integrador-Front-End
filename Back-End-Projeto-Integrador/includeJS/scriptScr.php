@@ -9,5 +9,6 @@
   <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
   <!-- Arquivo JS principal -->
+  <!-- Se não tiver esse arquivo o site simplemente NÃO carrega -->
   <script src="../assets/js/main.js"></script>
 </nav>

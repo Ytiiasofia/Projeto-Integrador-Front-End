@@ -3,12 +3,10 @@
     <h4 class="mb-4">Adicionar Nova Oportunidade</h4>
 
     <?php
-    // Conexão com o banco de dados via require
     require("../Include/conexao.php");
 
-    // Verifique se o formulário foi enviado
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo'])) {
-        // Preparar os dados
+        // Recebendo os dados do formulário
         $titulo = mysqli_real_escape_string($con, $_POST['titulo']);
         $tipo = mysqli_real_escape_string($con, $_POST['tipo']);
         $modalidade = mysqli_real_escape_string($con, $_POST['modalidade']);
@@ -19,7 +17,7 @@
         $link_detalhes = mysqli_real_escape_string($con, $_POST['link_detalhes']);
         $status_edital = mysqli_real_escape_string($con, $_POST['status_edital']);
         
-        // Query de inserção
+        // Inserir no banco de dados
         $sql = "INSERT INTO oportunidades (titulo, tipo, modalidade, local, area, data_abertura, data_fechamento, link_detalhes, status_edital) 
                 VALUES ('$titulo', '$tipo', '$modalidade', '$local', '$area', '$data_abertura', '$data_fechamento', '$link_detalhes', '$status_edital')";
         

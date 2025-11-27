@@ -1,4 +1,4 @@
-// codigosComuns.js - Funcionalidades compartilhadas entre usuário e admin
+//  Funcionalidades compartilhadas entre usuário e admin
 
 class ProfileManager {
     constructor() {

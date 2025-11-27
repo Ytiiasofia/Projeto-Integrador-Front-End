@@ -104,13 +104,13 @@
 </head>
 
 <body class="blog-page">
-
-  <!-- Cabeçalho -->
+   
+<!-- Menu -->
   <?php require_once __DIR__ . '/../Include/menuADM.php'; ?>
-
+<!-- Fim do Menu -->
   <main class="main">
 
-    <!-- Page Title -->
+    <!-- Título -->
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(../assets/img/blog-page-title-bg.jpg);">
       <div class="container">
         <h1>Notícias</h1>
@@ -120,7 +120,8 @@
           </ol>
         </nav>
       </div>
-    </div><!-- End Page Title -->
+    </div>
+    <!-- Fim do Título -->
 
     <div class="container">
       <!-- Seção para Adicionar Notícia -->
@@ -185,13 +186,12 @@
 
       <div class="row">
         <div class="col-lg-8">
-          <!-- Blog Posts Section -->
+          <!-- Seção de Notícias -->
           <section id="blog-posts" class="blog-posts section">
             <div class="container">
 
               <div class="row gy-4" id="news-container">
                 <?php
-                // Conexão e consulta para as notícias principais
                 require_once '../Include/conexao.php';
                 
                 // Verificar se há busca
@@ -343,7 +343,7 @@
                           </button>
                         </div>
                       </article>
-                    </div><!-- End post list item -->
+                    </div>
                     <?php
                   }
                 } else {
@@ -378,19 +378,21 @@
                 ?>
               </div>
             </div>
-          </section><!-- /Blog Posts Section -->
+          </section>
+          <!-- Fim da Seção de Notícias -->
         </div>
 
         <div class="col-lg-4 sidebar">
           <div class="widgets-container">
-            <!-- Search Widget -->
+            <!-- Busca Widget -->
             <div class="search-widget widget-item">
               <h3 class="widget-title">Pesquisa</h3>
               <form id="search-form" method="GET" action="">
                 <input type="text" name="search" id="search-input" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" placeholder="Buscar notícias...">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
               </form>
-            </div><!--/Search Widget -->
+            </div>
+            <!--/Busca Widget -->
 
             <!-- Categories Widget -->
             <div class="categories-widget widget-item">
@@ -422,9 +424,11 @@
                 }
                 ?>
               </ul>
-            </div><!--/Categories Widget -->
+            </div>
+            <!-- Fim do Categories Widget -->
 
-            <!-- Recent Posts Widget -->
+            <!-- Posts Recentes Widget -->
+  
             <div class="recent-posts-widget widget-item">
               <h3 class="widget-title">Posts Recentes</h3>
               <?php
@@ -435,7 +439,7 @@
                               FROM noticias n 
                               WHERE n.status = 'publicado' 
                               ORDER BY n.data_publicacao DESC 
-                              LIMIT 5";
+                              LIMIT 5"; // Limitando a 5 posts recentes, porque ia ficar muito micoso apresentar e aparecer TODOS os posts listados
               $recent_result = mysqli_query($con, $recent_query);
               
               if ($recent_result && mysqli_num_rows($recent_result) > 0) {
@@ -454,45 +458,45 @@
                       </a></h4>
                       <time datetime="<?php echo $recent['data_publicacao']; ?>"><?php echo $recent_data; ?></time>
                     </div>
-                  </div><!-- End recent post item-->
+                  </div>
+                  <!-- Fim do post recente -->
                   <?php
                 }
               } else {
                 echo '<p>Nenhum post recente encontrado.</p>';
               }
               
-              // Fechar conexão apenas uma vez, no final
               mysqli_close($con);
               ?>
-            </div><!--/Recent Posts Widget -->
+            </div>
+            <!-- Fim do Posts Recentes Widget -->
 
             <!-- Tags Widget -->
             <div class="tags-widget widget-item">
               <h3 class="widget-title">Tags</h3>
               <ul>
                 <?php
-                // Tags mais populares
+                // Tags mais populares, eu tinha feito isso quando ainda tinha a opção de adicionar tags personalizadas, mas como removi, deixei só as populares mesmo (que na realidade são as únicas que existem agora)
                 $popular_tags = ['IA', 'FrontEnd', 'BackEnd', 'Estágio', 'VagaTech', 'Mentoria', 'Networking', 'Currículo', 'Workshops', 'Certificação', 'Cursos Online', 'Notícia', 'Entrevista'];
                 foreach ($popular_tags as $tag) {
                   echo '<li><a href="?search=' . urlencode($tag) . '">' . $tag . '</a></li>';
                 }
                 ?>
               </ul>
-            </div><!--/Tags Widget -->
+            </div><!--Fim Tags Widget -->
           </div>
         </div>
       </div>
     </div>
   </main>
-  
+  <!-- Rodapé -->
   <footer id="footer" class="footer light-background">
     <?php require("../Include/footer.php"); ?>
   </footer>
-
+<!-- Fim do Rodapé -->
   <?php require("../Include/preloaderAndScrollTop.php"); ?>
   <?php require("../includeJS/scriptScr.php"); ?>
 
-<!-- Incluir os arquivos JavaScript -->
 <script src="../includeJsNoticias/principalNoticiasAdm.js"></script>
 <script src="../includeJsNoticias/sistemaCategorias.js"></script>
 <script src="../includeJsNoticias/sistemaTags.js"></script>

@@ -1,20 +1,6 @@
 <?php
-// Configurações do banco de dados
-$host = "db";      
-$user = "root";
-$pass = "root";    
-$dbname = "meu_banco";
-$port = 3306;
+require('../Include/conexao.php');
 
-// Conexão com o banco
-$con = mysqli_connect($host, $user, $pass, $dbname, $port);
-
-// Verifica se a conexão foi bem-sucedida
-if (!$con) {
-    die("Erro ao conectar com o banco de dados: " . mysqli_connect_error());
-}
-
-// Verifica se recebeu via POST
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['user_id'])) {
     $user_id = intval($_POST['user_id']);
 
@@ -50,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['user_id'])) {
         exit;
     }
 } else {
-    // Caso tentem acessar direto
     $conn->close();
     header("Location: ../UserADM/controleUserAdm.php?msg=invalid");
     exit;

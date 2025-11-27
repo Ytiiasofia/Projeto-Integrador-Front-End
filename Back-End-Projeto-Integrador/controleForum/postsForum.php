@@ -13,7 +13,7 @@ class ForumController {
         $this->forumModel = new ForumModel();
     }
     
-    // ========== MÉTODOS PARA FOTO DE PERFIL ==========
+    // Métodos para fotos de perfil e tags
     
     public function getFotoPerfilUsuario($usuario_id) {
         return $this->forumModel->getFotoPerfilUsuario($usuario_id);
@@ -23,7 +23,7 @@ class ForumController {
         return $this->forumModel->getTagsDoPost($post_id);
     }
     
-    // ========== MÉTODOS PARA CURTIDAS DE POSTS ==========
+    // Métodos para curtidas de posts
     
     public function curtirPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -62,7 +62,7 @@ class ForumController {
         return $this->forumModel->getTotalCurtidasPost($post_id);
     }
 
-    // ========== MÉTODOS PARA CURTIDAS DE COMENTÁRIOS ==========
+    // Métodos para curtidas de comentários
     
     public function curtirComentario() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -101,7 +101,7 @@ class ForumController {
         return $this->forumModel->getTotalCurtidasComentario($comentario_id);
     }
     
-    // ========== MÉTODOS PARA POSTS ==========
+    // Métodos para posts
     
     public function criarPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -117,7 +117,7 @@ class ForumController {
             
             if (empty($titulo) || empty($conteudo)) {
                 $_SESSION['erro'] = 'Título e conteúdo são obrigatórios';
-                // REDIRECIONAMENTO CORRIGIDO - Verifica se é admin
+                // Tem que ter essa verfificação para redirecionar corretamente, se não o admin vai para a página errada
                 if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
                     header('Location: ../UserADM/forumAdm.php');
                 } else {
@@ -134,7 +134,7 @@ class ForumController {
                 $_SESSION['erro'] = 'Erro ao criar post. Tente novamente.';
             }
             
-            // REDIRECIONAMENTO CORRIGIDO - Verifica se é admin
+            // De novo verificação para redirecionar corretamente
             if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
                 header('Location: ../UserADM/forumAdm.php');
             } else {
@@ -148,19 +148,19 @@ class ForumController {
         return $this->forumModel->listarPosts();
     }
 
-    // ========== MÉTODOS PARA FILTRAGEM ==========
+    // Métodos para filtragem
 
     public function listarPostsFiltrados($filtro = 'recentes') {
         return $this->forumModel->listarPostsFiltrados($filtro);
     }
 
-    // ========== MÉTODOS PARA BUSCA ==========
+    // Métodos para busca
 
     public function buscarPosts($termo) {
         return $this->forumModel->buscarPosts($termo);
     }
     
-    // ========== MÉTODOS PARA COMENTÁRIOS ==========
+    // Métodos para comentários
     
     public function adicionarComentario() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -176,7 +176,7 @@ class ForumController {
             
             if (empty($comentario) || $post_id <= 0) {
                 $_SESSION['erro'] = 'Comentário e post são obrigatórios';
-                // REDIRECIONAMENTO CORRIGIDO - Verifica se é admin
+                // Verificação para redirecionar corretamente
                 if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
                     header('Location: ../UserADM/forumAdm.php');
                 } else {
@@ -193,7 +193,7 @@ class ForumController {
                 $_SESSION['erro'] = 'Erro ao adicionar comentário. Tente novamente.';
             }
             
-            // REDIRECIONAMENTO CORRIGIDO - Verifica se é admin
+            // Verificação para redirecionar corretamente
             if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
                 header('Location: ../UserADM/forumAdm.php');
             } else {
@@ -207,7 +207,7 @@ class ForumController {
         return $this->forumModel->listarComentariosPorPost($post_id);
     }
 
-    // ========== MÉTODOS PARA ADMIN ==========
+    // Métodos para admin
     
     public function deletarPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -233,7 +233,7 @@ class ForumController {
     }
 }
 
-// ========== PROCESSAR AÇÕES ==========
+// Métodos para processar ações
 
 if (isset($_GET['action'])) {
     $controller = new ForumController();

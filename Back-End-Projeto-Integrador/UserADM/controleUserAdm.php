@@ -60,7 +60,6 @@
           </thead>
           <tbody>
 <?php
-// Conexão com o banco 
 require("../Include/conexao.php");
 
 // Busca os usuários
@@ -96,7 +95,6 @@ if ($resultado && mysqli_num_rows($resultado) > 0) {
     echo "<tr><td colspan='5' class='text-center'>Nenhum usuário encontrado.</td></tr>";
 }
 
-// Fechar conexão (opcional)
 mysqli_close($con);
 ?>
           </tbody>
@@ -126,7 +124,7 @@ mysqli_close($con);
       </div>
     </div></div>
   </div>
-  <!-- Fim Modal -->
+  <!-- Fim Modal de exclusão -->
 
 </main>
 
@@ -134,10 +132,12 @@ mysqli_close($con);
 <footer id="footer" class="footer light-background">
   <?php require("../Include/footer.php"); ?>
 </footer>
+<!-- Fim do Rodapé -->
 
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
 <?php require("../includeJS/scriptScr.php"); ?>
 <script>
+  // Script para lidar com o modal de exclusão
   document.addEventListener('DOMContentLoaded', function () {
     const deleteButtons = document.querySelectorAll('.delete-user');
     const deleteModal = new bootstrap.Modal(document.getElementById('deleteUserModal'));

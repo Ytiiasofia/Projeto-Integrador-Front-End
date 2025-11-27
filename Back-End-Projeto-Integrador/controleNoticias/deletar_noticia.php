@@ -4,29 +4,27 @@ require_once '../Include/conexao.php';
 
 header('Content-Type: application/json');
 
-// Verificar se o usuário é admin
+// Verificação de autenticação e autorização
 if (!isset($_SESSION['usuario_id']) || $_SESSION['is_admin'] != 1) {
     echo json_encode(['success' => false, 'message' => 'Acesso negado. Apenas administradores podem deletar notícias.']);
     exit;
 }
 
-// Verificar se a conexão foi bem-sucedida
 if (!$con) {
     echo json_encode(['success' => false, 'message' => 'Erro de conexão com o banco de dados.']);
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Receber dados
+    // Recebebendo os dados do banco
     $noticia_id = mysqli_real_escape_string($con, $_POST['noticia_id'] ?? '');
     
-    // Validações
+    // Validações básicas
     if (empty($noticia_id)) {
         echo json_encode(['success' => false, 'message' => 'ID da notícia não informado.']);
         exit;
     }
 
-    // Iniciar transação
     mysqli_begin_transaction($con);
 
     try {
@@ -39,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         $noticia_data = mysqli_fetch_assoc($check_result);
-        
+        // Procedimentos para deletar a notícia:
         // 1. Deletar as relações na tabela noticias_tags
         $delete_tags_query = "DELETE FROM noticias_tags WHERE noticia_id = '$noticia_id'";
         $delete_tags_result = mysqli_query($con, $delete_tags_query);
@@ -64,12 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Confirmar transação
         mysqli_commit($con);
         echo json_encode(['success' => true, 'message' => 'Notícia deletada com sucesso!']);
 
     } catch (Exception $e) {
-        // Reverter transação em caso de erro
         mysqli_rollback($con);
         echo json_encode(['success' => false, 'message' => 'Erro: ' . $e->getMessage()]);
     }
@@ -78,6 +74,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => false, 'message' => 'Método não permitido.']);
 }
 
-// Fechar conexão
 mysqli_close($con);
 ?>
