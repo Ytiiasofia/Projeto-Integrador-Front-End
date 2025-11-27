@@ -106,14 +106,32 @@
   </section>
 
 </main>
-
 <footer id="footer" class="footer light-background">
   <?php require("../Include/footer.php"); ?>
 </footer>
 
 <?php require("../Include/preloaderAndScrollTop.php"); ?>
 <?php require("../includeJS/scriptScr.php"); ?>
-<!-- Script para barra de força da senha -->
-<script src="../includeJS/barraDeForcaSenha.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const passwordInput = document.getElementById('password');
+  const passwordStrength = document.getElementById('passwordStrength');
+  
+  passwordInput.addEventListener('input', function() {
+    const password = this.value;
+    let strength = 0;
+    if (password.length >= 8) strength += 25;
+    if (password.length >= 12) strength += 25;
+    if (/[A-Z]/.test(password)) strength += 15;
+    if (/[0-9]/.test(password)) strength += 15;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+    strength = Math.min(strength, 100);
+    passwordStrength.style.width = strength + '%';
+    if (strength < 40) passwordStrength.style.backgroundColor = '#dc3545';
+    else if (strength < 70) passwordStrength.style.backgroundColor = '#fd7e14';
+    else passwordStrength.style.backgroundColor = '#28a745';
+  });
+});
+</script>
 </body>
 </html>
