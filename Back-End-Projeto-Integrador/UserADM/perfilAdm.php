@@ -385,6 +385,5 @@ try {
     require("../includeJS/scriptScr.php");
   ?>
 <script src="../includeJsPerfil/codigosComuns.js"></script>
-<script src="../includeJsPerfil/codigosExclusivoAdm.js"></script>
 </body>
 </html>
