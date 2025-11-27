@@ -205,10 +205,7 @@ try {
               
               <div class="admin-section">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h5><i class="bi bi-graph-up"></i> Estatísticas da Plataforma</h5>
-                  <button class="btn btn-sm btn-outline-primary" onclick="atualizarEstatisticas()">
-                    <i class="bi bi-arrow-clockwise"></i> Atualizar
-                  </button>
+                  <h5><i class="bi bi-graph-up"></i> Estatísticas da Plataforma</h5>  
                 </div>
                 
                 <?php if ($estatisticas['total_usuarios'] === 0 && $estatisticas['total_posts'] === 0 && $estatisticas['total_oportunidades'] === 0): ?>
@@ -237,9 +234,6 @@ try {
                       <div class="number" id="stat-oportunidades"><?php echo $estatisticas['total_oportunidades']; ?></div>
                     </div>
                   </div>
-                </div>
-                <div class="text-end small text-muted mt-2">
-                  Última atualização: <span id="stat-atualizacao"><?php echo $estatisticas['ultima_atualizacao']; ?></span>
                 </div>
               </div>
               
